@@ -1,0 +1,166 @@
+﻿@model KTN5.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理員</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif,system,'Inter', sans-serif,'Noto Sans TC', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            /* background: linear-gradient(45deg, rgba(19,25,31,1) 0%, rgba(38,51,64,1) 100%); */
+            background: rgb(236, 235, 236);
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .well {
+            flex-grow: 1;
+            max-width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: none;
+            background: #fff;
+            box-shadow: 0px 6px 60px 0px rgba(38, 51, 64, 0.08);
+            border: none;
+            border-radius: 6px;
+            padding: 50px 60px;
+        }
+
+        .form-group {
+            outline-style: none;
+            border-radius: 3px;
+            padding: 6px 6px;
+            margin: 2px 0;
+            width: 280px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif,'Noto Sans TC', sans-serif;
+        }
+
+        .pwd {
+            width: 280px;
+            height: 30px;
+            /* background-color: #ccc; */
+            display: flex;
+            flex-direction: row;
+            /* justify-content:flex-end; */
+            /* margin: 70px; */
+            justify-content: center;
+            /* border: 1px solid red; */
+        }
+
+        .pwd-text {
+            width: 150px;
+            height: 30px;
+            /* outline: 1px solid red; */
+            display: block;
+            font-size: 13px;
+            font-weight: 300;
+            margin-left: 180px;
+            color: lighten(#717e88, 15%);
+        }
+
+        .helper-text {
+            font-size: 13px;
+            font-weight: 300;
+            margin-top: 20px;
+            color: lighten(#717e88, 15%);
+        }
+
+        .icons {
+            width: 280px;
+            height: 70px;
+            /* background-color: #ccc; */
+            display: flex;
+            flex-direction: row;
+            /* justify-content:flex-end; */
+            /* margin: 70px; */
+            justify-content: center;
+            /* border: 1px solid red; */
+        }
+
+        .btn {
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 300;
+            padding: 14px 40px;
+            min-width: 280px;
+            border: none;
+            border-radius: 30px;
+            background: #905ca2;
+            transition: all .2s ease-in-out;
+            margin-top: 30px;
+        }
+
+            .btn:hover {
+                background-color: #5f1985;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="well">
+        <h2>後台管理員</h2>
+        <br>
+
+        <!-- ... -->
+        <form class="form-User" action="~/User/AdminLogin" method="post">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <input type="email" class="form-control" name="account" value="" placeholder="帳號" required>
+                @Html.ValidationMessageFor(model => model.account, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" value="" panel placeholder="密碼" id="pwd-1" maxlength="12" required>
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+            <div class="pwd">
+                <div class="pwd-text">
+                    <input type="checkbox" onclick="myFunction()">  顯示密碼
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">登入</button>
+        </form>
+
+
+        <script>
+            function myFunction() {
+                var x = document.getElementById("pwd-1");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
+
+        <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+
+</body>
+</html>
