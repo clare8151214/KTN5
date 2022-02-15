@@ -403,6 +403,39 @@ namespace KTN5.Controllers
         }
 
 
+        //編輯密碼
+        [Authorize]
+        public ActionResult EditPassword()
+        {
+            string uid = User.Identity.Name;
+            dbktnEntities db = new dbktnEntities();
+            var personalProfile = db.User.Where(m => m.account == uid).FirstOrDefault();
+            return View(personalProfile);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPassword(User user)
+        {
+            string uid = User.Identity.Name;
+            dbktnEntities db = new dbktnEntities();
+            var personalProfile = db.User.Where(m => m.account == uid).FirstOrDefault();
+            user.password = Crypto.Hash(user.ConfirmPassword);
+            user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
+            personalProfile.password = user.password;
+            personalProfile.ConfirmPassword = user.ConfirmPassword;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
     }
 
 }
