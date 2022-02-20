@@ -27,5 +27,8 @@ namespace KTN5.Models
     
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Charity_Member> Charity_Member { get; set; }
+        public virtual DbSet<Object> Object { get; set; }
+        public virtual DbSet<CartItem> CartItem { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }

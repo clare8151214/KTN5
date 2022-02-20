@@ -7,6 +7,9 @@
       <Diagram DiagramId="b40b40dc58334adeb18b65232779e215" Name="Diagram1">
         <EntityTypeShape EntityType="dbktnModel.User" Width="1.5" PointX="1.125" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="dbktnModel.Charity_Member" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="dbktnModel.Object" Width="1.5" PointX="5.5" PointY="0.75" />
+        <EntityTypeShape EntityType="dbktnModel.CartItem" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbktnModel.ShoppingCart" Width="1.5" PointX="2.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

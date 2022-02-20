@@ -1,0 +1,82 @@
+﻿@model IEnumerable<KTN5.Models.Object>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>物資列表</h2>
+@using (Html.BeginForm())
+{
+    @:關鍵字 <input type="text" name="txtKeyword" />
+    <input type="submit" value="查詢" />
+}
+
+<br />
+<p>
+    @Html.ActionLink("新增物資", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            序號
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oPhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oIntro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+        int count = 0;
+        foreach (var item in Model)
+        {
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.oName)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.oPhoto)*@
+                    @if (item.oPhoto == "")
+                    {
+                        <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
+                    }
+                    else 
+                    {                                        
+                        <img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" />
+                    }
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.oNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.oIntro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type)
+                </td>
+                <td>
+                    @Html.ActionLink("修改", "Edit", new { id = item.oId }) |
+                    @Html.ActionLink("刪除", "Delete", "Object", new { id = item.oId },
+                        new { onclick = "return confirm('確定要刪除嗎?')" })
+                </td>
+            </tr>
+        }
+    }
+</table>

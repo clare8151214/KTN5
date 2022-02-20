@@ -1,0 +1,115 @@
+﻿@model KTN5.Models.Object
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+<h2>修改物資資料</h2>
+
+
+@using (Html.BeginForm("Edit", "Object", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>物資資料</h4>
+        <hr />
+
+        <script>
+        // 預覽圖片
+        function PreviewImage() {
+            var oFReader = new FileReader(); // HTML5 File API
+            oFReader.readAsDataURL(document.getElementById("photo").files[0]);
+
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("preview").src = oFREvent.target.result;
+            };
+        };
+        // 載入圖片失敗時, 使用預設圖片
+        function imgUserAvatarError(image) {
+            image.src = '@Url.Content("~/Content/oPhoto/2.jpg")';
+            return true;
+        }
+        </script>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <input type="hidden" value="@Model.oId" name="oId" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.oName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.oName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.oName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.oPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @*@Html.EditorFor(model => model.oPhoto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.oPhoto, "", new { @class = "text-danger" })*@
+
+                <br />
+                <div>
+                    <img id="preview" src="~/Content/images/oPhoto/@Model.oPhoto" style="width: 100px; height: 100px;" onerror="imgUserAvatarError(this)" />
+                </div>
+                <br />
+                <input type="file" class="upload" name="photo" id="photo" accept="image/*" onchange="PreviewImage();" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.oNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.oNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.oNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.oIntro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.oIntro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.oIntro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <select name="type">
+                    <option value="文具">文具</option>
+                    <option value="食品">食品</option>
+                    <option value="電器">電器</option>
+                    <option value="衛生">衛生</option>
+                    <option value="醫療">醫療</option>
+                    <option value="其他">其他</option>
+                </select>
+
+                @*@Html.EditorFor(model => model.type, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
