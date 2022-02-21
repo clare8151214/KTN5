@@ -1,7 +1,7 @@
 ﻿@model KTN5.Models.User
 
 @{
-    Layout = null;
+    Layout = null;   
 }
 
 <!DOCTYPE html>
@@ -90,7 +90,10 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="@Url.Action("EditProfile","User")">設定會員資料</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("EditPassword","User")">變更密碼</a></li>
-                                <li><a class="dropdown-item" href="#">編輯公益單位資料</a></li>
+                                @if (ViewBag.Role == "公益單位")
+                                {
+                                    <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
+                                }
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

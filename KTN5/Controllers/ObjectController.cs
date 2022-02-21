@@ -16,7 +16,7 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
-            if (result.role == "管理員" || result.role == "公益單位")
+            if (result.role == "管理員")
                 return true;
             return false;
         }
@@ -38,6 +38,8 @@ namespace KTN5.Controllers
         [Authorize]
         public ActionResult List()
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             if (isAdmin())
             {
                 IEnumerable<Object> objects = null;
@@ -50,16 +52,33 @@ namespace KTN5.Controllers
                               where o.oName.Contains(keyword)
                               select o;
                 return View(objects);
+            }            
+            else if (result.role == "公益單位")
+            {
+                var charity = db.Charity_Member.Where(m => m.uId == result.uId).FirstOrDefault();
+                IEnumerable<Object> objects = null;
+                string keyword = Request.Form["txtKeyword"];
+                if (string.IsNullOrEmpty(keyword))
+                {
+                    objects = db.Object.Where(m => m.cId == charity.cId);
+                }
+                else
+                {
+                    objects = db.Object.Where(m => m.cId == charity.cId && m.oName.Contains(keyword));
+                }
+                return View(objects);
             }
+
             return RedirectToAction("Index");
             
         }
         [Authorize]
         public ActionResult Delete(int id)
         {
-            if (isAdmin())
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (isAdmin() || result.role == "公益單位")
             {
-                dbktnEntities db = new dbktnEntities();
                 Object obj = db.Object.FirstOrDefault(o => o.oId == id);
                 if (obj != null)
                 {
@@ -68,14 +87,17 @@ namespace KTN5.Controllers
                 }
                 return RedirectToAction("List");
             }
+            
+
             return RedirectToAction("Index");
         }
         [Authorize]
         public ActionResult Edit(int id)
         {
-            if (isAdmin())
-            {
-                dbktnEntities db = new dbktnEntities();
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (isAdmin() || result.role == "公益單位")
+            {             
                 Object obj = db.Object.FirstOrDefault(o => o.oId == id);
                 if (obj == null)
                     return RedirectToAction("List");
@@ -87,7 +109,6 @@ namespace KTN5.Controllers
         [HttpPost]
         public ActionResult Edit(Object o)
         {
-            dbktnEntities db = new dbktnEntities();
             Object obj = db.Object.FirstOrDefault(t => t.oId == o.oId);
             if (obj != null)
             {
@@ -108,7 +129,9 @@ namespace KTN5.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            if (isAdmin())
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (isAdmin() || result.role == "公益單位")
             {
                 return View();
             }
@@ -119,7 +142,15 @@ namespace KTN5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Object o, HttpPostedFileBase photo)
         {
-            dbktnEntities db = new dbktnEntities();
+
+            string uid = User.Identity.Name; //取得當前帳號
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+
+            if (result.role == "公益單位")
+            {
+                var charity = db.Charity_Member.Where(m => m.uId == result.uId).FirstOrDefault();
+                o.cId = charity.cId;
+            }           
             db.Object.Add(o);
             db.SaveChanges();
             Object obj = db.Object.FirstOrDefault(c => c.oId == o.oId);

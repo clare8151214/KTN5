@@ -227,6 +227,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbktn.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Extended\Charity_Member.cs" />
     <Compile Include="Models\Extended\Object.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\MailModel.cs" />
@@ -266,6 +267,7 @@
     <Content Include="Views\Object\Create.cshtml" />
     <Content Include="Views\Object\Edit.cshtml" />
     <Content Include="Views\Object\Index.cshtml" />
+    <Content Include="Views\Charity\ObjectEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

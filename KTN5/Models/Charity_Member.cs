@@ -22,5 +22,6 @@ namespace KTN5.Models
         public string photo { get; set; }
         public Nullable<int> heart_code { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
+        public Nullable<int> uId { get; set; }
     }
 }

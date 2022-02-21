@@ -27,6 +27,7 @@
           <Property Name="photo" Type="nvarchar" MaxLength="100" />
           <Property Name="heart_code" Type="int" />
           <Property Name="created_at" Type="datetime" />
+          <Property Name="uId" Type="int" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -118,6 +119,7 @@
           <Property Name="photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="heart_code" Type="Int32" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="uId" Type="Int32" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -181,6 +183,7 @@
           <EntitySetMapping Name="Charity_Member">
             <EntityTypeMapping TypeName="dbktnModel.Charity_Member">
               <MappingFragment StoreEntitySet="Charity_Member">
+                <ScalarProperty Name="uId" ColumnName="uId" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="heart_code" ColumnName="heart_code" />
                 <ScalarProperty Name="photo" ColumnName="photo" />

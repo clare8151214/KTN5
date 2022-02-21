@@ -54,8 +54,8 @@ namespace KTN5.Controllers
                 using (dbktnEntities dc = new dbktnEntities())
                 {
                     dc.User.Add(user);
-                    
-                    if(user.role == "公益單位") //辨識會員類型
+                    dc.SaveChanges();
+                    if (user.role == "公益單位") //辨識會員類型
                     {
                         string cName = charityName;
                         var isCharityExit = dc.Charity_Member.Where(m => m.c_name == cName).FirstOrDefault(); //檢查是否已有這個公益單位                        
@@ -63,11 +63,13 @@ namespace KTN5.Controllers
                         {
                             Charity_Member charity = new Charity_Member
                             {
+                                uId = user.uId,
                                 c_name = cName,
                                 c_pname = user.name,
                                 created_at = DateTime.Now
                             };
                             dc.Charity_Member.Add(charity);
+                            dc.SaveChanges();
                         }
                         else
                         {
@@ -75,7 +77,7 @@ namespace KTN5.Controllers
                             return View(user);
                         }
                     }
-                    dc.SaveChanges();
+                  
 
                     //Send Email to User
                     SendVerificationLinkEmail(user.account, user.ActivationCode.ToString());

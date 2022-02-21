@@ -39,44 +39,65 @@
     </tr>
 
     @{
-        int count = 0;
-        foreach (var item in Model)
+        if (Model == null)
         {
-            count++;
             <tr>
-                <td>
-                    @count
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.oName)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.oPhoto)*@
-                    @if (item.oPhoto == "")
-                    {
-                        <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
-                    }
-                    else 
-                    {                                        
-                        <img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" />
-                    }
-                    
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.oNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.oIntro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.type)
-                </td>
-                <td>
-                    @Html.ActionLink("修改", "Edit", new { id = item.oId }) |
-                    @Html.ActionLink("刪除", "Delete", "Object", new { id = item.oId },
-                        new { onclick = "return confirm('確定要刪除嗎?')" })
-                </td>
+                <td>您尚未提出需求物資</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
+
+
         }
+        else
+        {
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.oName)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.oPhoto)*@
+                        @if (item.oPhoto == "")
+                        {
+                            <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" />
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.oNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.oIntro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.oId }) |
+                        @Html.ActionLink("刪除", "Delete", "Object", new { id = item.oId },
+                            new { onclick = "return confirm('確定要刪除嗎?')" })
+                    </td>
+                </tr>
+            }
+
+
+
+        }
+
     }
 </table>
