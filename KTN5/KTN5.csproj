@@ -113,6 +113,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\footer.css" />
+    <Content Include="Content\login_navbar.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\oPhoto\2.jpg" />
     <Content Include="Content\practice.css" />
@@ -197,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CharityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -227,6 +229,7 @@
     </Compile>
     <Compile Include="Models\Extended\Object.cs" />
     <Compile Include="Models\Extended\User.cs" />
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\Object.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
     </Compile>
@@ -273,6 +276,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UserPhotos\" />
+    <Folder Include="Views\Mail\" />
     <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>

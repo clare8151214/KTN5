@@ -223,11 +223,11 @@ namespace KTN5.Controllers
 
         //Logout
         [Authorize]
-        [HttpPost]
+        //[HttpPost]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Index", "Home");
         }
 
         [NonAction]

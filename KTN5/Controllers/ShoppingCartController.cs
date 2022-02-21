@@ -10,6 +10,7 @@ namespace KTN5.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        dbktnEntities db = new dbktnEntities();
         // GET: ShoppingCart
         public ActionResult Index()
         {

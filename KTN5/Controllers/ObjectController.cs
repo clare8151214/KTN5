@@ -10,6 +10,16 @@ namespace KTN5.Controllers
 {
     public class ObjectController : Controller
     {
+        dbktnEntities db = new dbktnEntities();
+        [NonAction]
+        bool isAdmin()
+        {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (result.role == "管理員" || result.role == "公益單位")
+                return true;
+            return false;
+        }
         // GET: Object
         public ActionResult Index()
         {
@@ -25,38 +35,55 @@ namespace KTN5.Controllers
             return View(objects);
         }
 
+        [Authorize]
         public ActionResult List()
         {
-            IEnumerable<Object> objects = null;
-            string keyword = Request.Form["txtKeyword"];
-            if (string.IsNullOrEmpty(keyword))
-                objects = from o in (new dbktnEntities()).Object
-                          select o;
-            else
-                objects = from o in (new dbktnEntities()).Object
-                          where o.oName.Contains(keyword)
-                          select o;
-            return View(objects);
+            if (isAdmin())
+            {
+                IEnumerable<Object> objects = null;
+                string keyword = Request.Form["txtKeyword"];
+                if (string.IsNullOrEmpty(keyword))
+                    objects = from o in (new dbktnEntities()).Object
+                              select o;
+                else
+                    objects = from o in (new dbktnEntities()).Object
+                              where o.oName.Contains(keyword)
+                              select o;
+                return View(objects);
+            }
+            return RedirectToAction("Index");
+            
         }
+        [Authorize]
         public ActionResult Delete(int id)
         {
-            dbktnEntities db = new dbktnEntities();
-            Object obj = db.Object.FirstOrDefault(o => o.oId == id);
-            if (obj != null)
+            if (isAdmin())
             {
-                db.Object.Remove(obj);
-                db.SaveChanges();
+                dbktnEntities db = new dbktnEntities();
+                Object obj = db.Object.FirstOrDefault(o => o.oId == id);
+                if (obj != null)
+                {
+                    db.Object.Remove(obj);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("List");
             }
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            dbktnEntities db = new dbktnEntities();
-            Object obj = db.Object.FirstOrDefault(o => o.oId == id);
-            if (obj == null)
-                return RedirectToAction("List");
-            return View(obj);
+            if (isAdmin())
+            {
+                dbktnEntities db = new dbktnEntities();
+                Object obj = db.Object.FirstOrDefault(o => o.oId == id);
+                if (obj == null)
+                    return RedirectToAction("List");
+                return View(obj);
+            }
+            return RedirectToAction("Index");
         }
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Object o)
         {
@@ -78,10 +105,16 @@ namespace KTN5.Controllers
             }
             return RedirectToAction("List");
         }
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            if (isAdmin())
+            {
+                return View();
+            }
+            return RedirectToAction("Index");   
         }
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Object o, HttpPostedFileBase photo)
