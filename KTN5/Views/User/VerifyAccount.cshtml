@@ -1,12 +1,12 @@
 ﻿
 @{ ViewBag.Title = "VerifyAccount"; }
 
-<h2>VerifyAccount</h2>
+<h2>確認帳戶</h2>
 
 @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
     <div class="alert alert-success">
-        <strong>success!</strong>Click @Html.ActionLink("登入", "Login", "User")
+        <strong>成功認證!</strong>點擊 @Html.ActionLink("登入", "Login", "User")
     </div> 
 }
 else

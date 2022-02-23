@@ -113,6 +113,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\footer.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\login_navbar.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\oPhoto\2.jpg" />
@@ -190,8 +191,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\practice.js" />
+    <Content Include="Scripts\register.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +264,6 @@
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\VerifyAccount.cshtml" />
-    <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\AdminLogin.cshtml" />
     <Content Include="Views\Shared\Navbar.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -277,6 +279,7 @@
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\OrderDetails.cshtml" />
+    <Content Include="Views\User\Registration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
