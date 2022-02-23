@@ -40,12 +40,45 @@ GO
 
 
 CREATE TABLE [dbo].[ShoppingCart] (
-    [hId] int IDENTITY(1,1) NOT NULL,
+    [cartId] int IDENTITY(1,1) NOT NULL,
+	[oName] nvarchar(50) NOT NULL,
+    [uId] int NOT NULL,
+    [oId] int NOT NULL,
+	[oIntro] nvarchar(max)  NULL,
+	[oQty] int NULL,
+	PRIMARY KEY CLUSTERED ([cartId] ASC)
+);
+GO
+
+CREATE TABLE [dbo].[Order] (
+    [orderId] int IDENTITY(1,1) NOT NULL,
 	[hName] nvarchar(50) NOT NULL,
     [uId] int NOT NULL,
     [hPhone] nvarchar(50)  NULL,
-	[hEamil] nvarchar(max)  NULL,
-	[hCarrier] nvarchar(max) NULL,       
-	PRIMARY KEY CLUSTERED ([hId] ASC)
+	[hEamil] nvarchar(50)  NULL,
+	[hCarrier] nvarchar(max) NULL,
+	[created_at] datetime  DEFAULT GETDATE(),
+	PRIMARY KEY CLUSTERED ([orderId] ASC)
 );
 GO
+
+CREATE TABLE [dbo].[OrderDetail] (
+    [odId] int IDENTITY(1,1) NOT NULL,
+	[oName] nvarchar(50) NOT NULL,
+    [orderId] int NOT NULL,
+    [oQty] int NULL,
+	
+	PRIMARY KEY CLUSTERED ([odId] ASC)
+);
+GO
+
+
+--CREATE TABLE [dbo].[CartItem] (
+--    [pId] int IDENTITY(1,1) NOT NULL,
+--	[oId] int NOT NULL,
+--    [hId] int NOT NULL,
+--    [count] int NOT NULL,    
+--	[created_at] datetime  DEFAULT GETDATE(),
+--	PRIMARY KEY CLUSTERED ([pId] ASC)
+--);
+--GO

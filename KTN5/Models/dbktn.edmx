@@ -52,6 +52,17 @@
           <Property Name="orderId" Type="int" Nullable="false" />
           <Property Name="oQty" Type="int" />
         </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="rId" />
+          </Key>
+          <Property Name="rId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rName" Type="nvarchar" MaxLength="255" />
+          <Property Name="rAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="rPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="startTime" Type="time" Precision="0" />
+          <Property Name="endTime" Type="time" Precision="0" />
+        </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
             <PropertyRef Name="cartId" />
@@ -86,6 +97,7 @@
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -118,6 +130,7 @@
           <EntitySet Name="Order" EntityType="dbktnModel.Order" />
           <EntitySet Name="OrderDetail" EntityType="dbktnModel.OrderDetail" />
           <EntitySet Name="ShoppingCart" EntityType="dbktnModel.ShoppingCart" />
+          <EntitySet Name="Restaurant" EntityType="dbktnModel.Restaurant" />
         </EntityContainer>
         <EntityType Name="Charity_Member">
           <Key>
@@ -176,6 +189,17 @@
           <Property Name="oId" Type="Int32" Nullable="false" />
           <Property Name="oIntro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="oQty" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="rId" />
+          </Key>
+          <Property Name="rId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="rAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="rPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="startTime" Type="Time" Precision="0" />
+          <Property Name="endTime" Type="Time" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -262,6 +286,18 @@
                 <ScalarProperty Name="uId" ColumnName="uId" />
                 <ScalarProperty Name="oName" ColumnName="oName" />
                 <ScalarProperty Name="cartId" ColumnName="cartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurant">
+            <EntityTypeMapping TypeName="dbktnModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurant">
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="rPhone" ColumnName="rPhone" />
+                <ScalarProperty Name="rAddress" ColumnName="rAddress" />
+                <ScalarProperty Name="rName" ColumnName="rName" />
+                <ScalarProperty Name="rId" ColumnName="rId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

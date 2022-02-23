@@ -1,0 +1,232 @@
+﻿@using KTN5.Models
+@{
+    ViewBag.Title = "愛心待用餐廳";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <style>
+        .img-reataurant {
+            width: 100%;
+        }
+
+        .table > thead {
+            vertical-align: middle;
+        }
+
+        tr.table-head {
+            background: #905ca2;
+            box-shadow: none;
+            color: #fff;
+            font-size: 16px;
+            height: 50px;
+        }
+
+        tr.list {
+            background: #fff;
+            box-shadow: none;
+            color: #000000;
+            font-size: 14px;
+            height: 40px;
+            vertical-align: middle;
+            align-items: center;
+        }
+
+            tr.list:hover {
+                background: #e0d7ff;
+            }
+
+        td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .searrch .btn1 {
+            margin: 20px auto;
+            height: 30px;
+            width: 70px;
+            border: none;
+            background: #905ca2;
+            border-radius: 10px 10px;
+        }
+
+        .btn1:hover {
+            background: #5F1985;
+        }
+
+        .dropdown-area {
+            height: 25px;
+            width: 180px;
+            padding: 10px;
+            color: #905ca2;
+            background-color: #ffffff;
+        }
+        /*  .dropdown-area2 {
+            padding: 10px;
+            background-color: #ffffff;
+            box-shadow: 0px 3px 5px 0px #d1d1d1;
+        }
+        .dropdown-area:hover {
+            background-color: #e8d2f7;
+        }*/
+
+        .keyword, .area {
+            border-radius: 5px;
+            border: 1px solid #905ca2;
+        }
+
+        .btn-edit {
+            background: #F7B52C;
+            border: none;
+        }
+
+            .btn-edit:hover {
+                background: orange;
+            }
+
+        .btn-delete {
+            background: #905ca2;
+            border: none;
+        }
+
+            .btn-delete:hover {
+                background: #5F1985;
+            }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <img class="img-reataurant" src="~/image/restaurant-head-03.png" alt="" />
+    </div>
+    <div class="container">
+
+        <div class="head">
+            <h3>愛心待用餐廳</h3>
+            <p>愛的力量與善的循環，關懷弱勢、愛心待用餐。給需要的朋友，一起共度難關。期待貢獻己力、共襄盛舉。</p>
+
+        </div>
+        <div class="searrch">
+            @using (Html.BeginForm())
+            {
+                @:關鍵字 <input class="keyword" type="text" name="txtKeyword" />
+                @:地區 <input class="area dropdown-area" name="txtArea" list="txtArea" />
+                <datalist id="txtArea">
+                    <select class="dropdown-area2" aria-label=".form-select-sm example">
+                        <option selected>地區</option>
+                        <option value="楠梓區">楠梓區</option>
+                        <option value="左營區">左營區</option>
+                        <option value="鼓山區">鼓山區</option>
+                        <option value="鹽埕區">鹽埕區</option>
+                        <option value="三民區">三民區</option>
+                        <option value="前金區">前金區</option>
+                        <option value="新興區">新興區</option>
+                        <option value="苓雅區">苓雅區</option>
+                        <option value="前鎮區">前鎮區</option>
+                        <option value="小港區">小港區</option>
+                        <option value="旗津區">旗津區</option>
+                        <option value="鳳山區">鳳山區</option>
+                        <option value="鳥松區">鳥松區</option>
+                        <option value="仁武區">仁武區</option>
+                        <option value="大社區">大社區</option>
+                        <option value="大樹區">大樹區</option>
+                        <option value="大寮區">大寮區</option>
+                        <option value="林園區">林園區</option>
+                        <option value="岡山區">岡山區</option>
+                        <option value="橋頭區">橋頭區</option>
+                        <option value="路竹區">路竹區</option>
+                        <option value="燕巢區">燕巢區</option>
+                        <option value="阿蓮區">阿蓮區</option>
+                        <option value="田寮區">田寮區</option>
+                        <option value="梓官區">梓官區</option>
+                        <option value="彌陀區">彌陀區</option>
+                        <option value="永安區">永安區</option>
+                        <option value="湖內區">湖內區</option>
+                        <option value="茄萣區">茄萣區</option>
+                        <option value="旗山區">旗山區</option>
+                        <option value="美濃區">美濃區</option>
+                        <option value="內門區">內門區</option>
+                        <option value="杉林區">杉林區</option>
+                        <option value="甲仙區">甲仙區</option>
+                        <option value="六龜區">六龜區</option>
+                        <option value="那瑪夏區">那瑪夏區</option>
+                        <option value="桃源區">桃源區</option>
+                        <option value="茂林區">茂林區</option>
+
+                    </select>
+                </datalist>
+
+                <input type="submit" class="btn1 btn-primary" value="查詢" />
+            }
+        </div>
+        <div>
+            <a href="~/Restaurant/Create" class="btn btn-primary" style="background-color: #F7B52C; border: none;">+新增餐廳</a>
+        </div>
+
+        <br />
+
+        <table id="tableArray" class="table text-center align-middle">
+            <thead>
+
+                <tr class="table-head ">
+                    <td>編    號</td>
+                    <td>店    名</td>
+                    <td>電    話</td>
+                    <td>地    址</td>
+                    <td>開店時間</td>
+                    <td>結束時間</td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+
+                @{
+                    int count = 0;
+                    foreach (Restaurant c in Model)
+                    {
+                        count++;
+
+                        <tr class="list">
+                            <td>@count</td>
+                            <td>@c.rName</td>
+                            <td>@c.rPhone</td>
+                            <td>@c.rAddress</td>
+                            <td>@c.startTime.ToString()</td>
+                            <td>@c.endTime.ToString()</td>
+
+                            <td>
+                                <a class="btn btn-edit"
+                                   href="@Url.Action("Edit","Restaurant")?id=@c.rId">
+                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-delete"
+                                   href="@Url.Action("Delete","Restaurant")?id=@c.rId" onclick="return confirm('確定要刪除嗎?')">
+                                    <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </thead>
+        </table>
+        <br />
+        <div>
+            <p>@ViewBag.ms</p>
+        </div>
+    </div>
+  
+
+</body>
+

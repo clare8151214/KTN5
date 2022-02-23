@@ -1,0 +1,116 @@
+﻿@model KTN5.Models.Restaurant
+@{
+    ViewBag.Title = "新增愛心餐廳";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<head>
+    <style>
+        .restaurant-background {
+            padding: 20px;
+            background: #e0d7ff;
+        }
+
+        .createText {
+            background: #ffffff;
+            width: 500px;
+            height: auto;
+            margin: 40px auto;
+            padding: 30px 30px;
+            box-shadow: 3px 3px 3px 3px #d1d1d1;
+        }
+
+        .createFrom {
+            padding-left: 50px;
+        }
+
+
+        .btnCreate {
+            margin: 20px auto;
+            height: 40px;
+            width: 80px;
+            border: none;
+            background: #905ca2;
+            border-radius: 10px 10px;
+        }
+
+            .btnCreate:hover {
+                background: #5F1985;
+            }
+    </style>
+
+</head>
+<div class="restaurant-background">
+    <div class="createText">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal createFrom">
+                <form method="post" action="~/restaurant/Save">
+
+                    <h3>新增愛心餐廳</h3>
+                    <br />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.rName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.rName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.rName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.rPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.rPhone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.rPhone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.rAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.rAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.rAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.startTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.startTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.endTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.endTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="送出" class="btnCreate btn-primary" />
+
+
+                        </div>
+
+                    </div>
+                </form>
+                <div class="btnback-restaurant">
+                    @Html.ActionLink("返回 愛心待用餐廳", "List", new { @class = "btnback-restaurant", style = "color:#ffffff;" })
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+

@@ -204,6 +204,7 @@
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Crypto.cs" />
@@ -232,6 +233,8 @@
     <Compile Include="Models\Extended\Object.cs" />
     <Compile Include="Models\Extended\Order.cs" />
     <Compile Include="Models\Extended\OrderDetail.cs" />
+    <Compile Include="Models\Extended\Restaurant.cs" />
+    <Compile Include="Models\Extended\ShoppingCart.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\Object.cs">
@@ -244,6 +247,10 @@
       <DependentUpon>dbktn.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\Restaurant.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RestaurantFactory.cs" />
     <Compile Include="Models\ShoppingCart.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
     </Compile>
@@ -280,6 +287,9 @@
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\OrderDetails.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\Restaurant\List.cshtml" />
+    <Content Include="Views\Restaurant\Create.cshtml" />
+    <Content Include="Views\Restaurant\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
