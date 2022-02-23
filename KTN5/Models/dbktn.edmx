@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="dbktnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="CartItem">
-          <Key>
-            <PropertyRef Name="pId" />
-          </Key>
-          <Property Name="pId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="oId" Type="int" Nullable="false" />
-          <Property Name="hId" Type="int" Nullable="false" />
-          <Property Name="count" Type="int" Nullable="false" />
-          <Property Name="created_at" Type="datetime" />
-        </EntityType>
         <EntityType Name="Charity_Member">
           <Key>
             <PropertyRef Name="cId" />
@@ -41,17 +31,37 @@
           <Property Name="oIntro" Type="nvarchar(max)" />
           <Property Name="type" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="ShoppingCart">
+        <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="hId" />
+            <PropertyRef Name="orderId" />
           </Key>
-          <Property Name="hId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="hName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="uId" Type="int" Nullable="false" />
           <Property Name="hPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="hEamil" Type="nvarchar" MaxLength="50" />
           <Property Name="hCarrier" Type="nvarchar(max)" />
           <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="odId" />
+          </Key>
+          <Property Name="odId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderId" Type="int" Nullable="false" />
+          <Property Name="oQty" Type="int" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="cartId" />
+          </Key>
+          <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="oId" Type="int" Nullable="false" />
+          <Property Name="oIntro" Type="nvarchar(max)" />
+          <Property Name="oQty" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -72,9 +82,10 @@
           <Property Name="photo" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="dbktnModelStoreContainer">
-          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Charity_Member" EntityType="Self.Charity_Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -104,7 +115,8 @@
           <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="Charity_Member" EntityType="dbktnModel.Charity_Member" />
           <EntitySet Name="Object" EntityType="dbktnModel.Object" />
-          <EntitySet Name="CartItem" EntityType="dbktnModel.CartItem" />
+          <EntitySet Name="Order" EntityType="dbktnModel.Order" />
+          <EntitySet Name="OrderDetail" EntityType="dbktnModel.OrderDetail" />
           <EntitySet Name="ShoppingCart" EntityType="dbktnModel.ShoppingCart" />
         </EntityContainer>
         <EntityType Name="Charity_Member">
@@ -133,27 +145,37 @@
           <Property Name="oIntro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="CartItem">
+        <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="pId" />
+            <PropertyRef Name="orderId" />
           </Key>
-          <Property Name="pId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="oId" Type="Int32" Nullable="false" />
-          <Property Name="hId" Type="Int32" Nullable="false" />
-          <Property Name="count" Type="Int32" Nullable="false" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="ShoppingCart">
-          <Key>
-            <PropertyRef Name="hId" />
-          </Key>
-          <Property Name="hId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="hName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="uId" Type="Int32" Nullable="false" />
           <Property Name="hPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="hEamil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="hCarrier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="odId" />
+          </Key>
+          <Property Name="odId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="orderId" Type="Int32" Nullable="false" />
+          <Property Name="oQty" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="cartId" />
+          </Key>
+          <Property Name="cartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="oId" Type="Int32" Nullable="false" />
+          <Property Name="oIntro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oQty" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -208,27 +230,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CartItem">
-            <EntityTypeMapping TypeName="dbktnModel.CartItem">
-              <MappingFragment StoreEntitySet="CartItem">
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="hId" ColumnName="hId" />
-                <ScalarProperty Name="oId" ColumnName="oId" />
-                <ScalarProperty Name="pId" ColumnName="pId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShoppingCart">
-            <EntityTypeMapping TypeName="dbktnModel.ShoppingCart">
-              <MappingFragment StoreEntitySet="ShoppingCart">
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="dbktnModel.Order">
+              <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="hCarrier" ColumnName="hCarrier" />
                 <ScalarProperty Name="hEamil" ColumnName="hEamil" />
                 <ScalarProperty Name="hPhone" ColumnName="hPhone" />
                 <ScalarProperty Name="uId" ColumnName="uId" />
                 <ScalarProperty Name="hName" ColumnName="hName" />
-                <ScalarProperty Name="hId" ColumnName="hId" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetail">
+            <EntityTypeMapping TypeName="dbktnModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="oQty" ColumnName="oQty" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+                <ScalarProperty Name="oName" ColumnName="oName" />
+                <ScalarProperty Name="odId" ColumnName="odId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCart">
+            <EntityTypeMapping TypeName="dbktnModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="oQty" ColumnName="oQty" />
+                <ScalarProperty Name="oIntro" ColumnName="oIntro" />
+                <ScalarProperty Name="oId" ColumnName="oId" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="oName" ColumnName="oName" />
+                <ScalarProperty Name="cartId" ColumnName="cartId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

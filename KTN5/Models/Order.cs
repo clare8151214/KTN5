@@ -12,12 +12,14 @@ namespace KTN5.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CartItem
+    public partial class Order
     {
-        public int pId { get; set; }
-        public int oId { get; set; }
-        public int hId { get; set; }
-        public int count { get; set; }
+        public int orderId { get; set; }
+        public string hName { get; set; }
+        public int uId { get; set; }
+        public string hPhone { get; set; }
+        public string hEamil { get; set; }
+        public string hCarrier { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
     }
 }

@@ -12,13 +12,11 @@ namespace KTN5.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ShoppingCart
+    public partial class OrderDetail
     {
-        public int cartId { get; set; }
+        public int odId { get; set; }
         public string oName { get; set; }
-        public int uId { get; set; }
-        public int oId { get; set; }
-        public string oIntro { get; set; }
+        public int orderId { get; set; }
         public Nullable<int> oQty { get; set; }
     }
 }

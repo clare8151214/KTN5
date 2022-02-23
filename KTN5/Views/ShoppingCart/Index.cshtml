@@ -1,0 +1,86 @@
+﻿@model IEnumerable<KTN5.Models.ShoppingCart>
+@{
+    ViewBag.Title = "購物車列表";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>購物車列表</h2>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.oId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oIntro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oQty)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.oId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oIntro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oQty)
+            </td>
+            <td>
+
+                <a href="@Url.Action("ShoppingCartAddQty")?cartId=@item.cartId" class="btn btn-info">+1</a>
+                <a href="@Url.Action("ShoppingCartSubQty")?cartId=@item.cartId" class="btn btn-warning">-1</a>
+                <a href="@Url.Action("ShoppingCartDelete")?cartId=@item.cartId" class="btn btn-danger">刪除此項目</a>
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<hr />
+<h2>聯絡資料</h2>
+<form method="post" action="@Url.Action("Order","Order")">
+    <div class="panel panel-success">
+        <div class="panel-heading">請填寫捐贈資訊</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="hName">捐贈者姓名</label>
+                <input type="text" class="form-control" id="hName" name="hName" required>
+            </div>
+            <div class="form-group">
+                <label for="hPhone">捐贈者電話</label>
+                <input type="text" class="form-control" id="hPhone" name="hPhone" required>
+            </div>
+            <div class="form-group">
+                <label for="hEmail">電子信箱</label>
+                <input type="email" class="form-control" id="hEmail" name="hEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="hCarrier">物資運送方式</label>
+                <input type="text" class="form-control" id="hCarrier" name="hCarrier" required>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="送出">
+            </div>
+        </div>
+    </div>
+</form>
+

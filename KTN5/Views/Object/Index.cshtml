@@ -67,7 +67,7 @@
                 </td>
                 <td>
                     @*@Html.ActionLink("修改", "Edit", new { id = item.oId })*@ 
-                    <a href="#" class="btn btn-primary">加入購物車</a>
+                    <a href="@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=@item.oId" class="btn btn-primary">加入購物車</a>
                 </td>
             </tr>
         }

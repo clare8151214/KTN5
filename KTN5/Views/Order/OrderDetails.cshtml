@@ -1,0 +1,40 @@
+﻿@model IEnumerable<KTN5.Models.OrderDetail>
+@{
+    ViewBag.Title = "捐贈詳情";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>捐贈詳情</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.orderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.oQty)
+        </th>
+   
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.orderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.oQty)
+            </td>
+        </tr>
+    }
+
+</table>
+
+

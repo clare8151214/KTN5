@@ -1,0 +1,55 @@
+﻿@model IEnumerable<KTN5.Models.Order>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>捐贈者清單</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.hName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hEamil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hCarrier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.hName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hEamil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hCarrier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                <a href="@Url.Action("OrderDetails")?orderid=@item.orderId" class="btn btn-info">捐贈詳情</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
