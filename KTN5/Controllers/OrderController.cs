@@ -10,9 +10,13 @@ namespace KTN5.Controllers
     {
         dbktnEntities db = new dbktnEntities();
         // GET: Order
-        public ActionResult Index()
+        public ActionResult Index() //不須會員
         {
-            return View();
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
+            var order = db.Order.OrderByDescending(m => m.orderId).ToList();
+            return View(order);
         }
 
         [Authorize]
@@ -20,6 +24,8 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
+
             var order = db.Order.Where(m => m.uId == result.uId).OrderByDescending(m => m.orderId).ToList();            
             return View(order);
         }
@@ -64,6 +70,9 @@ namespace KTN5.Controllers
         [Authorize]
         public ActionResult OrderDetails(int orderid)
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
             var order = db.OrderDetail.Where(m => m.orderId == orderid).ToList();
             return View(order);
         }

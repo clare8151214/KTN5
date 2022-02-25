@@ -23,6 +23,10 @@ namespace KTN5.Controllers
         // GET: Object
         public ActionResult Index()
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if(result != null)
+                ViewBag.photo = result.photo;
             IEnumerable<Object> objects = null;
             string keyword = Request.Form["txtKeyword"];
             if (string.IsNullOrEmpty(keyword))
@@ -40,6 +44,7 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
             if (isAdmin())
             {
                 IEnumerable<Object> objects = null;
@@ -60,7 +65,7 @@ namespace KTN5.Controllers
                 string keyword = Request.Form["txtKeyword"];
                 if (string.IsNullOrEmpty(keyword))
                 {
-                    objects = db.Object.Where(m => m.cId == charity.cId);
+                    objects = db.Object.Where(m => m.cId == charity.cId);                   
                 }
                 else
                 {
@@ -96,6 +101,7 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
             if (isAdmin() || result.role == "公益單位")
             {             
                 Object obj = db.Object.FirstOrDefault(o => o.oId == id);
@@ -131,6 +137,7 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
             if (isAdmin() || result.role == "公益單位")
             {
                 return View();
@@ -145,7 +152,7 @@ namespace KTN5.Controllers
 
             string uid = User.Identity.Name; //取得當前帳號
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
-
+            ViewBag.photo = result.photo;
             if (result.role == "公益單位")
             {
                 var charity = db.Charity_Member.Where(m => m.uId == result.uId).FirstOrDefault();

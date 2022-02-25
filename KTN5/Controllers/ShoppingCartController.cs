@@ -25,6 +25,7 @@ namespace KTN5.Controllers
         {
             string user = User.Identity.Name;
             var result = db.User.Where(m => m.account == user).FirstOrDefault();
+            ViewBag.photo = result.photo;
             var shoppingCar = db.ShoppingCart.Where(m => m.uId == result.uId).ToList();
             return View(shoppingCar);
         }
@@ -35,6 +36,7 @@ namespace KTN5.Controllers
         {
             string user = User.Identity.Name;
             var result = db.User.Where(m => m.account == user).FirstOrDefault();
+            ViewBag.photo = result.photo;
             var shoppingCar = db.ShoppingCart.Where(m => m.uId == result.uId && m.oId == oId).FirstOrDefault();
             if(shoppingCar != null)
             {

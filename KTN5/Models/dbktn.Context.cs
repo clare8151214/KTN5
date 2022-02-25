@@ -32,5 +32,10 @@ namespace KTN5.Models
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
         public virtual DbSet<Restaurant> Restaurant { get; set; }
+        public virtual DbSet<Donate> Donate { get; set; }
+        public virtual DbSet<Fund> Fund { get; set; }
+        public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<Solution> Solution { get; set; }
+        public virtual DbSet<Sponsor> Sponsor { get; set; }
     }
 }

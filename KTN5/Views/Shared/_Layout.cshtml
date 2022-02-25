@@ -19,26 +19,26 @@
 <body>
     <header class="navbar-header">
         <div class="wrapper">
-            <div class="logo">
-                <img src="~/images/LOGO.png" alt="" width="300px" />
+            <div class="logo">                
+                <a href="@Url.Action("Index","Home")"><img src="~/images/LOGO.png" alt="" width="300px" /></a>
             </div>
             <nav class="navbar-nav">
                 <div class="dropdown">
                     <div class="activity">
                         <a href="#">公益活動<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#">公益活動</a></li>
-                            <li><a href="#">數位發票箱</a></li>
-                            <li><a href="#">愛心捐款</a></li>
+                            <li><a href="#">募資活動</a></li>
+                            <li><a href="#">數位發票箱</a></li>                           
                         </ul>
                     </div>
                     <div class="invoice">
                         <a href="#">公益捐贈<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
                             <li><a href="@Url.Action("Index","Object")">物資捐贈</a></li>
+                            <li><a href="#">愛心捐款</a></li>
                         </ul>
                     </div>
-                    <a href="#">愛心餐廳</a>
+                    <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>
                     <a href="#">捐血地圖</a>
                 </div>
             </nav>

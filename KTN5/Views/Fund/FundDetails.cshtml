@@ -1,0 +1,107 @@
+﻿@model KTN5.Models.FundDetailsView
+@{
+    ViewBag.Title = "FundDetails";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>募資</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            專案圖片
+        </th>
+        <th>
+            專案名稱
+        </th>
+        <th>
+            提案單位
+        </th>
+        <th>
+            累積金額
+        </th>
+        <th>
+            進度:
+        </th>
+        <th>
+            倒數日期:
+        </th>
+        <th>
+            
+        </th>
+    </tr>
+
+   
+    <tr>
+        <td>
+            @if (Model.fPhoto == "")
+            {
+                <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
+            }
+            else
+            {
+                <img src="~/FundPhotos/@Model.fPhoto" width="100" height="100" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.fName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.cName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.accMoney)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.progress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.countDown)
+        </td>
+            
+    </tr>
+</table>
+
+<hr />
+
+<table id="showSolutions" class="table">
+
+</table>
+<script>
+    $(document).ready(function () {
+
+        var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
+        loadData();
+        function loadData() {
+            $.ajax({
+                url: apiurl,
+                type: 'GET',
+                success: function (data) {
+                    $("#showSolutions").empty();
+                    console.log(data);
+                    $("#showSolutions").append
+                        ("<tbody><tr><th>方案圖片</th><th>贊助金額</th><th>方案內容</th><th>贊助按鈕</th></tr>");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#showSolutions").append(
+                            "<tr>" +
+                            "<td>" + data[i].sPhoto + "</td>" +
+                            "<td>" + data[i].sMoney + "</td>" +
+                            "<td>" + data[i].intro + "</td>" +
+                            "<td><input type='button' value='選取' id='btnSelect" + i +
+                            "' class='btn btn-info' /></td>" +
+                            "</tr>"
+
+                        );
+
+                    }
+                    $("#showSolutions").append("</tbody>");
+                }
+            });
+        }
+
+
+    });
+
+
+
+</script>

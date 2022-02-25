@@ -12,6 +12,11 @@
         <EntityTypeShape EntityType="dbktnModel.OrderDetail" Width="1.5" PointX="8.375" PointY="3.875" />
         <EntityTypeShape EntityType="dbktnModel.ShoppingCart" Width="1.5" PointX="4.5" PointY="3.5" />
         <EntityTypeShape EntityType="dbktnModel.Restaurant" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbktnModel.Donate" Width="1.5" PointX="3.875" PointY="6.5" />
+        <EntityTypeShape EntityType="dbktnModel.Fund" Width="1.5" PointX="5.875" PointY="6.5" />
+        <EntityTypeShape EntityType="dbktnModel.Invoice" Width="1.5" PointX="0.875" PointY="7.5" />
+        <EntityTypeShape EntityType="dbktnModel.Solution" Width="1.5" PointX="7.875" PointY="6.5" />
+        <EntityTypeShape EntityType="dbktnModel.Sponsor" Width="1.5" PointX="8.875" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

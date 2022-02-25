@@ -9,13 +9,15 @@ namespace KTN5.Controllers
 {
     public class RestaurantController : Controller
     {
+        dbktnEntities db = new dbktnEntities();
         // GET: Restaurant
         public ActionResult List()
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = result.photo;
             string keyword = Request.Form["txtKeyword"];
             string area = Request.Form["txtArea"];
-            ViewBag.ff = area;
-            ViewBag.kk = keyword;
             List<Restaurant> list = null;
             if (string.IsNullOrEmpty(keyword) && string.IsNullOrEmpty(area))
                 list = (new RestaurantFactory()).queryAll();

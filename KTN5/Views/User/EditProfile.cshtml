@@ -2,69 +2,90 @@
 
 @{
     ViewBag.Title = "EditProfile";
-    Layout = "~/Views/Shared/Navbar.cshtml.cshtml";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+    ViewBag.photo = Model.photo;
 }
 
-<h2>編輯個人檔案</h2>
 
-
-@using (Html.BeginForm("EditProfile", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>User</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    
-    <div class="form-group">
-        @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.photo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })*@
-            <input type="file" name="photo" />
-        </div>
-    </div>
-
-   
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="送出" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+@section Styles{
+    <link href="~/Content/User-info.css" rel="stylesheet" />
 }
+<section class="user-info">
+    <div class="container p-5">
+        <div class="personal-information">
+            <div class="info-title">個人資訊</div>
+            <br>
 
-<div>
-    @Html.ActionLink("回首頁", "Index","Home")
-</div>
+            <form class="personal-info" action="@Url.Action("EditProfile","User")" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+                <div class="d-flex">
+                    <div class="col-6 text-center">
+
+                        <div class="personal-img">
+
+                            @if (ViewBag.photo == null)
+                            {
+                                <img src="~/images/User_icon.svg" id="user-img" width="250" height="250" style="border-radius: 50%">
+                            }
+                            else
+                            {
+                                <img src="~/UserPhotos/@ViewBag.photo" id="user-img" width="250" height="250" style="border-radius: 50%">
+
+                            }
+
+                        </div>
+                        <br>
+                        <div class="personal-wrap">
+                            <div class="personal-btn">
+                                <label class="upload-btn" for="upload"><i class="bi bi-camera"></i>上傳照片</label>
+                                <input type="file" id="upload" name="photo" onchange="previewFile()"><br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="personal-group1">
+                            <label for="u-name">姓名</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="text" class="form-control" name="name" value="" placeholder="姓名" required><br>
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="personal-group1">
+                            <label for="u-phone">電話</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="tel" class="form-control" name="phone" value="" placeholder="電話號碼" maxlength="10">
+                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                            <br>
+
+                        </div>
+
+                        <div class="personal-group1">
+                            <label for="u-address">地址</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="text" class="form-control" name="address" value="" placeholder="地址" maxlength=30><br>
+                            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                        </div>
+
+                        <br>
+                        <div class="personal-line">
+                            <input type="submit" class="personal-save btn" value="儲存">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/User-info.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

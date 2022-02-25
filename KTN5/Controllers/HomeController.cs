@@ -15,11 +15,12 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var user = db.User.Where(m => m.account == uid).FirstOrDefault();
-
+            
             if (user != null)
             {
                 ViewBag.Name = user.name;
                 ViewBag.Role = user.role;
+                ViewBag.photo = user.photo;
             }
             return View();
         }

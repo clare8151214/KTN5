@@ -72,6 +72,18 @@ CREATE TABLE [dbo].[OrderDetail] (
 );
 GO
 
+CREATE TABLE [dbo].[Restaurant] (
+    [rId] int IDENTITY(1,1) NOT NULL,
+	[rName] nvarchar(255) NULL,
+    [rAddress] nvarchar(255) NULL,
+    [rPhone] nvarchar(255) NULL,
+	[startTime] time(0) NULL,
+	[endTime] time(0) NULL,
+	PRIMARY KEY CLUSTERED ([rId] ASC)
+);
+GO
+
+
 
 --CREATE TABLE [dbo].[CartItem] (
 --    [pId] int IDENTITY(1,1) NOT NULL,

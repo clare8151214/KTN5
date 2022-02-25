@@ -4,75 +4,83 @@
     ViewBag.Title = "編輯公益單位資料";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
+@section Styles{
+    <link href="~/Content/User-info.css" rel="stylesheet" />
+}
 
-<h2>編輯公益單位資料</h2>
+<section class="user-info">
+    <div class="container p-5">
+        <div class="personal-information">
+            <div class="info-title">公益單位資訊</div>
+            <br>
 
+            <form class="personal-info" action="@Url.Action("Edit")" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div class="d-flex">
+                    <div class="col-6 text-center">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+                        <div class="personal-img">
+                            <img src="~/images/Charity_icon.svg" id="user-img" width="250" height="250" style="border-radius: 50%">
+                        </div>
+                        <br>
+                        <div class="personal-wrap">
+                            <div class="personal-btn">
+                                <label class="upload-btn" for="upload"><i class="bi bi-camera"></i>上傳照片</label>
+                                <input type="file" name="photo" id="upload" onchange="previewFile()"><br>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.c_name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.c_name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.c_address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.c_address, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="col-6">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.c_phone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.c_phone, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="personal-group1">
+                            <label for="c-name">公益單位</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="text" class="form-control" name="c_name" value="@Model.c_name" placeholder="公益單位名稱" readonly required><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.c_pname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.c_pname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.c_pname, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="personal-group1">
+                            <label for="c-name">負責人</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="text" class="form-control" name="c_pname" value="@Model.c_pname" placeholder="姓名" required><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.photo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="personal-group1">
+                            <label for="c-phone">電話</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="tel" class="form-control" name="c_phone" value="@Model.c_phone" placeholder="電話號碼" maxlength="10"><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.heart_code, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.heart_code, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.heart_code, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="personal-group1">
+                            <label for="c-address">地址</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="text" class="form-control" name="c_address" value="@Model.c_address" placeholder="地址" maxlength=30><br>
+                        </div>
 
+                        <div class="personal-group1">
+                            <label for="c-name">愛心碼</label>
+                        </div>
+                        <div class="personal-group2">
+                            <input type="number" class="form-control" name="heart_code" value="@Model.heart_code" placeholder="愛心碼" maxlength="8"><br>
+                        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="儲存" class="btn btn-default" />
-            </div>
+                        <br>
+                        <div class="personal-line">
+                            <input type="submit" class="personal-save btn" value="儲存">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
-}
+</section>
 
 
 

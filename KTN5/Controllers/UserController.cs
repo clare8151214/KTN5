@@ -261,7 +261,7 @@ namespace KTN5.Controllers
             else if (emailFor == "ResetPassword")
             {
                 subject = "reset Password";
-                body = "<br/><br/>reset Password" + "<br/><br/><a href=" + link + ">Reset Password link</a>";
+                body = "<br/><br/>reset Password" + "<br/><br/><a href=" + link + ">重設密碼連結</a>";
             }
 
             var smtp = new SmtpClient
@@ -372,6 +372,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             dbktnEntities db = new dbktnEntities();
             var personalProfile = db.User.Where(m => m.account == uid).FirstOrDefault();
+            ViewBag.photo = personalProfile.photo;
             return View(personalProfile);
         }
         [HttpPost]
@@ -412,6 +413,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             dbktnEntities db = new dbktnEntities();
             var personalProfile = db.User.Where(m => m.account == uid).FirstOrDefault();
+            
             return View(personalProfile);
         }
         [HttpPost]

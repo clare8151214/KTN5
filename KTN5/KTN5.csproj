@@ -50,6 +50,13 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -61,6 +68,12 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -119,15 +132,18 @@
     <Content Include="Content\oPhoto\2.jpg" />
     <Content Include="Content\practice.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\User-info.css" />
     <Content Include="Global.asax" />
     <Content Include="images\1.jpg" />
     <Content Include="images\2.jpg" />
     <Content Include="images\3.jpg" />
     <Content Include="images\about-us.jpg" />
+    <Content Include="images\Charity_icon.svg" />
     <Content Include="images\Facebook_icon.png" />
     <Content Include="images\Facebook_icon.svg" />
     <Content Include="images\Google_icon.png" />
     <Content Include="images\Google_icon.svg" />
+    <Content Include="images\Head_photo.jpg" />
     <Content Include="images\homepage.jpg" />
     <Content Include="images\icon\icon-01.svg" />
     <Content Include="images\icon\icon-02.svg" />
@@ -138,9 +154,11 @@
     <Content Include="images\icon\icon-yellow-03.svg" />
     <Content Include="images\icon\icon-yellow-04.svg" />
     <Content Include="images\invoice-02.jpg" />
+    <Content Include="images\Lock_icon.svg" />
     <Content Include="images\LOGO-02.png" />
     <Content Include="images\LOGO.png" />
     <Content Include="images\no.jpg" />
+    <Content Include="images\User_icon.svg" />
     <Content Include="Models\dbktn.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>dbktn.edmx</DependentUpon>
@@ -195,17 +213,21 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\practice.js" />
     <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\User-info.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CharityController.cs" />
+    <Compile Include="Controllers\FundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\SolutionApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
@@ -229,13 +251,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbktn.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Donate.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Extended\Charity_Member.cs" />
+    <Compile Include="Models\Extended\Fund.cs" />
     <Compile Include="Models\Extended\Object.cs" />
     <Compile Include="Models\Extended\Order.cs" />
     <Compile Include="Models\Extended\OrderDetail.cs" />
     <Compile Include="Models\Extended\Restaurant.cs" />
     <Compile Include="Models\Extended\ShoppingCart.cs" />
     <Compile Include="Models\Extended\User.cs" />
+    <Compile Include="Models\Fund.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FundDetailsView.cs" />
+    <Compile Include="Models\FundsView.cs" />
+    <Compile Include="Models\Invoice.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\Object.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
@@ -252,6 +286,12 @@
     </Compile>
     <Compile Include="Models\RestaurantFactory.cs" />
     <Compile Include="Models\ShoppingCart.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Solution.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sponsor.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -290,6 +330,9 @@
     <Content Include="Views\Restaurant\List.cshtml" />
     <Content Include="Views\Restaurant\Create.cshtml" />
     <Content Include="Views\Restaurant\Edit.cshtml" />
+    <Content Include="Views\Fund\Create.cshtml" />
+    <Content Include="Views\Fund\Index.cshtml" />
+    <Content Include="Views\Fund\FundDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -299,6 +342,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FundPhotos\" />
     <Folder Include="UserPhotos\" />
     <Folder Include="Views\Mail\" />
   </ItemGroup>

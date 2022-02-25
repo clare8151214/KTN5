@@ -19,6 +19,42 @@
           <Property Name="created_at" Type="datetime" />
           <Property Name="uId" Type="int" />
         </EntityType>
+        <EntityType Name="Donate">
+          <Key>
+            <PropertyRef Name="dId" />
+          </Key>
+          <Property Name="dId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cId" Type="int" Nullable="false" />
+          <Property Name="uId" Type="int" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="money" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fund">
+          <Key>
+            <PropertyRef Name="fId" />
+          </Key>
+          <Property Name="fId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cId" Type="int" />
+          <Property Name="fText" Type="nvarchar(max)" />
+          <Property Name="targetMoney" Type="money" />
+          <Property Name="accMoney" Type="money" />
+          <Property Name="startTime" Type="datetime" />
+          <Property Name="endTime" Type="datetime" />
+          <Property Name="trueName" Type="nvarchar" MaxLength="50" />
+          <Property Name="fPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="fEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="fPhoto" Type="nvarchar" MaxLength="255" />
+          <Property Name="fName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="iId" />
+          </Key>
+          <Property Name="iId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cId" Type="int" Nullable="false" />
+          <Property Name="targetNumber" Type="bigint" Nullable="false" />
+          <Property Name="accNumber" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Object">
           <Key>
             <PropertyRef Name="oId" />
@@ -74,6 +110,27 @@
           <Property Name="oIntro" Type="nvarchar(max)" />
           <Property Name="oQty" Type="int" />
         </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="sId" />
+          </Key>
+          <Property Name="sId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fId" Type="int" Nullable="false" />
+          <Property Name="sMoney" Type="money" />
+          <Property Name="intro" Type="nvarchar(max)" />
+          <Property Name="sName" Type="nvarchar" MaxLength="50" />
+          <Property Name="sPhoto" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'dbktn.dbo.Sponsor' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="Sponsor">
+          <Key>
+            <PropertyRef Name="uId" />
+            <PropertyRef Name="sId" />
+          </Key>
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="sId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="uId" />
@@ -94,12 +151,22 @@
         </EntityType>
         <EntityContainer Name="dbktnModelStoreContainer">
           <EntitySet Name="Charity_Member" EntityType="Self.Charity_Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Donate" EntityType="Self.Donate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fund" EntityType="Self.Fund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sponsor" EntityType="Self.Sponsor" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Sponsor].[uId] AS [uId], 
+    [Sponsor].[sId] AS [sId]
+    FROM [dbo].[Sponsor] AS [Sponsor]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -131,6 +198,11 @@
           <EntitySet Name="OrderDetail" EntityType="dbktnModel.OrderDetail" />
           <EntitySet Name="ShoppingCart" EntityType="dbktnModel.ShoppingCart" />
           <EntitySet Name="Restaurant" EntityType="dbktnModel.Restaurant" />
+          <EntitySet Name="Donate" EntityType="dbktnModel.Donate" />
+          <EntitySet Name="Fund" EntityType="dbktnModel.Fund" />
+          <EntitySet Name="Invoice" EntityType="dbktnModel.Invoice" />
+          <EntitySet Name="Solution" EntityType="dbktnModel.Solution" />
+          <EntitySet Name="Sponsor" EntityType="dbktnModel.Sponsor" />
         </EntityContainer>
         <EntityType Name="Charity_Member">
           <Key>
@@ -200,6 +272,61 @@
           <Property Name="rPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="startTime" Type="Time" Precision="0" />
           <Property Name="endTime" Type="Time" Precision="0" />
+        </EntityType>
+        <EntityType Name="Donate">
+          <Key>
+            <PropertyRef Name="dId" />
+          </Key>
+          <Property Name="dId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cId" Type="Int32" Nullable="false" />
+          <Property Name="uId" Type="Int32" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Fund">
+          <Key>
+            <PropertyRef Name="fId" />
+          </Key>
+          <Property Name="fId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cId" Type="Int32" />
+          <Property Name="fText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="targetMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="accMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="startTime" Type="DateTime" Precision="3" />
+          <Property Name="endTime" Type="DateTime" Precision="3" />
+          <Property Name="trueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fPhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="fName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="iId" />
+          </Key>
+          <Property Name="iId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cId" Type="Int32" Nullable="false" />
+          <Property Name="targetNumber" Type="Int64" Nullable="false" />
+          <Property Name="accNumber" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Solution">
+          <Key>
+            <PropertyRef Name="sId" />
+          </Key>
+          <Property Name="sId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fId" Type="Int32" Nullable="false" />
+          <Property Name="sMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="intro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sPhoto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Sponsor">
+          <Key>
+            <PropertyRef Name="uId" />
+            <PropertyRef Name="sId" />
+          </Key>
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="sId" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -298,6 +425,65 @@
                 <ScalarProperty Name="rAddress" ColumnName="rAddress" />
                 <ScalarProperty Name="rName" ColumnName="rName" />
                 <ScalarProperty Name="rId" ColumnName="rId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Donate">
+            <EntityTypeMapping TypeName="dbktnModel.Donate">
+              <MappingFragment StoreEntitySet="Donate">
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="cId" ColumnName="cId" />
+                <ScalarProperty Name="dId" ColumnName="dId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fund">
+            <EntityTypeMapping TypeName="dbktnModel.Fund">
+              <MappingFragment StoreEntitySet="Fund">
+                <ScalarProperty Name="fName" ColumnName="fName" />
+                <ScalarProperty Name="fPhoto" ColumnName="fPhoto" />
+                <ScalarProperty Name="fEmail" ColumnName="fEmail" />
+                <ScalarProperty Name="fPhone" ColumnName="fPhone" />
+                <ScalarProperty Name="trueName" ColumnName="trueName" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="accMoney" ColumnName="accMoney" />
+                <ScalarProperty Name="targetMoney" ColumnName="targetMoney" />
+                <ScalarProperty Name="fText" ColumnName="fText" />
+                <ScalarProperty Name="cId" ColumnName="cId" />
+                <ScalarProperty Name="fId" ColumnName="fId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoice">
+            <EntityTypeMapping TypeName="dbktnModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="accNumber" ColumnName="accNumber" />
+                <ScalarProperty Name="targetNumber" ColumnName="targetNumber" />
+                <ScalarProperty Name="cId" ColumnName="cId" />
+                <ScalarProperty Name="iId" ColumnName="iId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Solution">
+            <EntityTypeMapping TypeName="dbktnModel.Solution">
+              <MappingFragment StoreEntitySet="Solution">
+                <ScalarProperty Name="sPhoto" ColumnName="sPhoto" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="intro" ColumnName="intro" />
+                <ScalarProperty Name="sMoney" ColumnName="sMoney" />
+                <ScalarProperty Name="fId" ColumnName="fId" />
+                <ScalarProperty Name="sId" ColumnName="sId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sponsor">
+            <EntityTypeMapping TypeName="dbktnModel.Sponsor">
+              <MappingFragment StoreEntitySet="Sponsor">
+                <ScalarProperty Name="sId" ColumnName="sId" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
