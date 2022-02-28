@@ -1,0 +1,96 @@
+.Object-Create{
+    background-color: #e0d7ff;
+}
+
+.info-title{
+    color: #5f1985;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.create-information{
+    padding:50px 50px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.create-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    margin: 0 80px;
+}
+
+.create-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 150px;
+}
+    
+input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    top: 10px;
+    left: 8px;
+    font-size: 15px;
+    color: #b8b8b8;
+}
+
+.create-btn {
+    position: relative;
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: #905ca2;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.upload-btn:hover{
+    background-color: #5f1985;
+    color:white;
+}
+
+.create-group1{
+    font-weight:600;
+    font-size:large;
+    padding-bottom: 5px;
+    color:#5f1985;  
+}
+
+.create-group2 {
+    width: 500px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif,'Noto Sans TC', sans-serif;
+}
+
+.create-line{
+    padding-left:410px;
+    padding-top: 10px;
+}
+
+.create-save {
+    font-size: 16px;
+    font-weight: 300;
+    padding: 14px 40px;
+    width: 120px;
+    border: none;
+    border-radius: 30px;
+    background: #905ca2;
+    margin-top: 30px;
+    color:white;
+    font-weight:bold;
+}
+
+.create-save:hover {
+    background-color: #5f1985;
+    color:white;
+}

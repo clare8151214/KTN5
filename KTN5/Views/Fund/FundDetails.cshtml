@@ -68,40 +68,35 @@
 
 </table>
 <script>
-    $(document).ready(function () {
 
-        var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
-        loadData();
-        function loadData() {
-            $.ajax({
-                url: apiurl,
-                type: 'GET',
-                success: function (data) {
-                    $("#showSolutions").empty();
-                    console.log(data);
-                    $("#showSolutions").append
-                        ("<tbody><tr><th>方案圖片</th><th>贊助金額</th><th>方案內容</th><th>贊助按鈕</th></tr>");
-                    for (var i = 0; i < data.length; i++) {
-                        $("#showSolutions").append(
-                            "<tr>" +
-                            "<td>" + data[i].sPhoto + "</td>" +
-                            "<td>" + data[i].sMoney + "</td>" +
-                            "<td>" + data[i].intro + "</td>" +
-                            "<td><input type='button' value='選取' id='btnSelect" + i +
-                            "' class='btn btn-info' /></td>" +
-                            "</tr>"
 
-                        );
+    var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
+    loadData();
+    function loadData() {
+        $.ajax({
+            url: apiurl,
+            type: 'GET',
+            success: function (data) {
+                $("#showSolutions").empty();
+                console.log(data);
+                $("#showSolutions").append
+                    ("<tbody><tr><th>方案圖片</th><th>贊助金額</th><th>方案內容</th><th>贊助按鈕</th></tr>");
+                for (var i = 0; i < data.length; i++) {
+                    $("#showSolutions").append(
+                        "<tr>" +
+                        "<td>" + data[i].sPhoto + "</td>" +
+                        "<td>" + data[i].sMoney + "</td>" +
+                        "<td>" + data[i].intro + "</td>" +
+                        "<td><button type='button' value='選取' id='btnSelect" + data[i].sId +
+                        "' class='btn btn-info'><a href='Sponsor?id=" + data[i].sId + "'></a></button></td>" +
+                        "</tr>"
 
-                    }
-                    $("#showSolutions").append("</tbody>");
+                    );
+                    
                 }
-            });
-        }
-
-
-    });
-
-
+                $("#showSolutions").append("</tbody>");
+            }
+        });
+    }
 
 </script>

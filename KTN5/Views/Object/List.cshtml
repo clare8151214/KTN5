@@ -1,103 +1,98 @@
 ﻿@model IEnumerable<KTN5.Models.Object>
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "物資管理";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
-<h2>物資列表</h2>
-@using (Html.BeginForm())
-{
-    @:關鍵字 <input type="text" name="txtKeyword" />
-    <input type="submit" value="查詢" />
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="~/Content/Object-Store.css" rel="stylesheet" />
 }
 
-<br />
-<p>
-    @Html.ActionLink("新增物資", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            序號
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oPhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oIntro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
-        </th>
-        <th></th>
-    </tr>
-
-    @{
-        if (Model == null)
-        {
-            <tr>
-                <td>您尚未提出需求物資</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-
+<script>
+    function Delete(id) {
+        var r = confirm("確定要刪除嗎?");
+        if (r == true) {
+            this.location.href = '@Url.Action("Delete")?id=' + id;
         }
-        else
-        {
-            int count = 0;
-            foreach (var item in Model)
-            {
-                count++;
-                <tr>
-                    <td>
-                        @count
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.oName)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.oPhoto)*@
-                        @if (item.oPhoto == "")
-                        {
-                            <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
-                        }
-                        else
-                        {
-                            <img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" />
-                        }
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.oNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.oIntro)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.type)
-                    </td>
-                    <td>
-                        @Html.ActionLink("修改", "Edit", new { id = item.oId }) |
-                        @Html.ActionLink("刪除", "Delete", "Object", new { id = item.oId },
-                            new { onclick = "return confirm('確定要刪除嗎?')" })
-                    </td>
-                </tr>
-            }
-
-
-
-        }
-
     }
-</table>
+
+</script>
+
+
+<section class="object-store">
+    <div class="container p-5">
+
+        <div class="d-flex">
+            <div class="col-6" style="height: 60px;">
+                <h3 class="mb-3" style="font-weight:bold; color: #5f1985;">物資管理</h3>
+            </div>
+            <div class="col-6" style="height: 60px;">
+
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="col-6" style="height: 60px;">
+                <div class="wrap">
+                    <div class="search">
+                        @using (Html.BeginForm())
+                        {
+                            <input class="search-bar" type="text" name="txtKeyword" id="search" placeholder="搜尋">
+                            <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-6" style="height: 60px;">
+                <div class="det-line">
+                    <button type="button" class="create-btn" onClick="location.href = '@Url.Action("Create")'">
+                        <i class="fa-solid fa-plus"></i>&nbsp;建立
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <table class="table align-middle">
+                <thead class="table-dark">
+                    <tr class="table-head">
+                        <th scope="col">編號</th>
+                        <th scope="col">品名</th>
+                        <th scope="col">照片</th>
+                        <th scope="col">需求數量</th>
+                        <th scope="col">需求說明</th>
+                        <th scope="col">類別</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            count++;
+
+                            <tr class="list">
+                                <th scope="row" class="o-id">@count</th>
+                                <td class="o-Name">@item.oName</td>
+                                <td><input type="image" img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" alt=""></td>
+                                <td class="o-Number">@item.oNumber</td>
+                                <td class="o-Intro">@item.oIntro</td>
+                                <td class="o-type">@item.type</td>
+                                <td class="o-btn"><button type="button" class="update-btn" onclick="location.href = '@Url.Action("Edit")?id=@item.oId'">編輯</button></td>
+                                <td class="o-btn"><button type="button" class="delete-btn" onclick="Delete(@item.oId)">刪除</button></td>
+                            </tr>
+
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+
+<script src="~/Scripts/Object-Create.js"></script>

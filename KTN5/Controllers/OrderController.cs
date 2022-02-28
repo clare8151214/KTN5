@@ -9,7 +9,22 @@ namespace KTN5.Controllers
     public class OrderController : Controller
     {
         dbktnEntities db = new dbktnEntities();
+        public void setCartNumber() //取出當前使用者購物車數量
+        {
+            string user = User.Identity.Name;
+            var result = db.User.Where(m => m.account == user).FirstOrDefault();
+            var getCart = db.ShoppingCart.Where(m => m.uId == result.uId).ToList();
+            int? quantity = 0;
+            foreach (var item in getCart)
+            {
+                quantity += item.oQty;
+            }
+
+            Session["Cart"] = quantity;
+            Session.Timeout = 50;
+        }
         // GET: Order
+
         public ActionResult Index() //不須會員
         {
             string uid = User.Identity.Name;
@@ -63,7 +78,7 @@ namespace KTN5.Controllers
             db.OrderDetail.AddRange(orderDetails);
             db.ShoppingCart.RemoveRange(shoppingCart);
             db.SaveChanges();
-
+            setCartNumber();
             return RedirectToAction("List");
         }
 

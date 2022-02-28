@@ -12,13 +12,21 @@ namespace KTN5.Controllers
     {
         dbktnEntities db = new dbktnEntities();
         // GET: ShoppingCart
-        //[NonAction]
-        //public int uid() //取出當前使用者的id
-        //{
-        //    string user = User.Identity.Name;
-        //    var result = db.User.Where(m => m.account == user).FirstOrDefault();
-        //    return result.uId;
-        //}
+        [NonAction]
+        public void setCartNumber() //取出當前使用者購物車數量
+        {
+            string user = User.Identity.Name;
+            var result = db.User.Where(m => m.account == user).FirstOrDefault();
+            var getCart = db.ShoppingCart.Where(m => m.uId == result.uId).ToList();
+            int? quantity = 0;
+            foreach (var item in getCart)
+            {
+                quantity += item.oQty;
+            }
+
+            Session["Cart"] = quantity;
+            Session.Timeout = 50;
+        }
 
         [Authorize]
         public ActionResult Index()
@@ -30,13 +38,12 @@ namespace KTN5.Controllers
             return View(shoppingCar);
         }
 
-
-        [Authorize]
+        [Authorize]        
         public ActionResult AddObjectToShoppingCart(int oId)
         {
             string user = User.Identity.Name;
             var result = db.User.Where(m => m.account == user).FirstOrDefault();
-            ViewBag.photo = result.photo;
+            ViewBag.photo = result.photo;            
             var shoppingCar = db.ShoppingCart.Where(m => m.uId == result.uId && m.oId == oId).FirstOrDefault();
             if(shoppingCar != null)
             {
@@ -54,30 +61,36 @@ namespace KTN5.Controllers
                 db.ShoppingCart.Add(newCart);
             }
             db.SaveChanges();
-            return RedirectToAction("Index");
+            setCartNumber();
+            return RedirectToAction("Index","Object");
         }
 
         [Authorize]
         public ActionResult ShoppingCartDelete(int cartId)
         {
+
             var shoppingCar = db.ShoppingCart.Where(m => m.cartId == cartId).FirstOrDefault();
             db.ShoppingCart.Remove(shoppingCar);
             db.SaveChanges();
+            setCartNumber();
             return RedirectToAction("Index");
         }
 
         [Authorize]
         public ActionResult ShoppingCartAddQty(int cartId)
         {
+            
             var shoppingCar = db.ShoppingCart.Where(m => m.cartId == cartId).FirstOrDefault();
             shoppingCar.oQty += 1;
             db.SaveChanges();
+            setCartNumber();
             return RedirectToAction("Index");
         }
 
         [Authorize]
         public ActionResult ShoppingCartSubQty(int cartId)
         {
+
             var shoppingCar = db.ShoppingCart.Where(m => m.cartId == cartId).FirstOrDefault();
             shoppingCar.oQty -= 1;
             if(shoppingCar.oQty == 0)
@@ -85,6 +98,7 @@ namespace KTN5.Controllers
                 db.ShoppingCart.Remove(shoppingCar);
             }
             db.SaveChanges();
+            setCartNumber();
             return RedirectToAction("Index");
         }
 

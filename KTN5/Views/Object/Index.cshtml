@@ -1,75 +1,238 @@
-﻿@model IEnumerable<KTN5.Models.Object>
+﻿@model IEnumerable<KTN5.Models.ObjectIndexView>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "物資捐贈";
     Layout = "~/Views/Shared/Navbar.cshtml";
+    int count = 0;
+}
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="~/Content/Object-FrontPage.css" rel="stylesheet" />
 }
 
-<h2>物資列表</h2>
-@using (Html.BeginForm())
-{
-    @:關鍵字 <input type="text" name="txtKeyword" />
-    <input type="submit" value="查詢" />
-}
+<script>
 
-<br />
-<p>
-    @Html.ActionLink("新增物資", "Create")
-</p>
-<table class="table">
-    <tr>
-     
-        <th>
-            @Html.DisplayNameFor(model => model.oName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oPhoto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oIntro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.type)
-        </th>
-        <th></th>
-    </tr>
-
-    @{
-        
-        foreach (var item in Model)
-        {           
-            <tr>              
-                <td>
-                    @Html.DisplayFor(modelItem => item.oName)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.oPhoto)*@
-                    @if (item.oPhoto == "")
-                    {
-                        <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
-                    }
-                    else
-                    {
-                        <img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" />
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.oNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.oIntro)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.type)
-                </td>
-                <td>
-                    @*@Html.ActionLink("修改", "Edit", new { id = item.oId })*@ 
-                    <a href="@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=@item.oId" class="btn btn-primary">加入購物車</a>
-                </td>
-            </tr>
-        }
+    function fnAdd(id) {
+        var apiurl = '@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=' + id;
+        @*location.href='@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=@item.oId'*@
+        $.ajax({
+            url: apiurl,
+            type: 'POST',
+            data: { oId: id },
+            success: function (result) {
+                alert("成功");
+                
+            }
+        });
     }
-</table>
+</script>
+
+
+<section class="Object-FP" style="outline: 1px solid red;">
+    <div class="container p-5">
+        <div class="d-flex justify-content-evenly">
+            <div class="text-center">
+                <img src="~/images/Object_benner.jpg" width="1225px" alt="">
+            </div>
+        </div>
+
+        <section class="Donations">
+            <div class="container p-5">
+                <div class="d-flex flex-column">
+                    <!-- <h3><img src="images/LOGO-02.png" alt="" class="me-2" width="45px">物資類別</img></h3> -->
+                    <p class="text-center mb-5"></p>
+                    <div class="d-flex justify-content-center">
+
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objA" id="objA" onclick="location.href='@Url.Action("Index",new { otype="文具" })'">
+                                        <div class="don-btn">
+                                            <i class="fa-solid fa-pencil fa-1px"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">文具</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objB" id="objB" onclick="location.href='@Url.Action("Index",new { otype="衛生" })'">
+                                        <div class="don-btn">
+                                            <i class="fa-solid fa-toilet-paper fa-1px"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">衛生</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objC" id="objC" onclick="location.href='@Url.Action("Index",new { otype="食品" })'">
+                                        <div class="don-btn">
+                                            <i class="fa-solid fa-apple-whole fa-1px"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">食品</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objD" id="objD" onclick="location.href='@Url.Action("Index",new { otype="電器" })'">
+                                        <div class="don-btn">
+                                            <i class="fa-solid fa-plug fa-1px"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">電器</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objE" id="objE" onclick="location.href='@Url.Action("Index",new { otype="醫療" })'">
+                                        <div class="don-btn">
+                                            <i class="fa-solid fa-suitcase-medical fa-1px"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">醫療</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="icon mb-3">
+                                    <button class="donation-objF" id="objF" onclick="location.href='@Url.Action("Index")'">
+                                        <div class="don-btn">
+                                            <i class="bi bi-box2-heart-fill"></i>
+                                            <div class="don-font">
+                                                <h5 style="font-weight: 700;">其他</h5>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="object-all">
+            <div class="container p-5">
+                <div class="d-flex row justify-content-center">
+                    <!-- Card -->
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-4 d-flex justify-content-center">
+                            <div class="mb-3">
+                                <div class="card" style="width: 21rem">
+                                    <a href="@Url.Action("ObjectDetail")?oId=@item.oId" style="width: 200px; margin: auto;">
+                                        <img src="~/Content/oPhoto/@item.oPhoto" style="width: 200px;">
+                                    </a>
+                                    <div class="card-body">
+                                        <div class="donation-group1">
+                                            <label>@Html.DisplayFor(modelItem => item.c_name)</label>
+                                        </div>
+
+                                        <div class="donation-group2">
+                                            <a href="@Url.Action("ObjectDetail")?oId=@item.oId" style="text-decoration:none;">@Html.DisplayFor(modelItem => item.oName)</a>
+                                        </div>
+
+                                        <div class="donation-line">
+                                            <button class="donation-save btn"  onclick="location.href='@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=@item.oId'">
+                                                <i class="bi bi-basket2-fill"></i>&nbsp;加入捐贈籃
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        count++;
+                        if (count % 3 == 0)
+                        {
+                            <div style="height: 100px;"></div>
+                        }
+                    }
+
+
+
+
+                    @*<div class="col-4 d-flex justify-content-center">
+                            <div class="mb-3">
+                                <div class="card" style="width: 21rem">
+                                    <a href="Object-details.html" style="width: 200px; margin: auto;">
+                                        <img src="images/衛生_成人紙尿褲.jpg" style="width: 200px;">
+                                    </a>
+                                    <div class="card-body">
+                                        <div class="donation-group1">
+                                            <label>社團法人台灣樂知公益慈善協會</label>
+                                        </div>
+
+                                        <div class="donation-group2">
+                                            <a href="Object-details.html" style="text-decoration:none;">成人紙尿褲</a>
+                                        </div>
+
+                                        <div class="donation-line">
+                                            <button class="donation-save btn">
+                                                <i class="bi bi-basket2-fill"></i>&nbsp;加入捐贈籃
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-4 d-flex justify-content-center">
+                            <div class="mb-3">
+                                <div class="card" style="width: 21rem">
+                                    <a href="Object-details.html" style="width: 200px; margin: auto;">
+                                        <img src="images/食品_純生乳奶粉.jpg" style="width: 200px;">
+                                    </a>
+                                    <div class="card-body">
+                                        <div class="donation-group1">
+                                            <label>南高雄家扶中心</label>
+                                        </div>
+
+                                        <div class="donation-group2">
+                                            <a href="Object-details.html" style="text-decoration:none;">純生乳奶粉</a>
+                                        </div>
+
+                                        <div class="donation-line">
+                                            <button class="donation-save btn">
+                                                <i class="bi bi-basket2-fill"></i>&nbsp;加入捐贈籃
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+

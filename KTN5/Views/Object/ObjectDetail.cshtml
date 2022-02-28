@@ -1,0 +1,64 @@
+﻿@model KTN5.Models.ObjectIndexView
+
+@{
+    ViewBag.Title = "ObjectDetail";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Object-details.css" rel="stylesheet" />
+}
+
+<section class="Object-det">
+    <div class="container p-5">
+
+        <div class="d-flex">
+
+            <div class="col-6 text-center" style="padding-top: 25px;">
+                <img src="~/Content/oPhoto/@Model.oPhoto" width="350px" alt="">
+            </div>
+
+            <div class="col-6">
+                <div class="details-group1">
+                    <label>@Model.oName</label>
+                </div>
+
+
+                <div class="details-group2">
+                    <label class="det-type">需求單位</label>
+                    <span>&nbsp;@Model.c_name</span>
+                </div>
+
+
+                <div class="details-group2">
+                    <div class="det-wrap">
+                        <div class="det">
+                            <label class="det-type2">需求說明</label><br>
+                        </div>
+                        <div class="det det2">
+                            @Model.oIntro
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-group2">
+                    <label class="det-type">需求數量</label>
+                    <span>&nbsp;@Model.oNumber</span>
+                </div>
+
+                <div class="details-group2">
+                    <label class="det-type">物資類別</label>
+                    <span>&nbsp;@Model.type</span>
+                </div>
+
+
+                <hr>
+                <div class="det-line">
+                    <button class="details-save btn" onclick="location.href='@Url.Action("AddObjectToShoppingCart","ShoppingCart")?oId=@Model.oId'"><i class="bi bi-basket2-fill"></i> 加入捐贈籃</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+

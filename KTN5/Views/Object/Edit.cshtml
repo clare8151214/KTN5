@@ -5,21 +5,12 @@
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
-<h2>Edit</h2>
+@section Styles{
 
-
-<h2>修改物資資料</h2>
-
-
-@using (Html.BeginForm("Edit", "Object", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>物資資料</h4>
-        <hr />
-
-        <script>
+    <link href="~/Content/Object-Create.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+}
+<script>
         // 預覽圖片
         function PreviewImage() {
             var oFReader = new FileReader(); // HTML5 File API
@@ -34,12 +25,105 @@
             image.src = '@Url.Content("~/Content/oPhoto/2.jpg")';
             return true;
         }
-        </script>
+</script>
 
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <input type="hidden" value="@Model.oId" name="oId" />
+<section class="Object-Create">
+    <div class="container p-5">
+        <div class="create-information">
+            <div class="info-title"><i class="fa-solid fa-pen-to-square"></i>&nbsp;編輯物資</div>
+            <br>
+
+            <form class="create-info" action="@Url.Action("Edit")" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <input type="hidden" value="@Model.oId" name="oId" />
+
+                <div class="d-flex">
+                    <div class="col-6 text-center">
+
+                        <div class="create-img">
+
+                            <img src="~/Content/oPhoto/@Model.oPhoto" id="object-img" width="250" height="250">
+
+                        </div>
+                        <br>
+                        <div class="create-wrap">
+                            <div class="create-btn">
+                                <label class="upload-btn" for="upload"><i class="bi bi-camera"></i>上傳照片</label>
+                                <input type="file" name="photo" id="upload" onchange="previewFile()"><br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="create-group1">
+                            <label for="o-name">品名</label>
+                        </div>
+                        <div class="create-group2">
+                            <input type="text" class="form-control" name="oName" value="@Model.oName" placeholder="品名" required><br>
+                        </div>
+
+                        <div class="create-group1">
+                            <label for="o-number">需求數量</label>
+                        </div>
+                        <div class="create-group2">
+                            <input type="text" class="form-control" name="oNumber" value="@Model.oNumber" placeholder="數量 / 單位" required><br>
+                        </div>
+
+                        <div class="create-group1">
+                            <label for="o-intro">需求說明</label>
+                        </div>
+                        <div class="create-group2">
+                            <textarea class="form-control" name="oIntro" rows="5" cols="40" placeholder="@Model.oIntro" style="resize: none;"></textarea><br>
+                        </div>
+
+                        <div class="create-group1">
+                            <label for="o-type">類別</label>
+                        </div>
+
+                        <select class="form-select" aria-label="Default select example" name="type" style="width: 500px;">
+                            <!-- <option selected>選擇類別</option> -->
+                            <option value="文具">文具</option>
+                            <option value="衛生">衛生</option>
+                            <option value="食品">食品</option>
+                            <option value="電器">電器</option>
+                            <option value="醫療">醫療</option>
+                            <option value="其他">其他</option>
+                        </select>
+
+                        <br>
+                        <div class="create-line">
+                            <input type="submit" class="create-save btn" value="儲存">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+@using (Html.BeginForm("Edit", "Object", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>物資資料</h4>
+        <hr />
+
+
+
+        
         <div class="form-group">
             @Html.LabelFor(model => model.oName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -106,10 +190,8 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script src="~/Scripts/Object-Create.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

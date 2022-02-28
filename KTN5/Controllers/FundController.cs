@@ -179,11 +179,59 @@ namespace KTN5.Controllers
             
             return View(fund);
         }
+        public ActionResult Sponsor(int id)
+        {
+            string uid = User.Identity.Name;
+            var user = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (user != null)
+            {
+                ViewBag.photo = user.photo;
+                ViewBag.role = user.role;
+            }
 
-        //public IEnumerable<Solution> GetSolutions(int id)
-        //{
-        //    var solutions = db.Solution.Where(m => m.fId == id).ToList();           
-        //    return solutions;
-        //}
+            var query = (from f in db.Fund
+                         join c in db.Charity_Member on f.cId equals c.cId
+                         join s in db.Solution on f.fId equals s.fId
+                         where s.sId == id
+                         select new
+                         {
+                             fId = f.fId,
+                             fName = f.fName,
+                             cName = c.c_name,
+                             targetMoney = f.targetMoney,
+                             accMoney = f.accMoney,
+                             startTime = f.startTime,
+                             endTime = f.endTime,                             
+                             fPhoto = f.fPhoto,
+                             fText = f.fText,
+                             sId = s.sId,
+                             sMoney = s.sMoney,
+                             intro = s.intro,
+                             sName = s.sName,
+                             sPhoto = s.sPhoto,
+                         }).FirstOrDefault();
+
+            SponsorView sponsor = new SponsorView()
+            {
+                fId = query.fId,
+                fName = query.fName,
+                cName = query.cName,
+                accMoney = query.accMoney,
+                startTime = query.startTime,
+                endTime = query.endTime,
+                countDown = (query.endTime - query.startTime),
+                progress = (query.accMoney / query.targetMoney),
+                fPhoto = query.fPhoto,
+                sId = query.sId,
+                sMoney = query.sMoney,
+                intro = query.intro,
+                sName = query.sName,
+                sPhoto = query.sPhoto,
+                targetMoney = query.targetMoney,
+            };
+
+            return View(sponsor);
+        }
+
     }
 }

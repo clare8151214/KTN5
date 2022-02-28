@@ -1,0 +1,114 @@
+﻿@model KTN5.Models.SponsorView
+@{
+    ViewBag.Title = "Sponsor";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+<h2>捐贈方案</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            方案圖片
+        </th>
+        <th>
+            專案名稱
+        </th>
+        <th>
+            提案單位
+        </th>
+        <th>
+            累積金額
+        </th>
+        <th>
+            進度:
+        </th>
+        <th>
+            倒數日期:
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+
+    <tr>
+        <td>
+            @if (Model.fPhoto == "")
+            {
+                <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
+            }
+            else
+            {
+                <img src="~/FundPhotos/@Model.sPhoto" width="100" height="100" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.fName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.cName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.accMoney)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.progress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.countDown)
+        </td>
+
+    </tr>
+</table>
+
+<hr />
+
+
+<table class="table">
+    <tr>
+        <th>
+            專案圖片
+        </th>
+        <th>
+            專案名稱
+        </th>
+        <th>
+            方案名稱
+        </th>
+        <th>
+            方案金額
+        </th>
+        <th>
+            方案介紹
+        </th>
+
+    </tr>
+
+
+    <tr>
+        <td>
+            @if (Model.fPhoto == "")
+            {
+                <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
+            }
+            else
+            {
+                <img src="~/FundPhotos/@Model.fPhoto" width="100" height="100" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.fName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => Model.sName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.sMoney)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.intro)
+        </td>
+    </tr>
+</table>

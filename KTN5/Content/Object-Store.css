@@ -1,0 +1,134 @@
+tr.table-head {
+    background: #905ca2;
+    box-shadow: none;
+    color: #fff;
+    font-size: 16px;
+    height: 50px;
+    text-align: center;
+}
+
+tr.list {
+    font-weight: 600;
+    background: #fff;
+    box-shadow: none;
+    color: #000000;
+    font-size: 14px;
+    height: 40px;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
+}
+
+tr.list:hover {
+    background: #e0d7ff;
+}
+
+.table-head th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.table-head th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.table thead.table-dark tr th {
+    background-color: #905ca2;
+    color: white;
+    border-bottom: 2px solid #905ca2;
+}
+
+.o-id {
+    width: 100px;
+}
+
+.o-Name ,
+.o-Number,
+.o-Intro {
+    width: 150px;
+}
+
+.o-type{
+    width: 450px; 
+}
+
+.o-btn{
+    width: 120px;
+}
+.update-btn {
+    font-size: 16px;
+    font-weight: 600;
+    width: 60px;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 10px;
+    background: #f7b52c;
+    color: #fff;
+}
+.update-btn:hover{
+    background-color: orange;
+}
+
+.delete-btn {
+    font-size: 16px;
+    font-weight: 600;
+    width: 60px;
+    padding: 8px 8px;
+    border: none;
+    border-radius: 10px;
+    background: #905ca2;
+    color: #fff;
+}
+.delete-btn:hover {
+    background-color: #5f1985;
+}
+
+.search{
+    position: relative;
+    width: 280px;
+    float: left; 
+    
+}
+
+.search-btn{
+    width: 60px;
+    height: 40px;
+    background-color: #5f1985;
+    color:#fff;
+    outline:none;
+    border: 1px solid #5f1985;
+    border-radius: 30px;
+    cursor: pointer; 
+    position: absolute;
+    top: 0;
+    right: 0; 
+}
+.search-btn:hover{
+    opacity: 0.8;
+}
+
+.search-bar{
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid #5f1985;
+    background-color: #fff;
+    border-radius: 30px;
+    padding-left: 15px;
+}
+
+.det-line{
+        text-align: end;
+}
+
+.create-btn{
+    width: 100px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 30px;
+    background: #5f1985;
+    color: #fff;
+}
+.create-btn:hover{
+    opacity: 0.8;
+}

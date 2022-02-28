@@ -4,37 +4,30 @@
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
-<h2>捐贈詳情</h2>
+<section class="container list-container donator-details">
+    <div class="cart-container">
+        <div class="section-header detail-header">
+            <h5 class="mb-0">捐贈詳情</h5>
+        </div>
+        <div class="section-body cart-items">
+            <div class="table-header row m-0">
+                <div class="col-4"><h6>捐贈ID</h6></div>
+                <div class="col-4"><h6>物資名稱</h6></div>
+                <div class="col-4"><h6>物資數量</h6></div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="cart-item row p-3">
+                    <div class="col-4">@Html.DisplayFor(modelItem => item.orderId)</div>
+                    <div class="col-4"> @Html.DisplayFor(modelItem => item.oName)</div>
+                    <div class="col-4"> @Html.DisplayFor(modelItem => item.oQty)</div>
+                </div>
+            }
 
-<table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.orderId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.oQty)
-        </th>
-   
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.orderId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.oName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.oQty)
-            </td>
-        </tr>
-    }
-
-</table>
+            
+        </div>
+    </div>
+</section>
 
 

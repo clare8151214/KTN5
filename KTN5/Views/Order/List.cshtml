@@ -1,55 +1,41 @@
 ﻿@model IEnumerable<KTN5.Models.Order>
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "捐贈者清單";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
-<h2>捐贈者清單</h2>
+<section class="container list-container">
+    <div class="cart-container">
+        <div class="section-header">
+            <h5 class="mb-0">捐贈者清單</h5>
+        </div>
+        <div class="section-body cart-items">
+            <div class="table-header row m-0">
+                <div class="col-2"><h6>捐贈者姓名</h6></div>
+                <div class="col-2"><h6>聯絡電話</h6></div>
+                <div class="col-3"><h6>電子郵件</h6></div>
+                <div class="col-2"><h6>運送方式</h6></div>
+                <div class="col-2"><h6>捐贈日期</h6></div>
+                <div class="col-1"></div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="cart-item row p-3">
+                    <div class="col-2">@Html.DisplayFor(modelItem => item.hName)</div>
+                    <div class="col-2">@Html.DisplayFor(modelItem => item.hPhone)</div>
+                    <div class="col-3">@Html.DisplayFor(modelItem => item.hEamil)</div>
+                    <div class="col-2">@Html.DisplayFor(modelItem => item.hCarrier)</div>
+                    <div class="col-2">@Convert.ToDateTime(item.created_at).ToString("yyyy/MM/dd")</div>
+                    <div class="col-1">
+                        <button class="btn-showdetails" onclick="location.href='@Url.Action("OrderDetails")?orderid=@item.orderId'">捐贈詳情</button>
+                    </div>
+                </div>
+            }
+           
+
+        </div>
+    </div>
+</section>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.hName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.hPhone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.hEamil)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.hCarrier)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.hName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hEamil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hCarrier)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.created_at)
-            </td>
-            <td>
-                <a href="@Url.Action("OrderDetails")?orderid=@item.orderId" class="btn btn-info">捐贈詳情</a>
-            </td>
-        </tr>
-    }
-
-</table>
 

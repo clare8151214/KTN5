@@ -21,23 +21,64 @@ namespace KTN5.Controllers
             return false;
         }
         // GET: Object
-        public ActionResult Index()
+        public ActionResult Index(string otype)
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             if(result != null)
                 ViewBag.photo = result.photo;
-            IEnumerable<Object> objects = null;
+            List<ObjectIndexView> objects = new List<ObjectIndexView>();
             string keyword = Request.Form["txtKeyword"];
-            if (string.IsNullOrEmpty(keyword))
-                objects = from o in (new dbktnEntities()).Object
-                          select o;
+            if (string.IsNullOrEmpty(otype))
+            {
+                var query = (from o in db.Object
+                             join c in db.Charity_Member on o.cId equals c.cId
+                             select new
+                             {
+                                 oId = o.oId,
+                                 oName = o.oName,
+                                 c_name = c.c_name,
+                                 oPhoto = o.oPhoto
+                             }).ToList();
+                foreach(var item in query)
+                {
+                    objects.Add(new ObjectIndexView()
+                    {
+                        oId = item.oId,
+                        oName = item.oName,
+                        c_name = item.c_name,
+                        oPhoto = item.oPhoto
+                    });
+                }
+            }
             else
-                objects = from o in (new dbktnEntities()).Object
-                          where o.oName.Contains(keyword)
-                          select o;
+            {
+                var query = (from o in db.Object
+                             join c in db.Charity_Member on o.cId equals c.cId
+                             where o.type.Contains(otype)
+                             select new
+                             {
+                                 oId = o.oId,
+                                 oName = o.oName,
+                                 c_name = c.c_name,
+                                 oPhoto = o.oPhoto
+                             }).ToList();
+                foreach (var item in query)
+                {
+                    objects.Add(new ObjectIndexView()
+                    {
+                        oId = item.oId,
+                        oName = item.oName,
+                        c_name = item.c_name,
+                        oPhoto = item.oPhoto
+                    });
+                }
+            }
+
             return View(objects);
         }
+
+        
 
         [Authorize]
         public ActionResult List()
@@ -77,6 +118,38 @@ namespace KTN5.Controllers
             return RedirectToAction("Index");
             
         }
+
+        public ActionResult ObjectDetail(int oId)
+        {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (result != null)
+                ViewBag.photo = result.photo;
+            ObjectIndexView objects = new ObjectIndexView();
+
+            var query = (from o in db.Object
+                         join c in db.Charity_Member on o.cId equals c.cId
+                         where o.oId == oId
+                         select new
+                         {
+                             oId = o.oId,
+                             oName = o.oName,
+                             c_name = c.c_name,
+                             oPhoto = o.oPhoto,
+                             oIntro = o.oIntro,
+                             oNumber = o.oNumber,
+                             type = o.type
+                         }).FirstOrDefault();
+            objects.oId = query.oId;
+            objects.oName = query.oName;
+            objects.c_name = query.c_name;
+            objects.oPhoto = query.oPhoto;
+            objects.oIntro = query.oIntro;
+            objects.oNumber = query.oNumber;
+            objects.type = query.type;
+            return View(objects);
+        }
+
         [Authorize]
         public ActionResult Delete(int id)
         {

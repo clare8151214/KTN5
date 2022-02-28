@@ -3,10 +3,90 @@
     ViewBag.Title = "購物車列表";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
+@*@section Styles{
+    <link href="~/Content/購物車列表.css" rel="stylesheet" />
 
-<h2>購物車列表</h2>
+}*@ 
+<section class="container list-container shoppingcart-list">
+    <div class="cart-container">
+        <div class="section-header">
+            <h5 class="mb-0">購物車列表</h5>
+        </div>
+        <div class="section-body cart-items">
+            <div class="table-header row m-0">
+                <div class="col-2"><h6>物資編號</h6></div>
+                <div class="col-3"><h6>物資名稱</h6></div>
+                <div class="col-3"><h6>物資介紹</h6></div>
+                <div class="col-3"><h6>捐贈數量</h6></div>
+                <div class="col-1"></div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="cart-item row p-3">
+                    <div class="col-2">@Html.DisplayFor(modelItem => item.oId)</div>
+                    <div class="col-3">@Html.DisplayFor(modelItem => item.oName)</div>
+                    <div class="col-3">@Html.DisplayFor(modelItem => item.oIntro)</div>
+                    <div class="col-3">
+                        <a href="@Url.Action("ShoppingCartAddQty")?cartId=@item.cartId"><i class="fa-solid fa-circle-plus"></i></a>
+                        <span class="numValue p-2">@Html.DisplayFor(modelItem => item.oQty)</span>
+                        <a href="@Url.Action("ShoppingCartSubQty")?cartId=@item.cartId"><i class="fa-solid fa-circle-minus"></i></a>
+                    </div>
+                    <div class="col-1"><a href="@Url.Action("ShoppingCartDelete")?cartId=@item.cartId"><i class="fa-solid fa-trash-can"></i></a></div>
+                </div>
+            }
 
-<table class="table">
+           
+        </div>
+    </div>
+
+
+    <div class="contactInfo-container">
+        <div class="section-header">
+            <h5 class="mb-0">聯絡資料</h5>
+        </div>
+        <div class="section-body contact-items p-4">
+            <h6>*請填寫捐贈資訊</h6>
+            <form  method="post" action="@Url.Action("Order","Order")">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">捐贈者姓名</label>
+                    <input type="text"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           name="hName"
+                           aria-descr
+                           ibedby="emailHelp" />
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">捐贈者電話</label>
+                    <input type="text"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           name="hPhone"
+                           aria-describedby="emailHelp" />
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">電子信箱</label>
+                    <input type="email"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           name="hEmail"
+                           aria-describedby="emailHelp" />
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">物資運送方式</label>
+                    <input type="text"
+                           class="form-control"
+                           name="hCarrier"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp" />
+                </div>
+                <button type="submit" class="btn-submit">送出</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@*<table class="table">
     <tr>
 
         <th>
@@ -82,5 +162,5 @@
             </div>
         </div>
     </div>
-</form>
+</form>*@
 

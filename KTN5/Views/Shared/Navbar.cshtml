@@ -13,7 +13,8 @@
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    
+
+    <link href="~/Content/購物車列表.css" rel="stylesheet" />
     @RenderSection("Styles", false)
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 </head>
@@ -62,7 +63,7 @@
                         <ul class="dropdown-content">
                             <li><a href="#">募資活動</a></li>
                             <li><a href="#">數位發票箱</a></li>
-                            
+
                         </ul>
                     </div>
                     <div class="invoice">
@@ -79,8 +80,8 @@
             @if (Request.IsAuthenticated)
             {
                 <div class="buttons">
-                    <div class="btn-group pe-5">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="btn-group w-50">
+                        <button type="button" class="btn dropdown-toggle me-5" data-bs-toggle="dropdown" aria-expanded="false">
                             @if (ViewBag.photo == null)
                             {
                                 <img src="data:image/jpeg;base64,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" width="50px" height="50px" class="rounded-circle">
@@ -89,18 +90,26 @@
                             else
                             {
                                 <img src="~/UserPhotos/@ViewBag.photo" width="50px" height="50px" class="rounded-circle">
-                           
+
                             }
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="@Url.Action("EditProfile","User")">設定會員資料</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("EditPassword","User")">變更密碼</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
+                            @if (Session["role"] == "公益單位")
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
+
+                            }
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="@Url.Action("Logout","User")">登出</a></li>
                         </ul>
+                    </div>
+                    <div class="shoppingcart-icon">
+                       <a href="@Url.Action("Index","ShoppingCart")"><i class="fa-solid fa-cart-shopping ms-3"></i></a>
+                        <span class="cart-count">@Session["Cart"]</span>
                     </div>
                 </div>
 
@@ -180,6 +189,7 @@
             </div>
         </section>
     </footer>
-    
+
+    @*<script src="~/Scripts/cart_number_counter.js"></script>*@
 </body>
 </html>
