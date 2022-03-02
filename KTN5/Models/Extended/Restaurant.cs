@@ -15,6 +15,7 @@ namespace KTN5.Models
 
     public class RestaurantMetadata
     {
+        [DisplayName("餐廳編號")]
         public int rId { get; set; }
         [DisplayName("餐廳")]
         public string rName { get; set; }

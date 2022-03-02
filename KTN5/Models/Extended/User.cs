@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace KTN5.Models
 {
@@ -10,9 +11,12 @@ namespace KTN5.Models
     public partial class User
     {
         public string ConfirmPassword { get; set; }
+        public HttpPostedFileBase photoFile { get; set; }
     }
     public class UserMetadata
     {
+        [DisplayName("會員編號")]
+        public int uId { get; set; }
 
         [Display(Name = "姓名")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "姓名必填")]
@@ -34,6 +38,13 @@ namespace KTN5.Models
         [Compare("password", ErrorMessage = "兩組密碼不匹配")]
         public string ConfirmPassword { get; set; }
 
-
+        [DisplayName("身分")]
+        public string role { get; set; }
+        [DisplayName("註冊日")]
+        public Nullable<System.DateTime> created_at { get; set; }
+        [DisplayName("電話")]
+        public string phone { get; set; }
+        [DisplayName("地址")]
+        public string address { get; set; }
     }
 }

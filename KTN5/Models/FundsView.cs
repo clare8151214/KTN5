@@ -14,7 +14,7 @@ namespace KTN5.Models
         [DisplayName("提案名稱")]
         public string fName { get; set; }
         [DisplayName("累計金額")]
-        public Nullable<decimal> accMoney { get; set; }
+        public int accMoney { get; set; }
         [DisplayName("開始時間")]
         public Nullable<System.DateTime> startTime { get; set; }
         [DisplayName("結束時間")]

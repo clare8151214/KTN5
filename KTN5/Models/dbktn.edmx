@@ -5,16 +5,29 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="dbktnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BloodMap">
+          <Key>
+            <PropertyRef Name="bId" />
+          </Key>
+          <Property Name="bId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="bAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="bPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="lat" Type="decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="lng" Type="decimal" Precision="12" Scale="9" Nullable="false" />
+          <Property Name="startTime" Type="time" Precision="7" />
+          <Property Name="endTime" Type="time" Precision="7" />
+        </EntityType>
         <EntityType Name="Charity_Member">
           <Key>
             <PropertyRef Name="cId" />
           </Key>
           <Property Name="cId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="c_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="c_name" Type="nvarchar" MaxLength="255" />
           <Property Name="c_address" Type="nvarchar(max)" />
-          <Property Name="c_phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="c_pname" Type="nvarchar" MaxLength="50" />
-          <Property Name="photo" Type="nvarchar" MaxLength="100" />
+          <Property Name="c_phone" Type="nvarchar" MaxLength="255" />
+          <Property Name="c_pname" Type="nvarchar" MaxLength="255" />
+          <Property Name="photo" Type="nvarchar" MaxLength="255" />
           <Property Name="heart_code" Type="int" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="uId" Type="int" />
@@ -60,12 +73,12 @@
             <PropertyRef Name="oId" />
           </Key>
           <Property Name="oId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="oName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="oName" Type="nvarchar" MaxLength="255" />
           <Property Name="cId" Type="int" />
           <Property Name="oPhoto" Type="nvarchar(max)" />
           <Property Name="oNumber" Type="nvarchar(max)" />
           <Property Name="oIntro" Type="nvarchar(max)" />
-          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -121,15 +134,22 @@
           <Property Name="sName" Type="nvarchar" MaxLength="50" />
           <Property Name="sPhoto" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <!--產生期間發現錯誤:
-警告 6002: 資料表/檢視 'dbktn.dbo.Sponsor' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="Sponsor">
           <Key>
-            <PropertyRef Name="uId" />
-            <PropertyRef Name="sId" />
+            <PropertyRef Name="sponsorId" />
           </Key>
-          <Property Name="uId" Type="int" Nullable="false" />
-          <Property Name="sId" Type="int" Nullable="false" />
+          <Property Name="sponsorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sId" Type="int" />
+          <Property Name="fId" Type="int" />
+          <Property Name="payMethod" Type="nvarchar" MaxLength="255" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="recipient" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="money" Type="money" />
+          <Property Name="uId" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -150,6 +170,7 @@
           <Property Name="photo" Type="nvarchar(max)" />
         </EntityType>
         <EntityContainer Name="dbktnModelStoreContainer">
+          <EntitySet Name="BloodMap" EntityType="Self.BloodMap" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Charity_Member" EntityType="Self.Charity_Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donate" EntityType="Self.Donate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fund" EntityType="Self.Fund" Schema="dbo" store:Type="Tables" />
@@ -160,13 +181,8 @@
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sponsor" EntityType="Self.Sponsor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sponsor" EntityType="Self.Sponsor" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Sponsor].[uId] AS [uId], 
-    [Sponsor].[sId] AS [sId]
-    FROM [dbo].[Sponsor] AS [Sponsor]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -203,17 +219,18 @@
           <EntitySet Name="Invoice" EntityType="dbktnModel.Invoice" />
           <EntitySet Name="Solution" EntityType="dbktnModel.Solution" />
           <EntitySet Name="Sponsor" EntityType="dbktnModel.Sponsor" />
+          <EntitySet Name="BloodMap" EntityType="dbktnModel.BloodMap" />
         </EntityContainer>
         <EntityType Name="Charity_Member">
           <Key>
             <PropertyRef Name="cId" />
           </Key>
           <Property Name="cId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="c_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="c_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="c_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="c_pname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="c_phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="c_pname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="heart_code" Type="Int32" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="uId" Type="Int32" />
@@ -223,12 +240,12 @@
             <PropertyRef Name="oId" />
           </Key>
           <Property Name="oId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="oName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="oName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="cId" Type="Int32" />
           <Property Name="oPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="oNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="oIntro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -322,11 +339,33 @@
         </EntityType>
         <EntityType Name="Sponsor">
           <Key>
-            <PropertyRef Name="uId" />
-            <PropertyRef Name="sId" />
+            <PropertyRef Name="sponsorId" />
           </Key>
-          <Property Name="uId" Type="Int32" Nullable="false" />
-          <Property Name="sId" Type="Int32" Nullable="false" />
+          <Property Name="sponsorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sId" Type="Int32" />
+          <Property Name="fId" Type="Int32" />
+          <Property Name="payMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="recipient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="uId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="BloodMap">
+          <Key>
+            <PropertyRef Name="bId" />
+          </Key>
+          <Property Name="bId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="bAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="bPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="lat" Type="Decimal" Nullable="false" Precision="12" Scale="9" />
+          <Property Name="lng" Type="Decimal" Nullable="false" Precision="12" Scale="9" />
+          <Property Name="startTime" Type="Time" Precision="7" />
+          <Property Name="endTime" Type="Time" Precision="7" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -482,8 +521,32 @@
           <EntitySetMapping Name="Sponsor">
             <EntityTypeMapping TypeName="dbktnModel.Sponsor">
               <MappingFragment StoreEntitySet="Sponsor">
-                <ScalarProperty Name="sId" ColumnName="sId" />
                 <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="recipient" ColumnName="recipient" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="payMethod" ColumnName="payMethod" />
+                <ScalarProperty Name="fId" ColumnName="fId" />
+                <ScalarProperty Name="sId" ColumnName="sId" />
+                <ScalarProperty Name="sponsorId" ColumnName="sponsorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BloodMap">
+            <EntityTypeMapping TypeName="dbktnModel.BloodMap">
+              <MappingFragment StoreEntitySet="BloodMap">
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="bPhone" ColumnName="bPhone" />
+                <ScalarProperty Name="bAddress" ColumnName="bAddress" />
+                <ScalarProperty Name="bName" ColumnName="bName" />
+                <ScalarProperty Name="bId" ColumnName="bId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

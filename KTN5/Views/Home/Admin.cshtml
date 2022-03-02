@@ -1,0 +1,922 @@
+﻿@model KTN5.Models.CVMMember
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Index.css" rel="stylesheet" />
+    <link href="~/Content/admin.css" rel="stylesheet" />
+
+}
+
+<div class="hero-image">
+    <div class="hero-text d-flex justify-content-center align-items-center">
+        <h1>後台管理員</h1>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-2 cs-btns">
+            <h3>管理項目</h3>
+            <button class="btn-classItem mb-3 bs-color" id="btn-member-management"><i class="fa-solid fa-user-large me-2"></i>會員管理</button>
+            <button class="btn-classItem mb-3" id="btn-act-management"><i class="fa-solid fa-box me-2"></i>活動管理</button>
+            <button class="btn-classItem mb-3" id="btn-rest-management"><i class="fa-solid fa-utensils me-2"></i>愛心餐廳</button>
+        </div>
+        <div class="col-md-10" style="flex-grow:1;" id="tab-container">
+            <div id="member-container">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="Charity_Member" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">一般會員</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="User" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">公益單位</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active mt-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="searchBar">
+                            <span class="me-2">查詢:</span>
+                            <select id="searchOption" class="me-2">
+                                <option value="uId">@Html.DisplayNameFor(model => model.gmembers.First().uId)</option>
+                                <option value="name">@Html.DisplayNameFor(model => model.gmembers.First().name)</option>
+                                <option value="account">@Html.DisplayNameFor(model => model.gmembers.First().account)</option>
+                                <option value="password">@Html.DisplayNameFor(model => model.gmembers.First().password)</option>
+                                <option value="phone">@Html.DisplayNameFor(model => model.gmembers.First().phone)</option>
+                                <option value="address">@Html.DisplayNameFor(model => model.gmembers.First().address)</option>
+                            </select>
+                            <i class="fa fa-search"></i>
+                            <input class="searchtext" id="searchText" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                        </div>
+                        <table class="table table-striped db-table mt-3" id="gmember-table">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().uId)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().name)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().account)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().password)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().phone)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().address)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().role)</th>
+                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().created_at)</th>
+                                    <th>編輯</th>
+                                    <th>刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="searchBar">
+                            <select id="searchOption_ch">
+                                <option value="cId">@Html.DisplayNameFor(model => model.charities.First().cId)</option>
+                                <option value="c_name">@Html.DisplayNameFor(model => model.charities.First().c_name)</option>
+                                <option value="c_address">@Html.DisplayNameFor(model => model.charities.First().c_address)</option>
+                                <option value="c_phone">@Html.DisplayNameFor(model => model.charities.First().c_phone)</option>
+                                <option value="heart_code">@Html.DisplayNameFor(model => model.charities.First().heart_code)</option>
+                            </select>
+                            <input class="searchtext" id="searchText_ch" type="text" name="search" placeholder="Search..." />
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <table class="table table-striped db-table mt-3" id="cmember-table">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().cId)</th>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_name)</th>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_address)</th>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_phone)</th>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().heart_code)</th>
+                                    <th>@Html.DisplayNameFor(model => model.charities.First().created_at)</th>
+                                    <th>編輯</th>
+                                    <th>刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @*Reastaurant Table*@
+            <div class="outer mt-3" id="rest-container">
+                <div class="rest-sec tbstyle mb-3 row">
+                    <div class="col-8">
+                        <span>查詢:</span>
+                        <select class="form-select d-inline mx-2 w-25" id="areaDataList">
+                            <option selected>@Html.DisplayNameFor(model => model.restaurants.First().rId)</option>
+                            <option>@Html.DisplayNameFor(model => model.restaurants.First().rName)</option>
+                            <option>地區</option>
+                            <option>@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</option>
+                        </select>
+                        <input class="searchtext h-100" id="searchText_rest" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                        <i class="fa fa-search icon-pc"></i>
+                    </div>
+                </div>
+                <div class="rest-sec tbstyle table-responsive" id="rest-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:100px">@Html.DisplayNameFor(model => model.restaurants.First().rId)</th>
+                                <th style="width:180px">@Html.DisplayNameFor(model => model.restaurants.First().rName)</th>
+                                <th>@Html.DisplayNameFor(model => model.restaurants.First().rAddress)</th>
+                                <th>@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</th>
+                                <th>@Html.DisplayNameFor(model => model.restaurants.First().startTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.restaurants.First().endTime)</th>
+                                <th>編輯</th>
+                                <th>刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.restaurants)
+                            {
+                                <tr class="list">
+                                    <td>@item.rId</td>
+                                    <td>@item.rName</td>
+                                    <td>@item.rAddress</td>
+                                    <td>@item.rPhone</td>
+                                    <td>@item.startTime</td>
+                                    <td>@item.endTime</td>
+                                    <td><a data-id="@item.rId" class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(@item.rId)"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td><a href="@Url.Action("DeleteRest", "Home", new { rId = item.rId })" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @*Supplies Table*@
+            <div class="outer mt-3" id="sup-container">
+                <div class="mb-3 row">
+                    <div class="col-8">
+                        <span>查詢:</span>
+                        <select class="form-select d-inline mx-2 w-25" id="option_obj">
+                            <option value="oId" selected>@Html.DisplayNameFor(model => model.objects.First().oId)</option>
+                            <option value="oName">@Html.DisplayNameFor(model => model.objects.First().oName)</option>
+                            <option value="cId">@Html.DisplayNameFor(model => model.objects.First().cId)</option>
+                            <option value="oNumber">@Html.DisplayNameFor(model => model.objects.First().oNumber)</option>
+                            <option value="oIntro">@Html.DisplayNameFor(model => model.objects.First().oIntro)</option>
+                        </select>
+                        <input class="searchtext h-100" id="searchText_sup" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                        <i class="fa fa-search icon-pc"></i>
+                    </div>
+                </div>
+                <div class="sup-sec tbstyle table-responsive" id="sup-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(m => m.objects.First().oId)</th>
+                                <th>@Html.DisplayNameFor(m => m.objects.First().oName)</th>
+                                <th>@Html.DisplayNameFor(m => m.objects.First().cId)</th>
+                                <th>@Html.DisplayNameFor(m => m.objects.First().oNumber)</th>
+                                <th>@Html.DisplayNameFor(m => m.objects.First().oIntro)</th>
+                                <th>編輯</th>
+                                <th>刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (var item in Model.objects)
+                                {
+                                    <tr class="list">
+                                        <td>@item.oId</td>
+                                        <td>@item.oName</td>
+                                        <td>@item.cId</td>
+                                        <td>@item.oNumber</td>
+                                        <td>@item.oIntro</td>
+                                        <td><a data-id="@item.oId" class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(@item.oId)"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                        <td><a href="@Url.Action("DeleteObj", "Home", new { oId = item.oId })" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                                    </tr>
+                                }*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Gmember Modal*@
+    <div class="modal fade" id="member-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">一般會員資料修改</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="~/Home/EditMember" method="post" enctype="multipart/form-data">
+                    <div class="modal-body d-flex p-3">
+                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                            <p><img src="" alt="avatar-photo" width="200px" id="member-avatar" /></p>
+                            @*<input type="file" name="photoFile" id="imageBrowse"/>*@
+                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="photoFile" id="memberImgBrowse" hidden /></label>
+                            <!---<button class="btn-uploadImg" onclick="imageBrowse.click()"><i class="fa-solid fa-image"></i>上傳檔案</button>-->
+                        </div>
+                        <div class="col-7">
+                            <div class="mb-3" id="userId">
+                                <label for="userId">@Html.DisplayNameFor(model => model.gmembers.First().uId):</label>
+                                <input type="text" class="form-control" id="member-modal-userId" name="uId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
+                            </div>
+                            <div class="mb-3" id="userName">
+                                <label for="userName">@Html.DisplayNameFor(model => model.gmembers.First().name):</label>
+                                <input type="text" class="form-control" id="member-modal-userName" name="name" aria-label="UserName" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userAccount">
+                                <label for="userAccount">@Html.DisplayNameFor(model => model.gmembers.First().account):</label>
+                                <input type="text" class="form-control" id="member-modal-userAccount" name="account" aria-label="UserAccount" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userPassword">
+                                <label for="userPassword">@Html.DisplayNameFor(model => model.gmembers.First().password):</label>
+                                <input type="text" class="form-control" id="member-modal-userPassword" name="password" aria-label="UserPassword" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userPhone">
+                                <label for="userPhone">@Html.DisplayNameFor(model => model.gmembers.First().phone):</label>
+                                <input type="text" class="form-control" id="member-modal-userPhone" name="phone" aria-label="UserPhone" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userAddress">
+                                <label for="userAddress">@Html.DisplayNameFor(model => model.gmembers.First().address):</label>
+                                <input type="text" class="form-control" id="member-modal-userAddress" name="address" aria-label="UserAddress" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userRole">
+                                <label for="userRole">@Html.DisplayNameFor(model => model.gmembers.First().role):</label>
+                                <input type="text" class="form-control" id="member-modal-userRole" name="role" aria-label="UserRole" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="userCreatedAt">
+                                <label for="userCreatedAt">@Html.DisplayNameFor(model => model.gmembers.First().created_at):</label>
+                                <input type="text" class="form-control" id="member-modal-userCreatedAt" name="created_at" aria-label="UserCreatedAt" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        <button type="submit" class="btn btn-success">確定變更</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*Charity modal*@
+    <div class="modal fade" id="charity-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">公益單位資料修改</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="~/Home/EditCharity" method="post" enctype="multipart/form-data">
+                    <div class="modal-body d-flex p-3">
+                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                            <p><img src="" alt="charity-photo" width="200px" id="charity-photo" /></p>
+                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="logoFile" id="charityImgBrowse" hidden /></label>
+                        </div>
+                        <div class="col-7">
+                            <div class="mb-3" id="cId">
+                                <label for="userId">@Html.DisplayNameFor(model => model.charities.First().cId):</label>
+                                <input type="text" class="form-control" id="charity-modal-cId" name="cId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
+                            </div>
+                            <div class="mb-3" id="cName">
+                                <label for="userName">@Html.DisplayNameFor(model => model.charities.First().c_name):</label>
+                                <input type="text" class="form-control" id="charity-modal-cName" name="c_name" aria-label="UserName" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="cAddress">
+                                <label for="userAccount">@Html.DisplayNameFor(model => model.charities.First().c_address):</label>
+                                <input type="text" class="form-control" id="charity-modal-cAddress" name="c_address" aria-label="UserAccount" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="cPhone">
+                                <label for="userPassword">@Html.DisplayNameFor(model => model.charities.First().c_phone):</label>
+                                <input type="text" class="form-control" id="charity-modal-cPhone" name="c_phone" aria-label="UserPassword" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="cHeartcode">
+                                <label for="userPhone">@Html.DisplayNameFor(model => model.charities.First().heart_code):</label>
+                                <input type="text" class="form-control" id="charity-modal-heartCode" name="heart_code" aria-label="UserPhone" aria-describedby="basic-addon1" required>
+                            </div>
+                            <div class="mb-3" id="cCreatedat">
+                                <label for="userAddress">@Html.DisplayNameFor(model => model.charities.First().created_at):</label>
+                                <input type="text" class="form-control" id="charity-modal-createdAt" name="created_at" aria-label="UserAddress" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        <button type="submit" class="btn btn-success">確定變更</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*Restaurant Modal*@
+    <div class="modal fade" id="rest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">愛心餐廳資料修改</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("EditRest", "Home", FormMethod.Post))
+                {
+                    <div class="modal-body p-3">
+                        <div>
+                            <div class="mb-3" id="rId">
+                                @Html.LabelFor(m => m.restaurants.First().rId):
+                                <input type="text" class="form-control" id="rest-modal-rId" name="rId" readonly />
+                            </div>
+                            <div class="mb-3" id="rName">
+                                @Html.LabelFor(m => m.restaurants.First().rName):
+                                <input type="text" class="form-control" id="rest-modal-rName" name="rName" required />
+                            </div>
+                            <div class="mb-3" id="rAddress">
+                                @Html.LabelFor(m => m.restaurants.First().rAddress):
+                                <input type="text" class="form-control" id="rest-modal-rAddress" name="rAddress" required />
+                            </div>
+                            <div class="mb-3" id="rPhone">
+                                @Html.LabelFor(m => m.restaurants.First().rPhone):
+                                <input type="text" class="form-control" id="rest-modal-rPhone" name="rPhone" required>
+                            </div>
+                            <div class="mb-3" id="rStarttime">
+                                @Html.LabelFor(m => m.restaurants.First().startTime):
+                                <input type="text" class="form-control" id="rest-modal-starttime" name="startTime" required />
+                            </div>
+                            <div class="mb-3" id="rEndtime">
+                                @Html.LabelFor(m => m.restaurants.First().endTime):
+                                <input type="text" class="form-control" id="rest-modal-endtime" name="endTime" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        <input type="submit" class="btn btn-success" value="更新" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @*Supplies Model*@
+    <div class="modal fade" id="sup-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">物資需求修改</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("EditObj", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body p-3 row">
+                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                            <p><img src="" class="rounded-circle" alt="supplies-photo" width="200px" id="sup-photo" /></p>
+                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="ophotoFile" id="supImgBrowse" hidden /></label>
+                        </div>
+                        <div class="col-7">
+                            <div>
+                                <div class="mb-3" id="oId">
+                                    @Html.LabelFor(m => m.objects.First().oId):
+                                    <input type="text" class="form-control" id="sup-modal-oId" name="oId" readonly />
+                                </div>
+                                <div class="mb-3" id="oName">
+                                    @Html.LabelFor(m => m.objects.First().oName):
+                                    <input type="text" class="form-control" id="sup-modal-oName" name="oName" required />
+                                </div>
+                                <div class="mb-3" id="oCId">
+                                    @Html.LabelFor(m => m.objects.First().cId):
+                                    <input type="text" class="form-control" id="sup-modal-cId" name="cId" required readonly />
+                                </div>
+                                <div class="mb-3" id="oNumber">
+                                    @Html.LabelFor(m => m.objects.First().oNumber):
+                                    <input type="text" class="form-control" id="sup-modal-oNumber" name="oNumber" required>
+                                </div>
+                                <div class="mb-3" id="oIntro">
+                                    @Html.LabelFor(m => m.objects.First().oIntro):
+                                    <input type="text" class="form-control" id="sup-modal-oIntro" name="oIntro" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        <input type="submit" class="btn btn-success" value="更新" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //載入表格資料
+            getGenMembers();
+            getCharities();
+            getObjects();
+
+            //一般會員搜尋功能
+            $("#searchText").on("keyup", function () {
+                if (!$("#searchText").val()) {
+                    $("#gmember-table tbody").empty();
+                    getGenMembers();
+                } else {
+                    searchMember();
+                }
+            });
+
+            //公益單位搜尋功能
+            $("#searchText_ch").on("keyup", function () {
+                if (!$("#searchText_ch").val()) {
+                    $("#cmember-table tbody").empty();
+                    getCharities();
+                } else {
+                    searchCharity();
+                }
+            });
+
+            //愛心餐廳搜尋功能
+            $("#searchText_rest").on("keyup", function () {
+                if (!$("#searchText_rest").val()) {
+                    $("#rest-table tbody").empty();
+                    getRestaurants();
+                } else {
+                    searchRestaurant();
+                }
+            })
+
+            //物資需求搜尋功能
+            $("#searchText_sup").on("keyup", function () {
+                if (!$("#searchText_sup").val()) {
+                    $("#sup-table tbody").empty();
+                    getObjects();
+                } else {
+                    searchObj();
+                }
+            })
+
+            //一般會員預覽圖片
+            $("#memberImgBrowse").change(function () {
+                const File = this.files;
+                if (File && File[0]) {
+                    ReadMemberImg(File[0]);
+                }
+            });
+
+            //公益單位logo image預覽
+            $("#charityImgBrowse").change(function () {
+                const File = this.files;
+                ReadCharityImg(File[0]);
+            })
+
+            //物資圖片預覽
+            $("#supImgBrowse").change(function () {
+                const File = this.files;
+                ReadSupImg(File[0]);
+            })
+
+            //按鈕樣式切換
+            $(".btn-classItem").click(function () {
+                $(".btn-classItem").removeClass("bs-color");
+                $(this).addClass("bs-color")
+            });
+
+            //按鈕切換頁面
+            $(".cs-btns").click(function () {
+                if ($(event.target).is("#btn-rest-management")) {
+                    $("#rest-container").css("display", "block");
+                    $("#member-container").css("display", "none");
+                    $("#sup-container").css("display", "none");
+                } else if ($(event.target).is("#btn-member-management")) {
+                    $("#member-container").css("display", "block");
+                    $("#rest-container").css("display", "none");
+                    $("#sup-container").css("display", "none");
+                } else if ($(event.target).is("#btn-act-management")) {
+                    $("#sup-container").css("display", "block");
+                    $("#rest-container").css("display", "none");
+                    $("#member-container").css("display", "none");
+                }
+            })
+
+            //sweetalert popup
+            var msgValue = "@((string)ViewBag.msg)";
+            if (msgValue != null && msgValue != "") {
+                swal({
+                    title: msgValue,
+                    icon: "success",
+                });
+            }
+    })
+
+    function ReadSupImg(file)
+    {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $("#sup-photo").attr("src", e.target.result)
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function ReadCharityImg(file)
+    {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $("#charity-photo").attr("src", e.target.result)
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function ReadMemberImg(file)
+    {
+        const reader = new FileReader();
+        /*var image = new Image(); */
+        reader.onload = function (e) {
+            /*image.src = e.target.result;*/
+            $("#member-avatar").attr('src', e.target.result)
+        }
+        reader.readAsDataURL(file);
+    }
+
+    function searchMember() {
+        var searchText = $("#searchText").val();
+        var searchOption = $("#searchOption").val();
+        $.ajax({
+        url: "getMembersByKeyword?searchOption=" + searchOption + "&searchText=" + searchText,
+        type: "POST",
+        success: function (memberList) {
+            $("#gmember-table tbody").empty();
+            if (memberList.length == 0) {
+                $("#gmember-table tbody").append(`<tr><td colspan='10'>查無相符的資料</td></tr>`)
+            }
+            else {
+                $(memberList).each(function (index, member) {
+                    var dateString = member.created_at.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth() + 1;
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var date = year + "/" + month + "/" + day
+                    $("#gmember-table tbody").append(`<tr>
+                    <td>${member.uId}</td>
+                    <td>${member.name}</td>
+                    <td>${member.account}</td>
+                    <td>${member.password}</td>
+                    <td>${member.phone}</td>
+                    <td>${member.address}</td>
+                    <td>${member.role}</td>
+                    <td>${date}</td>
+                    <td><a type="button" class="btn btn-info btn-edit-gmember" data-id="${member.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${member.uId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
+                    <td><a class="btn btn-danger btn-delete" data-id="${member.uId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${member.uId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                </tr>`)
+
+                })
+            }
+
+        },
+        //error: function (err) { confirm("載入錯誤") }
+    })
+    }
+
+    function findObjRecord(id) {
+        $.ajax({
+        url: "@Url.Action("getObjById", "Home")",
+        type: "POST",
+        data: { "oId": id },
+        success: function (objects) {
+            $(objects).each(function (index, obj) {
+                $('#sup-modal-oId').val(obj.oId)
+                $('#sup-modal-oName').val(obj.oName)
+                $('#sup-modal-cId').val(obj.cId)
+                $('#sup-modal-oNumber').val(obj.oNumber)
+                $('#sup-modal-oIntro').val(obj.oIntro)
+                $('#sup-photo').attr("src", "/images/" + obj.oPhoto)
+            })
+        },
+        //error: function (err) { confirm("載入錯誤") }
+    })
+    }
+
+    function findGeneralMemberRecord(id) {
+    $.ajax({
+        url: "@Url.Action("getGenMembersById", "Home")",
+        type: "POST",
+        data: { "mId": id },
+        success: function (member) {
+            $(member).each(function (index, member) {
+                var dateString = member.created_at.substr(6);
+                var currentTime = new Date(parseInt(dateString));
+                var month = currentTime.getMonth() + 1;
+                var day = currentTime.getDate();
+                var year = currentTime.getFullYear();
+                var date = year + "/" + month + "/" + day
+                $('#member-modal-userId').val(member.uId)
+                $('#member-modal-userName').val(member.name)
+                $('#member-modal-userAccount').val(member.account)
+                $('#member-modal-userPassword').val(member.password)
+                $('#member-modal-userPhone').val(member.phone)
+                $('#member-modal-userAddress').val(member.address)
+                $('#member-modal-userRole').val(member.role)
+                $('#member-modal-userCreatedAt').val(date)
+                $('#member-avatar').attr("src", "/images/" + member.photo)
+            })
+        },
+        //error: function (err) { confirm("載入錯誤") }
+    })
+}
+
+    function getGenMembers() {
+        $.ajax({
+            url: "@Url.Action("getGenMembers", "Home")",
+            async: false,
+            type: "GET",
+            data: {},
+            success: function (memberList) {
+                /* var actionUrl = '';*/
+                $(memberList).each(function (index, item) {
+                    var dateString = item.created_at.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth() + 1;
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var date = year + "/" + month + "/" + day
+                    $("#gmember-table tbody").append(`<tr>
+                        <td>${item.uId}</td>
+                        <td>${item.name}</td>
+                        <td>${item.account}</td>
+                        <td>${item.password}</td>
+                        <td>${item.phone}</td>
+                        <td>${item.address}</td>
+                        <td>${item.role}</td>
+                        <td>${date}</td>
+                        <td><a type="button" class="btn btn-info btn-edit-gmember" data-id="${item.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${item.uId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a class="btn btn-danger btn-delete" data-id="${item.uId}" onclick="return confirm('確定要刪除此筆資料嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${item.uId}'><i class="fa-solid fa-trash-can"></i></a></td>
+                            </tr>`)
+                })
+            },
+            error: function (err) { confirm("載入錯誤") }
+        })
+    }
+
+    function getCharities()
+    {
+        $.ajax({
+            url: "@Url.Action("getCharities", "Home")",
+            async: false,
+            method: "GET",
+            success: function (charityList) {
+                $(charityList).each(function (index, charity) {
+                    var dateString = charity.created_at.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth() + 1;
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var date = year + "/" + month + "/" + day
+                    $("#cmember-table tbody").append(`<tr>
+                        <td>${charity.cId}</td>
+                        <td>${charity.c_name}</td>
+                        <td>${charity.c_address}</td>
+                        <td>${charity.c_phone}</td>
+                        <td>${charity.heart_code}</td>
+                        <td>${date}</td>
+                        <td><a type="button" class="btn btn-info btn-edit-charity" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
+                        <td><a class="btn btn-danger btn-delete" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity","Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                    </tr>`)
+                })
+            }
+       })
+    }
+
+    function getRestaurants()
+    {
+        $.ajax({
+            url: "@Url.Action("getRestaurants", "Home")",
+            method: "GET",
+            success: function (restList) {
+                $(restList).each(function (index, rest) {
+                    //轉換結束營業datetime format
+                    var endDate = rest.endTime.substr(6);
+                    var currentTime = new Date(parseInt(endDate));
+                    var hour = currentTime.getHours();
+                    var minute = currentTime.getMinutes();
+                    if (minute == '0')
+                        minute = '00'
+                    var endTime = hour + ":" + minute;
+                    //轉換開始營業datetime format
+                    var startDate = rest.startTime.substr(6);
+                    var startCT = new Date(parseInt(startDate));
+                    var sminute = startCT.getMinutes(); //分
+                    if (sminute == '0')
+                        sminute = '00'
+                    var startTime = startCT.getHours() + ":" + sminute;
+                    $("#rest-table tbody").append(`<tr class="list">
+                        <td>${rest.rId}</td>
+                        <td>${rest.rName}</td>
+                        <td>${rest.rAddress}</td>
+                        <td>${rest.rPhone}</td>
+                        <td>${startTime}</td>
+                        <td>${endTime}</td>
+                        <td><a class="btn sec-btn-info" data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
+                        <td><a class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                    </tr>`)
+                })
+            }
+       })
+    }
+
+    function getObjects()
+    {
+        $.ajax({
+            url: "@Url.Action("getObjects", "Home")",
+            method: "GET",
+            success: function (objects) {
+                $(objects).each(function (index, obj) {
+                    $("#sup-table tbody").append(`<tr class="list">
+                        <td>${obj.oId}</td>
+                        <td>${obj.oName}</td>
+                        <td>${obj.c_name}</td>
+                        <td>${obj.oNumber}</td>
+                        <td>${obj.oIntro}</td>
+                        <td><a class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>`)
+                })
+            }
+       })
+    }
+
+    function findCharityRecord(id)
+    {
+        $.ajax({
+            url: "@Url.Action("getCharitiesById", "Home")",
+            method: "POST",
+            data: {"cId": id},
+            success: function (charity) {
+                $(charity).each(function (index, item) {
+                    var dateString = item.created_at.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth() + 1;
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var date = year + "/" + month + "/" + day;
+                    $('#charity-modal-cId').val(item.cId)
+                    $('#charity-modal-cName').val(item.c_name)
+                    $('#charity-modal-cAddress').val(item.c_address)
+                    $('#charity-modal-cPhone').val(item.c_phone)
+                    $("#charity-photo").attr("src", "/images/" + item.photo)
+                    $('#charity-modal-heartCode').val(item.heart_code)
+                    $('#charity-modal-createdAt').val(date)
+                })
+            }
+       })
+    }
+
+    function searchCharity()
+    {
+        var searchText = $("#searchText_ch").val();
+        var searchOption = $("#searchOption_ch").val();
+        $.ajax({
+        url: "getCharitiesByKeyword?searchOption=" + searchOption + "&searchText=" + searchText,
+        type: "POST",
+        success: function (charityList) {
+            $("#cmember-table tbody").empty();
+            if (charityList.length == 0) {
+                $("#cmember-table tbody").append(`<tr><td colspan='10'>查無相符的資料</td></tr>`)
+            }
+            else {
+                $(charityList).each(function (index, charity) {
+                    var dateString = charity.created_at.substr(6);
+                    var currentTime = new Date(parseInt(dateString));
+                    var month = currentTime.getMonth() + 1;
+                    var day = currentTime.getDate();
+                    var year = currentTime.getFullYear();
+                    var date = year + "/" + month + "/" + day;
+                    $("#cmember-table tbody").append(`<tr>
+                    <td>${charity.cId}</td>
+                    <td>${charity.c_name}</td>
+                    <td>${charity.c_address}</td>
+                    <td>${charity.c_phone}</td>
+                    <td>${charity.heart_code}</td>
+                    <td>${date}</td>
+                    <td><a type="button" class="btn btn-edit-charity" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
+                    <td><a class="btn btn-danger btn-delete" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity", "Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                </tr>`)
+
+                })
+            }
+
+        },
+        //error: function (err) { confirm("載入錯誤") }
+        })
+    }
+
+    function searchRestaurant()
+    {
+        var searchText = $("#searchText_rest").val();
+        var searchOption = $("#areaDataList").val();
+        $.ajax({
+        url: "getRestsByKeyword?searchOption=" + searchOption + "&searchText=" + searchText,
+        type: "POST",
+        success: function (restList) {
+            $("#rest-table tbody").empty();
+            if (restList.length == 0) {
+                $("#rest-table tbody").append(`<tr><td colspan='10'>查無相符的資料</td></tr>`)
+            }
+            else {
+                $(restList).each(function (index, rest) {
+                    //轉換結束營業datetime format
+                    var endDate = rest.endTime.substr(6);
+                    var currentTime = new Date(parseInt(endDate));
+                    var hour = currentTime.getHours();
+                    var minute = currentTime.getMinutes();
+                    if (minute == '0')
+                        minute = '00'
+                    var endTime = hour + ":" + minute;
+                    //轉換開始營業datetime format
+                    var startDate = rest.startTime.substr(6);
+                    var startCT = new Date(parseInt(startDate));
+                    var sminute = startCT.getMinutes(); //分
+                    if (sminute == '0')
+                        sminute = '00'
+                    var startTime = startCT.getHours() + ":" + sminute;
+                    $("#rest-table tbody").append(`<tr class="list">
+                    <td>${rest.rId}</td>
+                    <td>${rest.rName}</td>
+                    <td>${rest.rAddress}</td>
+                    <td>${rest.rPhone}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td><a class="btn btn-info sec-btn-info"  data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
+                    <td><a class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                </tr>`)
+
+                })
+            }
+        },
+        //error: function (err) { confirm("載入錯誤") }
+        })
+    }
+
+    function searchObj()
+    {
+        var searchText = $("#searchText_sup").val();
+        var searchOption = $("#option_obj").val();
+        $.ajax({
+        url: "getObjectsByKeyword?searchOption=" + searchOption + "&searchText=" + searchText,
+        type: "POST",
+        success: function (objList) {
+            $("#sup-table tbody").empty();
+            if (objList.length == 0) {
+                $("#sup-table tbody").append(`<tr><td colspan='10'>查無相符的資料</td></tr>`)
+            }
+            else {
+                $(objList).each(function (index, obj) {
+                    $("#sup-table tbody").append(`<tr class="list">
+                        <td>${obj.oId}</td>
+                        <td>${obj.oName}</td>
+                        <td>${obj.c_name}</td>
+                        <td>${obj.oNumber}</td>
+                        <td>${obj.oIntro}</td>
+                        <td><a class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>`)
+
+                })
+            }
+
+        },
+        //error: function (err) { confirm("載入錯誤") }
+    })
+    }
+
+    function findRestRecord(id)
+    {
+        $.ajax({
+            url: "@Url.Action("getRestById", "Home")",
+            method: "POST",
+            data: {"rId": id},
+            success: function (restaurants) {
+                $(restaurants).each(function (index, rest) {
+                    //轉換結束營業datetime format
+                    var endDate = rest.endTime.substr(6);
+                    var currentTime = new Date(parseInt(endDate));
+                    var hour = currentTime.getHours();
+                    var minute = currentTime.getMinutes();
+                    if (minute == '0')
+                        minute = '00'
+                    var endTime = hour + ":" + minute;
+                    //轉換開始營業datetime format
+                    var startDate = rest.startTime.substr(6);
+                    var startCT = new Date(parseInt(startDate));
+                    var sminute = startCT.getMinutes(); //分
+                    if (sminute == '0')
+                        sminute = '00'
+                    var startTime = startCT.getHours() + ":" + sminute;
+                    $('#rest-modal-rId').val(rest.rId)
+                    $('#rest-modal-rName').val(rest.rName)
+                    $('#rest-modal-rAddress').val(rest.rAddress)
+                    $('#rest-modal-rPhone').val(rest.rPhone)
+                    $('#rest-modal-starttime').val(startTime)
+                    $('#rest-modal-endtime').val(endTime)
+                })
+            }
+        })
+    }
+
+    </script>
+}

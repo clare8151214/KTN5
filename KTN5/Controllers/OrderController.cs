@@ -30,6 +30,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             var order = db.Order.OrderByDescending(m => m.orderId).ToList();
             return View(order);
         }
@@ -40,7 +41,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
-
+            ViewBag.Role = result.role;
             var order = db.Order.Where(m => m.uId == result.uId).OrderByDescending(m => m.orderId).ToList();            
             return View(order);
         }
@@ -88,6 +89,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             var order = db.OrderDetail.Where(m => m.orderId == orderid).ToList();
             return View(order);
         }

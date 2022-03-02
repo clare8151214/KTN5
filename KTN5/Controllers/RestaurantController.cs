@@ -15,7 +15,11 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
-            ViewBag.photo = result.photo;
+            if (result != null)
+            {
+                ViewBag.photo = result.photo;
+                ViewBag.Role = result.role;
+            }            
             string keyword = Request.Form["txtKeyword"];
             string area = Request.Form["txtArea"];
             List<Restaurant> list = null;
@@ -29,11 +33,19 @@ namespace KTN5.Controllers
             }
             return View(list);
         }
-
+        [Authorize]
         public ActionResult Create()
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (result != null)
+            {
+                ViewBag.photo = result.photo;
+                ViewBag.Role = result.role;
+            }
             return View();
         }
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Restaurant r)
         {
@@ -50,14 +62,22 @@ namespace KTN5.Controllers
             sql += "OR endTime LIKE '%" + keyword + "%'";
             return (new RestaurantFactory()).queryBySql(sql);
         }
-
+        [Authorize]
         public ActionResult Edit(int? id)
         {
+            string uid = User.Identity.Name;
+            var result = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (result != null)
+            {
+                ViewBag.photo = result.photo;
+                ViewBag.Role = result.role;
+            }
             Restaurant x = null;
             if (id != null)
                 x = (new RestaurantFactory()).queryByFid((int)id);
             return View(x);
         }
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Restaurant x)
         {
@@ -65,7 +85,7 @@ namespace KTN5.Controllers
             return RedirectToAction("List");
         }
 
-
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id != null)

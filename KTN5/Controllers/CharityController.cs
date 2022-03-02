@@ -19,6 +19,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             if (result.role == "公益單位")
             {
                 var charity = db.Charity_Member.Where(m => m.cId == result.cId).FirstOrDefault();
@@ -33,6 +34,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             if (result.role == "公益單位")
             {
                 var charity = db.Charity_Member.Where(m => m.uId == result.uId).FirstOrDefault();

@@ -83,14 +83,64 @@ CREATE TABLE [dbo].[Restaurant] (
 );
 GO
 
+CREATE TABLE [dbo].[Fund] (
+    [fId] int IDENTITY(1,1) NOT NULL,
+	[cId] int NULL,
+	[fText] nvarchar(max) NULL,
+    [targetMoney] money NULL,
+    [accMoney] money NULL,
+	[startTime] datetime NULL,
+	[endTime] datetime NULL,
+	[trueName] nvarchar(50) NULL,
+	[fPhone] nvarchar(50) NULL,
+	[fEmail] nvarchar(50) NULL,
+
+	PRIMARY KEY CLUSTERED ([fId] ASC)
+);
+GO
 
 
---CREATE TABLE [dbo].[CartItem] (
---    [pId] int IDENTITY(1,1) NOT NULL,
---	[oId] int NOT NULL,
---    [hId] int NOT NULL,
---    [count] int NOT NULL,    
---	[created_at] datetime  DEFAULT GETDATE(),
---	PRIMARY KEY CLUSTERED ([pId] ASC)
---);
---GO
+
+CREATE TABLE [dbo].[Solution] (
+    [sId] int IDENTITY(1,1) NOT NULL,
+	[fId] int NOT NULL,
+    [sMoney] money NULL,
+    [intro] nvarchar(max) NOT NULL,    
+	PRIMARY KEY CLUSTERED ([sId] ASC)
+);
+GO
+
+CREATE TABLE [dbo].[Sponsor] (
+    [uId] int  NOT NULL,
+	[sId] int  NOT NULL,
+);
+GO
+
+CREATE TABLE [dbo].[Invoice] (
+    [iId] int IDENTITY(1,1) NOT NULL,
+	[cId] int NOT NULL,
+	[targetNumber] bigint NOT NULL,
+	[accNumber] bigint NOT NULL, 
+	PRIMARY KEY CLUSTERED ([iId] ASC)
+);
+GO
+
+CREATE TABLE [dbo].[Donate] (
+    [dId] int IDENTITY(1,1) NOT NULL,
+	[cId] int NOT NULL,
+	[uId] int NULL,
+	[type] nvarchar(50) NOT NULL,
+	[money] money NOT NULL, 
+	PRIMARY KEY CLUSTERED ([dId] ASC)
+);
+GO
+
+
+--TRUNCATE TABLE [dbo].[User];
+--TRUNCATE TABLE [dbo].[Charity_Member];
+--TRUNCATE TABLE [dbo].[Object];
+
+--TRUNCATE TABLE [dbo].[Fund];
+--TRUNCATE TABLE [dbo].[Solution];
+--TRUNCATE TABLE [dbo].[Order];
+--TRUNCATE TABLE [dbo].[OrderDetail];

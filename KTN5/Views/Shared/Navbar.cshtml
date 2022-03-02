@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.title</title>
+    <link rel="icon" href="@Url.Content("~/Content/favicon.ico")" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/footer.css" rel="stylesheet" />
     <link rel="stylesheet"
@@ -61,8 +62,8 @@
                     <div class="activity">
                         <a href="#">公益活動<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#">募資活動</a></li>
-                            <li><a href="#">數位發票箱</a></li>
+                            <li><a href="@Url.Action("Create","Fund")">提案</a></li>
+                            <li><a href="@Url.Action("Index","Fund")">探索</a></li>
 
                         </ul>
                     </div>
@@ -70,7 +71,10 @@
                         <a href="#">公益捐贈<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
                             <li><a href="@Url.Action("Index","Object")">物資捐贈</a></li>
-                            <li><a href="#">愛心捐款</a></li>
+                            @if (!string.IsNullOrEmpty(ViewBag.Role))
+                            {
+                                <li><a href="@Url.Action("List","Object")">物資管理</a></li>
+                            }
                         </ul>
                     </div>
                     <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>
@@ -96,7 +100,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="@Url.Action("EditProfile","User")">設定會員資料</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("EditPassword","User")">變更密碼</a></li>
-                            @if (Session["role"] == "公益單位")
+                            @if (ViewBag.Role == "公益單位")
                             {
                                 <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
 
@@ -108,7 +112,7 @@
                         </ul>
                     </div>
                     <div class="shoppingcart-icon">
-                       <a href="@Url.Action("Index","ShoppingCart")"><i class="fa-solid fa-cart-shopping ms-3"></i></a>
+                        <a href="@Url.Action("Index","ShoppingCart")"><i class="fa-solid fa-cart-shopping ms-3"></i></a>
                         <span class="cart-count">@Session["Cart"]</span>
                     </div>
                 </div>
@@ -189,7 +193,7 @@
             </div>
         </section>
     </footer>
-
+    @RenderSection("Scripts", false);
     @*<script src="~/Scripts/cart_number_counter.js"></script>*@
 </body>
 </html>

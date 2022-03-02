@@ -4,6 +4,206 @@
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
+@section Styles{
+    <link href="~/Content/activities.css" rel="stylesheet" />
+}
+
+
+<div class="pay">
+    <div class="payhead">
+        <div class="activity-top">
+            <div class="left-img">
+                <img src="~/FundPhotos/@Model.sPhoto" alt="大手拉小手—引導計畫" width="100%" />
+            </div>
+            <div class="right-info">
+                <p>@Model.fName</p>
+                <h4>@Model.sName&nbsp每期 NT$<span id="mpay">@Model.sMoney.Value.ToString("N0")</span></h4>
+                <h5 style="font-size:15px;">
+                    提案人
+                    <a href="https://www.you-care.org.tw/" style="color:#000000;text-decoration:none;font-weight: bold;">@Model.cName</a>
+                </h5>
+                <div>
+                    <!-- 目前已募資金額 -->
+                    <div class="money">
+                        <div>
+                            <p class="money" id="money">NT$@Model.accMoney.Value.ToString("N0")</p>
+                        </div>
+                        <div>
+                            <p>目標金額NT$@Model.targetMoney.Value.ToString("N0")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-content">
+            <div class="left-project">
+                <div class="left-project-img">
+                    <img src="~/FundPhotos/@Model.fPhoto" alt="300" width="100%" /></img>
+                </div>
+
+                <div class="left-project-text">
+                    <div class="left-project-top">
+                        <h6>@Model.fName</h6>
+                        <h5 style="font-weight: bold;">@Model.sName&nbsp每期 NT$ @Model.sMoney.Value.ToString("N0")</h5>
+                        <hr>
+                        @*@Model.intro*@
+                        <p>
+                            ▉ 每月300元捐款一年，相當於支持一個社團15％的每月花費。
+                        </p>
+                        <p>
+                            ▉ 本方案回饋： 【普仁感謝禮】 ｜小太陽感謝卡ｘ１ ｜普仁紀念袋ｘ１ ｜普仁家園季刊ｘ１ ｜官網捐款列名 【園藝社禮包】 植物盆栽罐罐ｘ１ 室內香氛噴霧ｘ１ 【微熱山丘】 蜂蜜脆蛋糕ｘ１
+                        </p>
+                        <p>
+                            ▉ 其他注意事項：本方案至少需贊助滿 12 個月
+                        </p>
+                    </div>
+                    <div class="left-project-bottom">
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-project">
+                <form action="@Url.Action("Sponsor","Fund")" method="post">
+                    <input type="hidden" name="sId" value="@Model.sId" />
+                    <input type="hidden" name="fId" value="@Model.fId" />
+                    <input type="hidden" name="money" value="@Model.sMoney" />
+                    <div class="right-text">
+                        <label class="payment">付款方式</label>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payMethod" id="RadioCard" value="信用卡付款">
+                            <label class="form-check-label" for="RadioCard">
+                                <i class="fa-solid fa-credit-card"> 信用卡付款</i>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payMethod" id="flexRadioATM" value="ATM轉帳或臨櫃繳款" checked>
+                            <label class="form-check-label" for="flexRadioATM">
+                                <i class="fa-solid fa-building-columns"> ATM轉帳或臨櫃繳款</i>
+                            </label>
+                            <i class="bi bi-bank2"></i>
+                        </div>
+                    </div>
+
+                    <div class="right-text">
+                        <li>單位為非營利組織，僅能開立「捐款收據」，無法提供發票。</li>
+                    </div>
+
+                    <div class="right-text">
+                        <label class="option"> 加碼贊助</label>
+                        <h4>$ <input type="number" id="spNum" class="number" name="points" min="0" max="100" value="0" onchange="sendSpnum()" /></h4>
+                    </div>
+
+                    <div class="right-text">
+                        <div class="right-text-area">
+                            <label class="delivery">收件地點</label>
+                            <label for="country"></label>
+                            <select id="country" name="location" class="country" onchange="sendDfee()">
+                                <option value="台灣本島">台灣本島</option>
+                                <option id="tw-land" value="台灣外島(需額外運費)">台灣外島(需額外運費)</option>
+                                <option id="hk" value="香港">香港</option>
+                                <option id="mo" value="澳門">澳門</option>
+                            </select>
+                        </div>
+
+
+                        <div class="right-text-are-county">
+                            <div class="right-text-area1">
+                                <label name="county">縣市</label><br>
+                                <select id="sel" style="width: 200px; height: 2.5em;border-radius: 5px;border: 1px solid rgb(192, 192, 192);" name="city">
+                                    <option value="0">請選擇</option>
+                                    <option value="臺北市">臺北市</option>
+                                    <option value="新北市">新北市</option>
+                                    <option value="基隆市">基隆市</option>
+                                    <option value="桃園市">桃園市</option>
+                                    <option value="新竹市">新竹市</option>
+                                    <option value="新竹縣">新竹縣</option>
+                                    <option value="苗栗縣">苗栗縣</option>
+                                    <option value="臺中市">臺中市</option>
+                                    <option value="彰化縣">彰化縣</option>
+                                    <option value="南投縣">南投縣</option>
+                                    <option value="雲林縣">雲林縣</option>
+                                    <option value="嘉義市">嘉義市</option>
+                                    <option value="嘉義縣">嘉義縣</option>
+                                    <option value="臺南市">臺南市</option>
+                                    <option value="高雄市">高雄市</option>
+                                    <option value="屏東縣">屏東縣</option>
+                                    <option value="宜蘭縣">宜蘭縣</option>
+                                    <option value="花蓮縣">花蓮縣</option>
+                                    <option value="臺東縣">臺東縣</option>
+                                    <option value="澎湖縣">澎湖縣</option>
+                                    <option value="金門縣">金門縣</option>
+                                    <option value="連江縣">連江縣</option>
+                                </select>
+                            </div>
+                            <div class="right-text-area2">
+                                <label name="area">鄉鎮市區</label><br>
+                                <select id="sel2" name="country" style="width: 200px;  height: 2.5em;border-radius: 5px;border: 1px solid rgb(192, 192, 192);"><option>請選擇</option></select>
+                            </div>
+                        </div>
+
+                        <div class="right-text-area">
+                            <label for="address">地址</label><br>
+                            <input type="text" name="address" class="form-control" style="width:100%;  height: 2.5em;border-radius: 5px;" required>
+                        </div>
+                    </div>
+                    <div class="right-text">
+                        <label class="person">收件人</label><br>
+                        <input type="text" name="recipient" class="form-control" style="width: 100%; height:2.5em; border-radius:5px; " required>
+                    </div>
+                    <div class="right-text">
+                        <label class="phone">連絡電話</label><br>
+                        <input type="text" name="phone" class="form-control" style="width:100%;  height: 2.5em;border-radius: 5px;" required>
+                    </div>
+                    <div class="right-text">
+                        <label class="memo">備註</label><br>
+                        <input type="text" class="form-control" row="4" style="width:100%;  height: 2.5em;border-radius: 5px;" required>
+                    </div><br>
+
+                    <div class="right-project-total">
+                        <div>
+                            <label>選擇方案</label>
+                            <span>NT$<output id="mpayInput"></output></span>
+                            <br>
+                            <label>加碼贊助</label>
+                            <span>NT$<output id="spInput">0</output></span>
+                            <br>
+                            <label>運費</label>
+                            <span>NT$<output id="delivery-fee">0</output></span>
+                            <br>
+                            <hr>
+                            <div style="font-weight: bold;font-size: 20px;">
+                                <label>總金額</label>
+                                <span>NT$<output id="result"></output></span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="right-text2">
+                        <button type="submit" class="btn btn-primary">立即付款</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+     
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 <h2>捐贈方案</h2>
 
 <table class="table">
@@ -112,3 +312,7 @@
         </td>
     </tr>
 </table>
+
+
+<script src="~/Scripts/delivery-fee.js"></script>
+<script src="~/Scripts/area.js"></script>

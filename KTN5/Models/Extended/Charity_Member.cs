@@ -10,10 +10,12 @@ namespace KTN5.Models
     [MetadataType(typeof(Charity_MemberMetadata))]
     public partial class Charity_Member
     {
-        
+        public HttpPostedFileBase logoFile { get; set; }
     }
     public class Charity_MemberMetadata
     {
+        [DisplayName("單位編號")]
+        public int cId { get; set; }
         [DisplayName("單位名稱")]
         public string c_name { get; set; }
         [DisplayName("單位地址")]

@@ -14,7 +14,17 @@ namespace KTN5.Models
     
     public partial class Sponsor
     {
-        public int uId { get; set; }
-        public int sId { get; set; }
+        public int sponsorId { get; set; }
+        public Nullable<int> sId { get; set; }
+        public Nullable<int> fId { get; set; }
+        public string payMethod { get; set; }
+        public string location { get; set; }
+        public string city { get; set; }
+        public string country { get; set; }
+        public string address { get; set; }
+        public string recipient { get; set; }
+        public string phone { get; set; }
+        public Nullable<decimal> money { get; set; }
+        public Nullable<int> uId { get; set; }
     }
 }

@@ -3,6 +3,303 @@
     ViewBag.Title = "FundDetails";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
+@section Styles{
+    <link href="~/Content/program.css" rel="stylesheet" />
+}
+<script>
+    var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
+    loadData();
+    function loadData() {
+        $.ajax({
+            url: apiurl,
+            type: 'GET',
+            success: function (data) {
+                $("#showSolutions").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#showSolutions").append
+                    (
+                       `<div class="info">
+                        <div class="bottom-img">
+                            <a href="#">
+                                <img src="../FundPhotos/` + data[i].sPhoto + `" alt="300" />
+                            </a>
+                        </div>
+                        <h5 style="font-weight: bold;">` + data[i].sName + `</h5>
+                        <p id="infoPay">`
+                        + data[i].intro +
+                        `</p>
+                        <div class="program-btn">
+                            <button onclick="location.href = 'Sponsor?id=` + data[i].sId + `'" class="btn btn-primary">贊助</button>
+                        </div>
+                        </div>`
+                    );
+                }
+
+
+
+            }
+
+        });
+    }
+
+</script>
+
+
+
+<div class="program">
+    <div class="programhead">
+        <div class="program-top">
+            <div class="left-img">
+                <img src="~/FundPhotos/@Model.fPhoto" alt="@Model.fName" width="100%" /></img>
+            </div>
+            <div class="right-info">
+                <h4 style="font-weight: bold;">@Model.fName</h4>
+                <p>提案人&nbsp<span class="org2">@Model.cName</span></p>
+                <div>
+
+                    <div class="progress" style="height: 18px; font-size: 14px;">
+                        <div class="progress-bar"
+                             role="progressbar"
+                             style="width: @Model.progress%;"
+                             aria-valuenow="@Model.progress"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            @System.Decimal.Round(Model.progress.Value)%
+                        </div>
+                    </div><br>
+
+                    <div class="money">
+                        <div>
+                            <p>本專案已募集 NT$&nbsp<span id="pay" style="font-weight: bold;">@Model.accMoney.Value.ToString("N0")</span>&nbsp&nbsp&nbsp目標金額 NT$&nbsp<span id="payGoal" style="font-weight: bold;">@Model.targetMoney.Value.ToString("N0")</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="time">
+                    <h5>募資時間&nbsp<span id="time" style="font-weight: bold;">@Model.startTime.Value.ToShortDateString() ~ @Model.endTime.Value.ToShortDateString()</span></h5>
+                </div>
+                <div class="endtime">
+                    <h5>剩餘時間&nbsp<span id="endtime" style="font-weight: bold;">倒數 @Model.countDown.Value.Days 天</span></h5>
+                </div>
+                <div class="program-btn1">
+                    <a href='#one'>
+                        <button class="btn btn-primary">贊助專案</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="programText">
+        <div class="program-title">
+            <h4><i class="fa-solid fa-book">&nbsp專案內容&nbsp&nbsp&nbsp</i> </h4>
+        </div>
+        <div class="top-info">
+            <div class="top-info-icon">
+                <i class="fa-solid fa-users"></i><br><br>
+                <h5>在台灣，有近2萬名的「高關懷青少年」。</h5>
+            </div>
+            <p>
+                那裡，存在著許多難以想像的教育困境…。<br>
+                青少年是人生最動盪不安的階段，價值判斷、是非對錯都尚未成熟。
+            </p>
+
+            <p>
+                在最脆弱無力的年紀，要面對這些複雜的家庭問題，他們不知道要怎麼處理，我們社會又會如何協助他們正向長大?如果我們視而不見…，付出的代價是整個社會!
+                根據犯罪被害人保護協會的統計數據顯示，光是109年度登記在側的支出，含法律訴訟、急難救助、家庭湍懷重建、身心醫療協助等，即高達1.7億元。
+            </p><br>
+            <div class="top-info-icon">
+                <i class="fa-solid fa-palette"></i><br><br>
+                <h5>為什麼藉社團引導孩子?</h5>
+            </div>
+
+            <p>普仁基金會由中原大學慈暉社社友成立，我們深知社團可以為孩子提供安心成長的環境，在社團中可以學習到互助、溝通、領導力、企劃力，更有共同興趣和目標追尋，一起為理想付出，大家因為愛而凝聚的深厚情誼。</p><br>
+            <div class="top-info-icon">
+                <i class="fa-solid fa-book-open-reader"></i><br><br>
+                <h5>社團如何引導孩子成長?</h5>
+            </div>
+            <p>
+                <div class="top-info-center">
+                    1.	產生社會善的循環&nbsp&nbsp 2.	有更好的升學選擇&nbsp&nbsp 3.	建立自信心
+                </div>
+
+            </p><br>
+            <div class="top-info-icon">
+                <i class="fa-solid fa-school"></i><br><br>
+                <h5>普仁如何與學校合作?</h5>
+            </div>
+            <p>
+                【P計畫】<br>
+                學校老師主動規劃最適合當地學生的社團教案，並親自到基金會報告提案。<br>
+                普仁專家委員負責審核計畫，與老師共同討論出可行方案。<br><br>
+                【D執行】<br>
+                學校老師依計畫內容執行，每月上傳活動報導和學生參與心得到普仁官網。<br>
+                普仁募集所需一切資源。<br>
+                普仁進行關懷訪視。<br>
+                普仁定期舉辦交流研習會;安排青少年專家講座。<br><br>
+                【C查核】<br>
+                普仁透過定期線上查核、期中評鑑年度成果報告，檢核計畫執行成效，並提出改善建議。<br><br>
+                【A行動】<br>
+                計畫每年滾動式修正後，學校老師重新提出申請。<br>
+
+                普仁現支持22校23社團的年度營運開銷，其費用含專業老師鐘點費、設備費、課輔費、營養補給、比賽費用、維修費、服裝費、訓練耗材等。<br><br>
+                <div class="top-info-center">
+                    <h5>
+                        一起守護孩子第二個家~力挺孩子逆轉人生!<br><br>
+                        一起為孩子撕下標籤，給孩子一個夢想!
+                    </h5><br>
+                </div>
+        </div>
+        <div class="program-title">
+            <div id='one'>
+                <div class="program-title">
+                    <h4><i class="fa-solid fa-book">&nbsp方案內容&nbsp&nbsp&nbsp</i></h4>
+                    <p class="sleek">← 請左右捲動 →</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-info" id="showSolutions">
+            
+   
+            <div class="info">
+                <div class="bottom-img">
+                    <a href="#">
+                        <img src="~/images/回饋品-小圖-溫暖大手-月1000.jpg" alt="1000" /></img>
+                    </a>
+                </div>
+                <h5 style="font-weight: bold;">定期定額｜溫暖大手</h5>
+                <p id="infoPay">
+                    每1個月為一期<br>
+                    每期NT$1000<br><br>
+
+                    ▉每月1000元捐款一年，相當於支持0.5個社團的每月花費。<br>
+
+                    ▉本方案回饋：<br>
+                    【普仁感謝禮】<br>
+                    ｜小太陽感謝卡ｘ２<br>
+                    ｜普仁紀念袋ｘ２<br>
+                    ｜普仁家園季刊ｘ２<br>
+                    ｜官網捐款列名<br>
+
+                    【園藝社禮包】<br>
+                    植物盆栽罐罐ｘ２<br>
+                    室內香氛噴霧ｘ２<br>
+
+                    【微熱山丘】<br>
+                    蜂蜜脆蛋糕ｘ２<br>
+
+                    【印花樂】<br>
+                    小東西拉鍊包ｘ２<br>
+                    書衣手帳ｘ２<br>
+
+                    ▉其他注意事項：本方案至少需贊助滿 12 個月<br>
+                </p>
+                <div class="program-btn">
+                    <button class="btn btn-primary">贊助</button>
+                </div>
+            </div>
+            <div class="info">
+                <div class="bottom-img">
+                    <a href="#">
+                        <img src="~/images/回饋品-小圖-大顯身手-月2000.jpg" alt="2000" /></img>
+                    </a>
+                </div>
+                <h5 style="font-weight: bold;">定期定額｜大顯身手</h5>
+                <p id="infoPay">
+                    每1個月為一期<br>
+                    每期NT$2000<br><br>
+
+                    ▉每月2000元捐款一年，相當於支持1個社團的每月花費。<br>
+
+                    ▉本方案回饋：<br>
+                    【普仁感謝禮】<br>
+                    ｜小太陽感謝卡ｘ３　<br>
+                    ｜普仁紀念袋ｘ３<br>
+                    ｜普仁家園季刊ｘ３<br>
+                    ｜官網捐款列名<br>
+
+                    【園藝社禮包】<br>
+                    植物盆栽罐罐ｘ３<br>
+                    室內香氛噴霧ｘ３<br>
+
+                    【微熱山丘】<br>
+                    蜂蜜脆蛋糕ｘ３<br>
+
+                    【印花樂】<br>
+                    小東西拉鍊包ｘ３<br>
+                    13吋筆電收納包ｘ３<br>
+
+                    ▉其他注意事項：本方案至少需贊助滿 12 個月<br>
+                </p>
+                <div class="program-btn">
+                    <button class="btn btn-primary">贊助</button>
+                </div>
+            </div>
+            <div class="info">
+                <div class="bottom-img">
+                    <a href="#">
+                        <img src="~/images/回饋品-小圖-回春妙手-月2000.jpg" alt="3000" /></img>
+                    </a>
+                </div>
+                <h5 style="font-weight: bold;">定期定額｜回春妙手</h5>
+                <p id="infoPay">
+                    每1個月為一期<br>
+                    每期NT$3000<br><br>
+
+                    ▉每月3000元捐款一年，相當於支持1.5個社團的每月花費。<br>
+
+                    ▉本方案回饋：<br>
+                    【普仁感謝禮】<br>
+                    ｜小太陽感謝卡ｘ６　<br>
+                    ｜普仁紀念袋ｘ６<br>
+                    ｜普仁家園季刊ｘ６<br>
+                    ｜官網捐款列名<br>
+
+                    【園藝社禮包】<br>
+                    植物盆栽罐罐ｘ６<br>
+                    室內香氛噴霧ｘ６<br>
+
+                    【微熱山丘】<br>
+                    蜂蜜脆蛋糕ｘ６<br>
+
+                    【印花樂】<br>
+                    小東西拉鍊包ｘ６<br>
+                    13吋筆電收納包ｘ６<br>
+
+                    ▉其他注意事項：本方案至少需贊助滿 12 個月<br>
+                </p>
+                <div class="program-btn">
+                    <button class="btn btn-primary">贊助</button>
+                </div>
+            </div>
+        </div>
+        <div class="top-info">
+
+            <h5>【風險與變數】</h5>
+            <p>
+                本次群眾集資計劃由「財團法人普仁青年關懷基金會」發起。
+                集資結束後，我們將會依承諾時間給付所有贊助者回饋品，也會使命必達完成集資目標，若回饋品給付及集資目標執行過程中有任何變因或時程調整，都將主動以粉專貼文及 email 電子郵件通知報告所有支持此專案的贊助者，期間有任何問題也都可以與我們聯繫，再次感謝大家的支持。
+            </p>
+            <h5>【客服聯絡方式】</h5>
+            <p>
+                若您有 FAQ 外的其他問題，歡迎私訊基金會 FB 粉絲專頁，或於上班時間撥打基金會電話 (02)77231288 分機20，與我們聯繫！<br>
+                ｜官方粉絲專頁｜https://www.facebook.com/youthcare.tw <br>
+                ｜客服信箱｜ youcare20@you-care.org.tw<br>
+                ｜合作洽詢信箱｜ youcare14@you-care.org.tw<br>
+                ---------------------<br>
+                ｜立案字號｜(八九)青輔肆字第008321號函<br>
+                ｜勸募字號｜衛部救字第1101364592號 <br>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 <h2>募資</h2>
 
@@ -27,11 +324,11 @@
             倒數日期:
         </th>
         <th>
-            
+
         </th>
     </tr>
 
-   
+
     <tr>
         <td>
             @if (Model.fPhoto == "")
@@ -58,45 +355,13 @@
         <td>
             @Html.DisplayFor(modelItem => Model.countDown)
         </td>
-            
+
     </tr>
 </table>
 
 <hr />
 
-<table id="showSolutions" class="table">
+@*<table id="showSolutions" class="table">
 
-</table>
-<script>
+</table>*@
 
-
-    var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
-    loadData();
-    function loadData() {
-        $.ajax({
-            url: apiurl,
-            type: 'GET',
-            success: function (data) {
-                $("#showSolutions").empty();
-                console.log(data);
-                $("#showSolutions").append
-                    ("<tbody><tr><th>方案圖片</th><th>贊助金額</th><th>方案內容</th><th>贊助按鈕</th></tr>");
-                for (var i = 0; i < data.length; i++) {
-                    $("#showSolutions").append(
-                        "<tr>" +
-                        "<td>" + data[i].sPhoto + "</td>" +
-                        "<td>" + data[i].sMoney + "</td>" +
-                        "<td>" + data[i].intro + "</td>" +
-                        "<td><button type='button' value='選取' id='btnSelect" + data[i].sId +
-                        "' class='btn btn-info'><a href='Sponsor?id=" + data[i].sId + "'></a></button></td>" +
-                        "</tr>"
-
-                    );
-                    
-                }
-                $("#showSolutions").append("</tbody>");
-            }
-        });
-    }
-
-</script>

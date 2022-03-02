@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link rel="icon" href="@Url.Content("~/Content/favicon.ico")" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     @*<link href="~/Content/practice.css" rel="stylesheet" />*@
     <link href="~/Content/navbar.css" rel="stylesheet" />
@@ -27,15 +28,18 @@
                     <div class="activity">
                         <a href="#">公益活動<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#">募資活動</a></li>
-                            <li><a href="#">數位發票箱</a></li>                           
+                            <li><a href="@Url.Action("Create","Fund")">提案</a></li>
+                            <li><a href="@Url.Action("Index","Fund")">探索</a></li>
                         </ul>
                     </div>
                     <div class="invoice">
                         <a href="#">公益捐贈<i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-content">
                             <li><a href="@Url.Action("Index","Object")">物資捐贈</a></li>
-                            <li><a href="#">愛心捐款</a></li>
+                            @if (!string.IsNullOrEmpty(ViewBag.Role))
+                            {
+                                <li><a href="@Url.Action("List","Object")">物資管理</a></li>
+                            }
                         </ul>
                     </div>
                     <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>

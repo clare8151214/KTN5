@@ -25,8 +25,12 @@ namespace KTN5.Controllers
         {
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
-            if(result != null)
+            if (result != null)
+            {
                 ViewBag.photo = result.photo;
+                ViewBag.Role = result.role;
+            }
+
             List<ObjectIndexView> objects = new List<ObjectIndexView>();
             string keyword = Request.Form["txtKeyword"];
             if (string.IsNullOrEmpty(otype))
@@ -86,6 +90,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             if (isAdmin())
             {
                 IEnumerable<Object> objects = null;
@@ -124,7 +129,10 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             if (result != null)
+            {
                 ViewBag.photo = result.photo;
+                ViewBag.Role = result.role;
+            }
             ObjectIndexView objects = new ObjectIndexView();
 
             var query = (from o in db.Object
@@ -175,6 +183,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             if (isAdmin() || result.role == "公益單位")
             {             
                 Object obj = db.Object.FirstOrDefault(o => o.oId == id);
@@ -211,6 +220,7 @@ namespace KTN5.Controllers
             string uid = User.Identity.Name;
             var result = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = result.photo;
+            ViewBag.Role = result.role;
             if (isAdmin() || result.role == "公益單位")
             {
                 return View();

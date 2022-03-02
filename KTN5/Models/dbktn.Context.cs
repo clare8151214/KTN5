@@ -37,5 +37,6 @@ namespace KTN5.Models
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<Solution> Solution { get; set; }
         public virtual DbSet<Sponsor> Sponsor { get; set; }
+        public virtual DbSet<BloodMap> BloodMap { get; set; }
     }
 }

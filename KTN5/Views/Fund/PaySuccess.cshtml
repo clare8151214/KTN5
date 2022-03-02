@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "PaySuccess";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+
+@section Styles{
+
+
+    <link href="~/Content/paySuccess.css" rel="stylesheet" />
+}
+
+
+<div class="success">
+    <div class="payText">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3>訂單完成</h3>
+    </div>
+    <div class="payTime">
+        <p>
+            交易時間
+            <div onload="ShowTime()">
+                <p id="showbox" style="color: #5f1985; font-weight: 600"></p>
+            </div>
+        </p>
+
+        <h6>感謝您的捐贈讓社會更好!</h6>
+    </div>
+    <br />
+    <a href="@Url.Action("Index","Fund")"><i class="fa-solid fa-arrow-rotate-left">其他公益活動</i></a>
+</div>
+
+
+
+
+
+<script src="~/Scripts/payTime.js"></script>

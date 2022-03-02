@@ -193,19 +193,20 @@ namespace KTN5.Controllers
                     {
                         int timeout = login.RememberMe ? 525600 : 20;
                         var ticket = new FormsAuthenticationTicket(login.account, login.RememberMe, timeout);
+                        
                         string encrypted = FormsAuthentication.Encrypt(ticket);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
                         cookie.Expires = DateTime.Now.AddMinutes(timeout);
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);
-
+                        
                         if (Url.IsLocalUrl(ReturnUrl))
                         {
                             return Redirect(ReturnUrl);
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Admin", "Home");
                         }
                     }
                     else
@@ -373,6 +374,7 @@ namespace KTN5.Controllers
             dbktnEntities db = new dbktnEntities();
             var personalProfile = db.User.Where(m => m.account == uid).FirstOrDefault();
             ViewBag.photo = personalProfile.photo;
+            ViewBag.Role = personalProfile.role;
             return View(personalProfile);
         }
         [HttpPost]

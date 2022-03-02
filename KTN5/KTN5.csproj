@@ -109,6 +109,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\activities.css" />
+    <Content Include="Content\admin.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -125,7 +127,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="Content\footer.css" />
+    <Content Include="Content\Index.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\login_navbar.css" />
     <Content Include="Content\navbar.css" />
@@ -134,7 +138,10 @@
     <Content Include="Content\Object-FrontPage.css" />
     <Content Include="Content\Object-Store.css" />
     <Content Include="Content\oPhoto\2.jpg" />
+    <Content Include="Content\paySuccess.css" />
     <Content Include="Content\practice.css" />
+    <Content Include="Content\program.css" />
+    <Content Include="Content\project.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\User-info.css" />
     <Content Include="Content\購物車列表.css" />
@@ -143,6 +150,7 @@
     <Content Include="images\2.jpg" />
     <Content Include="images\3.jpg" />
     <Content Include="images\about-us.jpg" />
+    <Content Include="images\adminbg.jpg" />
     <Content Include="images\Charity_icon.svg" />
     <Content Include="images\Facebook_icon.png" />
     <Content Include="images\Facebook_icon.svg" />
@@ -167,6 +175,11 @@
     <Content Include="images\Object_icon.svg" />
     <Content Include="images\User_icon.svg" />
     <Content Include="images\其他_手推車.jpg" />
+    <Content Include="images\回饋品-小圖-回春妙手-月2000.jpg" />
+    <Content Include="images\回饋品-小圖-大顯身手-月2000.jpg" />
+    <Content Include="images\回饋品-小圖-溫暖大手-月1000.jpg" />
+    <Content Include="images\回饋品-小圖-理念推手-月300.jpg" />
+    <Content Include="images\回饋品-小圖-老師左右手-月600.jpg" />
     <Content Include="images\文具_36色色鉛筆組.jpg" />
     <Content Include="images\文具_學習工具書.jpg" />
     <Content Include="images\衛生_成人紙尿褲.jpg" />
@@ -178,6 +191,15 @@
     <Content Include="images\食品_玉米罐頭.jpg" />
     <Content Include="images\食品_純生乳奶粉.jpg" />
     <Content Include="images\食品_花雕雞麵.jpg" />
+    <Content Include="images\首圖1-1200x600.jpg" />
+    <Content Include="images\首圖2-1200x600.png" />
+    <Content Include="images\首圖3-1200x600.png" />
+    <Content Include="images\首圖4-1200x600.jpg" />
+    <Content Include="images\首圖5-1200x600.png" />
+    <Content Include="images\首圖6-1200x600.png" />
+    <Content Include="images\首圖7-1200x600.jpg" />
+    <Content Include="images\首圖8-1200x600.jpg" />
+    <Content Include="images\首圖9-1200x600.jpg" />
     <Content Include="Models\dbktn.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>dbktn.edmx</DependentUpon>
@@ -195,6 +217,7 @@
     <Content Include="Models\dbktn.edmx.diagram">
       <DependentUpon>dbktn.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\area.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -225,6 +248,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\cart_number_counter.js" />
+    <Content Include="Scripts\delivery-fee.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -232,6 +256,7 @@
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Object-Create.js" />
+    <Content Include="Scripts\payTime.js" />
     <Content Include="Scripts\practice.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\User-info.js" />
@@ -241,6 +266,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CharityController.cs" />
+    <Compile Include="Controllers\FundApiController.cs" />
     <Compile Include="Controllers\FundController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
@@ -254,9 +280,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BloodMap.cs">
+      <DependentUpon>dbktn.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Charity_Member.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CVMMember.cs" />
     <Compile Include="Models\dbktn.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -282,6 +312,7 @@
     <Compile Include="Models\Extended\OrderDetail.cs" />
     <Compile Include="Models\Extended\Restaurant.cs" />
     <Compile Include="Models\Extended\ShoppingCart.cs" />
+    <Compile Include="Models\Extended\Solution.cs" />
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\Fund.cs">
       <DependentUpon>dbktn.tt</DependentUpon>
@@ -358,6 +389,9 @@
     <Content Include="Views\Fund\FundDetails.cshtml" />
     <Content Include="Views\Fund\Sponsor.cshtml" />
     <Content Include="Views\Object\ObjectDetail.cshtml" />
+    <Content Include="Views\Fund\CreateSolution.cshtml" />
+    <Content Include="Views\Fund\PaySuccess.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,448 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-header a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar-header li {
+  list-style-type: none;
+}
+
+body {
+  padding-top: 130px;
+}
+
+/* purple decoration bar */
+.navbar-header::before {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 15px;
+  background-color: #905ca2;
+}
+
+.navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+  z-index: 1;
+  background-color: white;
+}
+
+.wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  padding-left: 80px;
+  cursor: pointer;
+}
+
+.navbar-nav {
+  width: 45%;
+  margin: 0 auto;
+}
+
+/* Menu */
+.dropdown {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.dropdown a:hover {
+  color: #5d007c;
+}
+
+.activity,
+.invoice {
+  position: relative;
+}
+
+.activity ul,
+.invoice ul {
+  position: absolute;
+  width: 110px;
+  border: 1px solid #ced4da;
+  border-top: 2.8px solid #5d007c;
+  display: none;
+  background-color: white;
+  z-index: 1;
+  padding-left: 0;
+}
+
+.activity a,
+.invoice a {
+  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+.dropdown-content a:hover {
+  background-color: #e8d2f7;
+}
+
+.activity li:not(:last-child) {
+  border-bottom: 1px solid #ced4da;
+}
+
+.activity:hover ul,
+.invoice:hover ul {
+  display: block;
+}
+
+.buttons {
+  padding-right: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.login,
+.register {
+  padding: 10px 13px;
+  margin-right: 30px;
+  background-color: orange;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.register {
+  padding: 10px 15px;
+  background-color: #5f1985;
+}
+
+.login a,
+.register a {
+  color: white;
+}
+
+.login:hover {
+  background-color: #ffb703;
+}
+
+.register:hover {
+  background-color: #905ca2;
+}
+
+/* icon */
+.fa-caret-down {
+  padding: 0 8px;
+}
+h2 {
+  color: #5f1985;
+  font-weight: bold;
+}
+.features .container .col-2 {
+  color: #595757;
+  justify-content: center;
+}
+.features .container .col-2:hover {
+  color: #f7b52c;
+}
+/* Carousel */
+.carousel-slide img {
+  width: 100%;
+}
+
+.carousel-container {
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: flex;
+}
+
+/* About-us */
+.px-6 {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
+.about-us img {
+  border-radius: 30px;
+}
+
+/* Achievement */
+.circle {
+  width: 140px;
+  height: 160px;
+  font-size: 20px;
+}
+
+.circle .number-text {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.circle i {
+  font-size: 30px;
+  color: #5f1985;
+}
+
+.bg-y {
+  background-color: #fceabd;
+}
+
+/* Cards */
+.projects h3,
+.features h3,
+.achievement h3 {
+  padding-left: 35px;
+  margin-bottom: 30px;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+}
+
+.card img {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 348px;
+  height: 196px;
+}
+
+.org {
+  font-size: 14px;
+}
+
+.progress-bar {
+  background-color: #ffb703;
+}
+
+/* Features */
+.features,
+.achievement {
+  background-color: #f4f4ff;
+}
+
+.features h3 {
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.invoice2 img {
+  display: block;
+  margin: 0px auto 100px auto;
+  border-radius: 30px;
+}
+
+.features {
+  margin: 50px 0;
+  padding: 50px 0;
+}
+
+/* footer */
+.footer-content {
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 100px 0px 0px 0px;
+  background-color: #dadada;
+  justify-content: center;
+}
+.left-info {
+  margin: 20px 20px;
+  padding: 20px 20px;
+  width: 500px;
+  justify-content: center;
+  position: relative;
+}
+.right-form {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 20px;
+  padding: 20px 20px;
+  justify-content: center;
+  width: 900px;
+}
+
+.left-info p,
+.right-form p {
+  font-size: 16px;
+}
+.form-group {
+  font-size: 16px;
+}
+.footer-content h4,
+.icon-title h4 {
+  color: #5f1985;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.btn1 {
+  margin: 20px auto;
+  height: 50px;
+  width: 600px;
+  border: none;
+  background: #5f1985;
+  border-radius: 30px 30px 30px 30px;
+}
+.btn1:hover {
+  background: rgb(67, 18, 94);
+}
+
+.Copyright {
+  position: position;
+  bottom: 30px;
+  text-decoration: center;
+}
+
+/* 選擇的方案 */
+.activity-top {
+  /* outline: 1px solid blue; */
+  display: flex;
+  padding-top: 30px;
+  justify-content: center;
+}
+
+.left-img {
+  /* outline: 1px solid green; */
+  width: 200px;
+}
+.right-info {
+  /* outline: 1px solid green; */
+  width: 800px;
+  padding: 20px 50px;
+}
+.right-info h4 {
+  font-weight: bold;
+  color: #5f1985;
+}
+.right-info h2 {
+  font-weight: bold;
+}
+.money p {
+  display: flex;
+  font-weight: bold;
+}
+.project-content {
+  /* outline: 1px solid blue; */
+  display: flex;
+  margin: 30px auto;
+  justify-content: center;
+  padding: 25px;
+}
+
+/* 方案細項說明(左) */
+.left-project {
+  /* outline: 1px solid green; */
+  justify-content: center;
+  width: 450px;
+  vertical-align: middle;
+  align-content: center;
+}
+.left-project-top {
+  /* outline: 1px solid blue; */
+  padding: 0px 10px;
+  width: 100%;
+  text-overflow: clip;
+}
+.left-project-top p {
+  white-space: pre-wrap;
+}
+.left-project-img,
+.left-project-text {
+  justify-content: center;
+  margin: 10px auto;
+}
+.left-project-text {
+  padding: 20px;
+}
+
+/* 付款細項(右)*/
+.right-project {
+  /* outline: 1px solid green; */
+  justify-content: center;
+  padding: 10px 30px;
+  width: 550px;
+}
+.form-check,
+.right-text {
+  /* outline: 1px solid rgb(128, 0, 75); */
+  margin: 20px 0px;
+  padding-left: 20px;
+}
+.fa-building-columns::before {
+  content: "\f19c";
+}
+.number {
+  width: 10em;
+  height: 1.5em;
+  border-radius: 5px;
+  border: 1px solid rgb(192, 192, 192);
+}
+
+.right-text-area1,
+.right-text-area2 {
+  margin: 30px 0px;
+}
+.right-text-area2 {
+  padding-left: 25px;
+}
+
+.right-text-are-county {
+  display: flex;
+}
+.country {
+  width: 100%;
+  height: 2.5em;
+  border-radius: 5px;
+  border: 1px solid rgb(192, 192, 192);
+}
+.right-project .btn {
+  margin: 20px auto;
+  height: 2.5em;
+  width: 10em;
+  border: none;
+  background: #5f1985;
+  border-radius: 30px 30px 30px 30px;
+  font-size: 15px;
+}
+.right-project .btn:hover {
+  background: rgb(67, 18, 94);
+}
+.right-text2 {
+  padding-left: 140px;
+}
+
+/* 總金額 */
+.right-project-total {
+  border: 1px solid rgb(192, 192, 192);
+  padding: 30px 20px;
+  border-radius: 10px 10px;
+}
+
+.right-project-total span {
+  float: right;
+}
