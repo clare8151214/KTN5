@@ -1,105 +1,114 @@
 ﻿@model KTN5.Models.Fund
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "提案";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
+@section Styles{
 
-<h2>Create</h2>
+    <link href="~/Content/proposal.css" rel="stylesheet" />
+}
 
 
-<form action="~/Fund/Create" method="post" enctype="multipart/form-data">
-
-
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Fund</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })
+<section class="proposal-background">
+    <div class="container p-5">
+        <div class="proposal-information">
+            <div class="proposal-title">
+                <p>我要提專案</p><br>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fText, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fText, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fText, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.targetMoney, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.targetMoney, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.targetMoney, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
 
+            <form class="proposal-info" action="~/Fund/Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div class="d-flex">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.startTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input name="startTime" type="date" class="form-control">
-                @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="col-6">
+                        <div class="proposal-group1">
+                            <label for="p-name">專案名稱</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <textarea class="form-control" name="pName" value="" rows="2" style="resize: none;" placeholder="可日後變更（例：ARRC 前瞻火箭｜台灣首支類衛星載具火箭 HTTP-3A 發射計畫" required></textarea><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.endTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input name="endTime" type="date" class="form-control">
-                @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="proposal-group1">
+                            <label for="p-number">專案概述</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <textarea class="form-control" name="pNumber" rows="5" value="" style="resize: none;" placeholder="請用 250 字摘要您的集資目標與計畫內容。產品型專案請說明產品內容，非產品集資請說明集資目的。" required></textarea><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.trueName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.trueName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.trueName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="proposal-group1">
+                            <label for="p-type">目標金額(新台幣)</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <textarea type="text" class="form-control" name="type" rows="3" cols="40" placeholder="挖貝採取的是全有全無制（All or Nothing），因此團隊可簡略試算集資成本、生產成本或集資資金使用分配，以推算出集資金額的門檻。" style="resize: none;"></textarea><br>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.fPhone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fPhone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fPhone, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fEmail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-
-                <input type="file" name="photo" id="photo"/>
-            </div>
-        </div>
+                        <div class="proposal-group1">
+                            <label for="start">專案開始日</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <input type="date" id="start" name="trip-start">
+                        </div>
 
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                        <div class="proposal-group1">
+                            <label for="start">專案結束日</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <input type="date" id="end" name="trip-end">
+                        </div><br>
+
+
+                        <div class="proposal-group1">
+                            <label for="p-type">聯絡窗口姓名</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <input type="text" class="form-control" name="price" placeholder="窗口的真實姓名"><br>
+                        </div>
+
+                        <div class="proposal-group1">
+                            <label for="p-type">聯絡電話</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <input type="phone" class="form-control" name="cellphone" placeholder="09xx-xxx-xxx/電話請加(區碼)"><br>
+                        </div>
+
+                        <div class="proposal-group1">
+                            <label for="p-type">電子郵件</label>
+                        </div>
+                        <div class="proposal-group2">
+                            <input type="email" class="form-control" name="cellphone" placeholder="此信箱提案信箱審核通過後，將會成為您的專案管理後台登入帳號。"><br>
+                        </div>
+
+                        <div class="col-6 text-center">
+                            <div class="proposal-img">
+                                <img src="~/images/Object_icon.svg" id="object-img" width="250" height="250">
+                            </div>
+                            <br>
+                            <div class="proposal-wrap">
+                                <div class="proposal-btn">
+                                    <label class="upload-btn text-center" for="upload"><i class="bi bi-camera"></i> 上傳照片</i></label>
+                                    <input type="file" id="upload" onchange="previewFile()"><br>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <br>
+                        <div class="proposal-line">
+                            <input type="submit" class="proposal-save btn" value="建立">
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </div>
-</form>
+            </form>
 
-@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Object-Create.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

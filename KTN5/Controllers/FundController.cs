@@ -297,6 +297,9 @@ namespace KTN5.Controllers
                 ViewBag.Role = user.role;
             }
             sponsor.uId = user.uId;
+            sponsor.created_at = DateTime.Now;
+            var fund = db.Fund.Where(m => m.fId == sponsor.fId).FirstOrDefault();
+            fund.accMoney += sponsor.money;
             db.Sponsor.Add(sponsor);
             db.SaveChanges();
             
@@ -316,6 +319,40 @@ namespace KTN5.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult SponsorDetail()
+        {
+            string uid = User.Identity.Name;
+            var user = db.User.Where(m => m.account == uid).FirstOrDefault();
+            if (user != null)
+            {
+                ViewBag.photo = user.photo;
+                ViewBag.Role = user.role;
+            }
+            var query = (from sp in db.Sponsor
+                         join f in db.Fund on sp.fId equals f.fId
+                         join sol in db.Solution on sp.sId equals sol.sId
+                         where sp.uId == user.uId
+                         select new
+                         {
+                             fName = f.fName,
+                             sName = sol.sName,
+                             money = sp.money,
+                             created_at = sp.created_at
+                         }).ToList();
+            List<SponsorDetailView> spons = new List<SponsorDetailView>();
+            foreach (var item in query)
+            {
+                spons.Add(new SponsorDetailView()
+                {
+                    fName = item.fName,
+                    sName = item.sName,
+                    money = item.money.Value,
+                    created_at = item.created_at.Value                    
+                });
+            }
 
+            return View(spons);
+        }
     }
 }

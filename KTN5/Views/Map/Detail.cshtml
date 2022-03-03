@@ -1,0 +1,159 @@
+﻿@model KTN5.Models.BloodMap
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Blood-Hospital.css" rel="stylesheet" />
+}
+<style>
+     /*   .flex {
+            display: flex;
+            flex-direction: row;
+        }*/
+
+    #map {
+        height: 520px;
+        width : 710px;
+        border:0;
+    }
+
+     /*   .form-horizontal {
+            height: 600px;
+            background-color: #F7B52C;
+            border-radius: 20px;
+            padding: 20px 20px;
+        }*/
+</style>
+
+<section class="Blood-Hospital">
+    <div class="container p-5">
+        <div class="d-flex">
+
+            <div class="col-7 text-center">
+
+                @*<iframe id="map"
+                        width="710" height="520" style="border:0;" allowfullscreen="" loading="lazy"></iframe>*@
+                <div id="map"></div>
+
+            </div>
+
+            <div class="col-5 px-5" style="background: #e0d7ff;">
+                <img src="~/images/Hospital_img.png" height="520px" alt="" style="position: absolute;">
+                <div class="hospital-group">
+
+                    <div class="hospital-group1">
+                        <span>@Model.bName</span>
+                    </div>
+                    <div class="hospital-group2">
+                        <span>
+                            <i class="fa-solid fa-location-dot"></i>&nbsp;@Model.bAddress
+                        </span>
+                    </div>
+
+                    <div class="hospital-group3">
+                        <span>
+                            <i class="fa-solid fa-phone"></i>&nbsp;電話
+                        </span>
+                    </div>
+                    <div class="hospital-group4">
+                        <span>@Model.bPhone</span>
+                    </div>
+
+                    <div class="hospital-group3">
+                        <span>
+                            <i class="fa-solid fa-clock"></i>&nbsp;營業時間
+                        </span>
+                    </div>
+                    <div class="hospital-group4">
+                        <span>@Model.startTime.Value－@Model.endTime.Value</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+function initMap() {
+        var kaoshiung = { lat: @Model.lat, lng: @Model.lng };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: kaoshiung
+        });
+
+        var marker = new google.maps.Marker({
+            position: { lat: @Model.lat , lng: @Model.lng },
+            map: map
+        });
+
+        const contentString =
+        '<div id="content">' +
+        '<div id="siteNotice">' +
+        "</div>" +
+        '<h1 id="firstHeading" class="firstHeading">@Model.bName</h1>' +
+        '<div id="bodyContent">' +
+        "<p><b>地址：</b>@Model.bAddress" +
+        "<p><b>作業時間：</b> @Model.startTime - @Model.endTime";
+        const infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        var mdl = marker;
+        google.maps.event.addListener(marker, 'mouseover', (function (mdl) {
+            return function () {
+                infowindow.open(map, marker);
+            }
+        })(marker));
+        google.maps.event.addListener(marker, 'mouseout', (function (mdl) {
+            return function () {
+                infowindow.close();
+            }
+        })(marker));
+        @*$.ajax({
+            url: '@Url.Action("GetAllLocation","Map")',
+            type: 'GET',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++)
+                {
+                    console.log(data[i]);
+                    marker[i] = new google.maps.Marker({
+                        position: { lat: data[i].lat, lng: data[i].lng },
+                        map:map
+                    });
+
+                    contentString[i] =
+                        '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+                        '<h1 id="firstHeading" class="firstHeading">' + data[i].bName + '</h1>' +
+                        '<div id="bodyContent">' +
+                        "<p><b>地址：</b>" + data[i].bAddress +
+                        "<p><b>作業時間：</b>" + data[i].startTime.Hours + ":" + data[i].startTime.Minutes + "-" + data[i].endTime.Hours + ":" + data[i].endTime.Minutes;
+                    infowindow[i] = new google.maps.InfoWindow({
+                        content: contentString[i]
+                    });
+                    var mdl = marker[i];
+                    google.maps.event.addListener(marker[i], 'mouseover', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].open(map, marker[i]);
+                        }
+                    })(marker[i], i));
+                    google.maps.event.addListener(marker[i], 'mouseout', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].close();
+                        }
+                    })(marker[i], i));
+
+                }
+
+            }
+
+        });*@
+    }
+</script>
+<script async defer id="mapScript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7fFaqIZ-Q0L0qRILLwabOa8Igg-k3MtE&callback=initMap">
+
+</script>

@@ -26,5 +26,6 @@ namespace KTN5.Models
         public string phone { get; set; }
         public Nullable<decimal> money { get; set; }
         public Nullable<int> uId { get; set; }
+        public Nullable<System.DateTime> created_at { get; set; }
     }
 }

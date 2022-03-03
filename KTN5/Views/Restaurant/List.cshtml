@@ -105,7 +105,7 @@
 
 <body>
     <div>
-        <img class="img-reataurant" src="~/image/restaurant-head-03.png" alt="" />
+        <img class="img-reataurant" src="~/images/restaurant-head-03.png" alt="" />
     </div>
     <div class="container">
 
@@ -167,9 +167,14 @@
                 <input type="submit" class="btn1 btn-primary" value="查詢" />
             }
         </div>
-        <div>
-            <a href="~/Restaurant/Create" class="btn btn-primary" style="background-color: #F7B52C; border: none;">+新增餐廳</a>
-        </div>
+        @if (ViewBag.Role == "管理員")
+        {
+            <div>
+                <a href="~/Restaurant/Create" class="btn btn-primary" style="background-color: #F7B52C; border: none;">+新增餐廳</a>
+            </div>
+
+        }
+
 
         <br />
 
@@ -183,10 +188,12 @@
                     <td>地    址</td>
                     <td>開店時間</td>
                     <td>結束時間</td>
-                    <td></td>
-                    <td></td>
-
-                </tr>
+                    @if (ViewBag.Role == "管理員")
+                    {
+                        <td></td>
+                        <td></td>
+                    }
+                    </tr>
 
 
                 @{
@@ -202,20 +209,26 @@
                             <td>@c.rAddress</td>
                             <td>@c.startTime.ToString()</td>
                             <td>@c.endTime.ToString()</td>
+                            @if (ViewBag.Role == "管理員") { 
+                            
+                                <td>
+                                    <a class="btn btn-edit"
+                                       href="@Url.Action("Edit","Restaurant")?id=@c.rId">
+                                        <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+                                    </a>
+                                </td>
 
-                            <td>
-                                <a class="btn btn-edit"
-                                   href="@Url.Action("Edit","Restaurant")?id=@c.rId">
-                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
-                                </a>
-                            </td>
+                                <td>
+                                    <a class="btn btn-delete"
+                                       href="@Url.Action("Delete","Restaurant")?id=@c.rId" onclick="return confirm('確定要刪除嗎?')">
+                                        <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+                                    </a>
+                                </td>
+                            
+                            
+                            }
+                            
 
-                            <td>
-                                <a class="btn btn-delete"
-                                   href="@Url.Action("Delete","Restaurant")?id=@c.rId" onclick="return confirm('確定要刪除嗎?')">
-                                    <i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
-                                </a>
-                            </td>
                         </tr>
                     }
                 }

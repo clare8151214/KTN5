@@ -2,7 +2,6 @@
 
 @{
     Layout = null;
-    
 }
 
 <!DOCTYPE html>
@@ -87,7 +86,7 @@
                         </ul>
                     </div>
                     <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>
-                    <a href="#">捐血地圖</a>
+                    <a href="@Url.Action("List","Map")">捐血地圖</a>
                 </div>
 
             </nav>
@@ -110,12 +109,14 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="@Url.Action("EditProfile","User")">設定會員資料</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("EditPassword","User")">變更密碼</a></li>
-                                @if(ViewBag.Role == "公益單位") 
-                                { 
+                                <li><a class="dropdown-item" href="@Url.Action("SponsorDetail","Fund")">贊助紀錄</a></li>
+
+                                @if (ViewBag.Role == "公益單位")
+                                {
                                     <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
-                                
+
                                 }
-                                
+
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -364,11 +365,10 @@
         <section class="features">
             <div class="container p-5">
                 <div class="d-flex flex-column">
-                    <h3><img src="images/LOGO-02.png" alt="" class="me-2" width="45px">平台服務</img></h3>
+                    <h3><img src="images/LOGO-02.png" alt="" class="me-2" width="45px">平台服務</h3>
                     <div class="text-center mb-5">
-                        <h2>
-                            有你我一起攜手協力照顧彼此</h4>
-                            <h5>所有流程由樂心平台把關，將資源送給需要幫助的人</h5>
+                        <h4>有你我一起攜手協力照顧彼此</h4>
+                        <h5>所有流程由樂心平台把關，將資源送給需要幫助的人</h5>
                     </div>
                     <div class="d-flex justify-content-center">
                         <div class="col-2">
@@ -400,7 +400,9 @@
                         </div>
                         <div class="col-2">
                             <div class="d-flex flex-column align-items-center">
-                                <div class="icon mb-3"><img src="~/images/icon/icon-04.svg" width="150px" alt="" href=""></div>
+                                <div class="icon mb-3">
+                                    <a href="@Url.Action("List","Map")"><img src="~/images/icon/icon-04.svg" width="150px" alt="" href=""></a>
+                                </div>
                                 <div class="title">捐血地圖</div>
                             </div>
                         </div>

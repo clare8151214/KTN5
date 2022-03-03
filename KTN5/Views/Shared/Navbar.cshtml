@@ -78,7 +78,7 @@
                         </ul>
                     </div>
                     <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>
-                    <a href="#">捐血地圖</a>
+                    <a href="@Url.Action("List","Map")">捐血地圖</a>
                 </div>
             </nav>
             @if (Request.IsAuthenticated)
@@ -100,6 +100,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="@Url.Action("EditProfile","User")">設定會員資料</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("EditPassword","User")">變更密碼</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("SponsorDetail","Fund")">贊助紀錄</a></li>
                             @if (ViewBag.Role == "公益單位")
                             {
                                 <li><a class="dropdown-item" href="@Url.Action("Edit","Charity")">編輯公益單位資料</a></li>
@@ -193,7 +194,7 @@
             </div>
         </section>
     </footer>
-    @RenderSection("Scripts", false);
+    @RenderSection("Scripts", false)
     @*<script src="~/Scripts/cart_number_counter.js"></script>*@
 </body>
 </html>

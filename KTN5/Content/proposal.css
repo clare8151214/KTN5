@@ -1,0 +1,317 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style-type: none;
+}
+
+body {
+  padding-top: 130px;
+}
+
+/* purple decoration bar */
+.navbar-header::before {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 15px;
+  background-color: #905ca2;
+}
+
+.navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+  z-index: 1;
+  background-color: white;
+}
+
+.wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  padding-left: 80px;
+  cursor: pointer;
+}
+
+.navbar-nav {
+  width: 45%;
+  margin: 0 auto;
+}
+
+/* Menu */
+.dropdown {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.dropdown a:hover {
+  color: #5d007c;
+}
+
+.activity,
+.invoice {
+  position: relative;
+}
+
+.activity ul,
+.invoice ul {
+  position: absolute;
+  width: 110px;
+  border: 1px solid #ced4da;
+  border-top: 2.8px solid #5d007c;
+  display: none;
+  background-color: white;
+  z-index: 1;
+  padding-left: 0;
+}
+
+.activity a,
+.invoice a {
+  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+}
+
+.dropdown-content a:hover {
+  background-color: #e8d2f7;
+}
+
+.activity li:not(:last-child) {
+  border-bottom: 1px solid #ced4da;
+}
+
+.activity:hover ul,
+.invoice:hover ul {
+  display: block;
+}
+
+.buttons {
+  padding-right: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.login,
+.register {
+  padding: 10px 13px;
+  margin-right: 30px;
+  background-color: orange;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.register {
+  padding: 10px 15px;
+  background-color: #5f1985;
+}
+
+.login a,
+.register a {
+  color: white;
+}
+
+.login:hover {
+  background-color: #ffb703;
+}
+
+.register:hover {
+  background-color: #905ca2;
+}
+
+/* 提案頁proposal */
+.proposal-background {
+  background-color: #e0d7ff;
+}
+
+.proposal-information {
+  width: 850px;
+  padding: 50px 50px;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 50px 190px;
+  margin: 10px auto;
+  justify-content: center;
+}
+
+.proposal-title {
+  color: #5f1985;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.proposal-img {
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  margin: 0 120px;
+}
+
+.proposal-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 400px;
+  padding-left: 190px;
+}
+
+input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  top: 10px;
+  left: 8px;
+  font-size: 15px;
+  color: #b8b8b8;
+}
+
+.proposal-btn {
+  position: relative;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  background-color: #f7b52c;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.upload-btn:hover {
+  background-color: orange;
+  color: white;
+}
+
+.proposal-group1 {
+  font-weight: 600;
+  font-size: large;
+  padding-bottom: 5px;
+  color: #5f1985;
+  font-weight: bold;
+}
+
+.proposal-group2 {
+  width: 500px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Inter", sans-serif, "Noto Sans TC", sans-serif;
+}
+
+.proposal-line {
+  padding-left: 140px;
+  padding-top: 10px;
+}
+
+.proposal-save {
+  font-size: 16px;
+  font-weight: 300;
+  padding: 14px 40px;
+  width: 200px;
+  border: none;
+  border-radius: 30px;
+  background: #905ca2;
+  margin-top: 30px;
+  color: white;
+  font-weight: bold;
+}
+
+.proposal-save:hover {
+  background-color: #5f1985;
+  color: white;
+}
+
+label {
+  display: block;
+  font: 1rem "Fira Sans", sans-serif;
+}
+
+input,
+label {
+  margin: 0.4rem 0;
+}
+
+/* footer */
+.footer-content {
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 100px 0px 0px 0px;
+  background-color: #dadada;
+  justify-content: center;
+}
+.left-info {
+  margin: 20px 20px;
+  padding: 20px 20px;
+  width: 500px;
+  justify-content: center;
+  position: relative;
+}
+.right-form {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 20px;
+  padding: 20px 20px;
+  justify-content: center;
+  width: 900px;
+}
+
+.left-info p,
+.right-form p {
+  font-size: 16px;
+}
+.form-group {
+  font-size: 16px;
+}
+.footer-content h4,
+.icon-title h4 {
+  color: #5f1985;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.btn1 {
+  margin: 20px auto;
+  height: 50px;
+  width: 600px;
+  border: none;
+  background: #5f1985;
+  border-radius: 30px 30px 30px 30px;
+}
+.btn1:hover {
+  background: rgb(67, 18, 94);
+}
+
+.Copyright {
+  position: position;
+  bottom: 30px;
+  text-decoration: center;
+}

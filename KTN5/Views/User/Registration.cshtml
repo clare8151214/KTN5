@@ -3,29 +3,47 @@
     ViewBag.Title = "註冊";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles{
+    <link href="~/Content/send-success.css" rel="stylesheet" />
 
-<!-- The Modal -->
-<div id="myregister1" class="register1">
+}
 
-    <!-- Modal content -->
-    <div class="register1-content">
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Message != null)
+    {
+        <div class="send-letter">
+            <div class="send-success">
 
-        <div class="well">
-            <h2>註冊</h2>
-            <br>
-            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
-            {
-                if (ViewBag.Message != null)
-                {
-                    <div class="alert alert-success">
-                        <strong>Success!</strong>  @ViewBag.Message
-                    </div>
+                <div class="send-icon">
+                    <h1><i class="fa-solid fa-check"></i></h1>
+                </div>
+                <br>
 
-                    <p class="helper-text"> @Html.ActionLink("登入", "Login", "User", new { style = "color: #5f1985;" })</p>
-                }
-            }
-            else
-            {
+                <h2>註冊完成</h2>
+
+                <p>歡迎使用&nbsp;&nbsp;樂心公益平台</p>
+
+                <div class="send-helper">
+                    <a href="@Url.Action("Login")">返回登入</a>
+                </div>
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <!-- The Modal -->
+    <div id="myregister1" class="register1">
+
+        <!-- Modal content -->
+        <div class="register1-content">
+
+            <div class="well">
+                <h2>註冊</h2>
+                <br>
+
                 <div class="tabs">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -122,17 +140,12 @@
                         </div>
                     </div>
                 </div>
-            }
-
-
-
+            </div>
         </div>
     </div>
-
-</div>
-
-@section Scripts{
-    <script src="~/Scripts/register.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 }
+    @section Scripts{
+        <script src="~/Scripts/register.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    }

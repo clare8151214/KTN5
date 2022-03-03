@@ -1,0 +1,55 @@
+tr.table-head {
+    background: #905ca2;
+    box-shadow: none;
+    color: #fff;
+    font-size: 16px;
+    height: 50px;
+    text-align: center;
+}
+
+tr.list {
+    font-weight: 600;
+    background: #fff;
+    box-shadow: none;
+    color: #000000;
+    font-size: 14px;
+    height: 40px;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
+    height: 100px;
+}
+
+tr.list:hover {
+    background: #e0d7ff;
+}
+
+.table-head th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.table-head th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.table thead.table-dark tr th {
+    background-color: #905ca2;
+    color: white;
+    border-bottom: 2px solid #905ca2;
+}
+
+.i-Id{
+    width: 100px;
+}
+
+.i-Name{
+    width: 450px;
+}
+
+.i-Solution,.i-Time{
+    width: 250px;
+}
+
+.i-Money{
+    width: 200px;
+}

@@ -14,7 +14,9 @@
           integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
+    @RenderSection("Styles", false)
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
 
 </head>
 <body>
@@ -43,7 +45,7 @@
                         </ul>
                     </div>
                     <a href="@Url.Action("List","Restaurant")">愛心餐廳</a>
-                    <a href="#">捐血地圖</a>
+                    <a href="@Url.Action("List","Map")">捐血地圖</a>
                 </div>
             </nav>
             <div class="buttons">

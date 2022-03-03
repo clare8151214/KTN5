@@ -348,81 +348,9 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </section>
 
 
 
-
-
-
-
-
-
-
-<h2>募資列表</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            編號
-        </th>
-        <th>
-            專案名稱
-        </th>
-        <th>
-            提案單位
-        </th>
-        <th>
-            累積金額
-        </th>
-        <th>
-            進度:
-        </th>
-        <th>
-            倒數日期:
-        </th>
-        <th>
-            專案圖片
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.fId)
-            </td>
-            <td>
-                <a href="@Url.Action("FundDetails")?id=@item.fId" class="btn btn-info">@item.fName</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.accMoney)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.progress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.countDown)
-            </td>
-            <td>
-                @if (item.fPhoto == "")
-                {
-                    <img src="~/Content/oPhoto/2.jpg" width="100" height="100" />
-                }
-                else
-                {
-                    <img src="~/FundPhotos/@item.fPhoto" width="100" height="100" />
-                }
-            </td>
-        </tr>
-    }
-
-</table>

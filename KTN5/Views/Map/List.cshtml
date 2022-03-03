@@ -1,0 +1,190 @@
+﻿
+@model IEnumerable<KTN5.Models.BloodMap>
+
+@{
+    ViewBag.Title = "捐血地圖";
+    Layout = "~/Views/Shared/Navbar.cshtml";
+}
+@section Styles{
+
+    <link href="~/Content/捐血地圖.css" rel="stylesheet" />
+
+}
+
+
+
+
+<section class="mb-5">
+    <h3 class="mt-5 ps-6">
+        <img src="~/images/blood-donation.png" alt="blood-donation icon" width="45px" /> 捐血地圖
+    </h3>
+    <div class="donation-sec mt-3 row">
+        <div class="col-8 donation-map" id="map">
+            @*<div id="map"></div>*@
+        </div>
+        <div class="col-4 donation-area">
+            <div class="area-search mb-3 ps-3">
+                <span class="me-2">
+                    <i class="fa-solid fa-location-dot me-2 c-org"></i>地區查詢:
+                </span>
+                <form>
+                    <select id="dropdawnList" class="form-select w-45 mt-4 d-inline"
+                            aria-label="Default select example">
+                        <option selected value="all">請選擇地區</option>
+                        <option value="楠梓區">楠梓區</option>
+                        <option value="左營區">左營區</option>
+                        <option value="鼓山區">鼓山區</option>
+                        <option value="鹽埕區">鹽埕區</option>
+                        <option value="三民區">三民區</option>
+                        <option value="前金區">前金區</option>
+                        <option value="新興區">新興區</option>
+                        <option value="苓雅區">苓雅區</option>
+                        <option value="前鎮區">前鎮區</option>
+                        <option value="小港區">小港區</option>
+                        <option value="旗津區">旗津區</option>
+                        <option value="鳳山區">鳳山區</option>
+                        <option value="鳥松區">鳥松區</option>
+                        <option value="仁武區">仁武區</option>
+                        <option value="大社區">大社區</option>
+                        <option value="大樹區">大樹區</option>
+                        <option value="大寮區">大寮區</option>
+                        <option value="林園區">林園區</option>
+                        <option value="岡山區">岡山區</option>
+                        <option value="橋頭區">橋頭區</option>
+                        <option value="路竹區">路竹區</option>
+                        <option value="燕巢區">燕巢區</option>
+                        <option value="阿蓮區">阿蓮區</option>
+                        <option value="田寮區">田寮區</option>
+                        <option value="梓官區">梓官區</option>
+                        <option value="彌陀區">彌陀區</option>
+                        <option value="永安區">永安區</option>
+                        <option value="湖內區">湖內區</option>
+                        <option value="茄萣區">茄萣區</option>
+                        <option value="旗山區">旗山區</option>
+                        <option value="美濃區">美濃區</option>
+                        <option value="內門區">內門區</option>
+                        <option value="杉林區">杉林區</option>
+                        <option value="甲仙區">甲仙區</option>
+                        <option value="六龜區">六龜區</option>
+                        <option value="那瑪夏區">那瑪夏區</option>
+                        <option value="桃源區">桃源區</option>
+                        <option value="茂林區">茂林區</option>
+                    </select>
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="blood-mobile ps-5" id="btnGroup">
+                <h5 class="mt-5">
+                    <i class="fa-solid fa-map-pin me-2"></i> 固定捐血地點
+                </h5>
+                @foreach (var item in Model)
+                {
+                    <a href="@Url.Action("Detail","Map")?id=@item.bId" class="btn mt-4 c-white">@item.bName</a>
+                }
+
+                @*<a class="btn mt-4 c-white">左營捐血室</a>
+                <a class="btn mt-4 c-white">前金捐血室</a>
+                <a class="btn mt-4 c-white">岡山捐血室</a>
+                <a class="btn mt-4 c-white">苓雅捐血室</a>
+                <a class="btn mt-4 c-white">捷運鳳山捐血室</a>
+                <a class="btn mt-4 c-white">楠梓捐血室</a>*@
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<script async defer id="mapScript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7fFaqIZ-Q0L0qRILLwabOa8Igg-k3MtE&callback=initMap">
+
+</script>
+
+
+<script>
+    function initMap() {
+        var kaoshiung = { lat: 22.628026, lng: 120.293009 };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: kaoshiung
+        });
+        var marker = [];
+        const contentString = [];
+        const infowindow = [];
+        $.ajax({
+            url: '@Url.Action("GetAllLocation","Map")',
+            type: 'GET',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++)
+                {
+                    console.log(data[i]);
+                    marker[i] = new google.maps.Marker({
+                        position: { lat: data[i].lat, lng: data[i].lng },
+                        map:map
+                    });
+
+                    contentString[i] =
+                        '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+                        '<h1 id="firstHeading" class="firstHeading">' + data[i].bName + '</h1>' +
+                        '<div id="bodyContent">' +
+                        "<p><b>地址：</b>" + data[i].bAddress +
+                        "<p><b>作業時間：</b>" + data[i].startTime.Hours + ":" + data[i].startTime.Minutes + "-" + data[i].endTime.Hours + ":" + data[i].endTime.Minutes;
+                    infowindow[i] = new google.maps.InfoWindow({
+                        content: contentString[i]
+                    });
+                    var mdl = marker[i];
+                    google.maps.event.addListener(marker[i], 'mouseover', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].open(map, marker[i]);
+                        }
+                    })(marker[i], i));
+                    google.maps.event.addListener(marker[i], 'mouseout', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].close();
+                        }
+                    })(marker[i], i));
+
+                }
+
+            }
+
+        });
+    }
+    
+
+
+
+    $("#dropdawnList").change(function () {
+        var a = $("#dropdawnList").val();
+        console.log(a);
+        $.ajax({
+            url : '@Url.Action("GetLocation","Map")?country=' + a,
+            type: 'GET',
+            success: function (data) {
+                $("#btnGroup").empty();
+                $("#btnGroup").append
+                    (`<h5 class="mt-5">
+                        <i class="fa-solid fa-map-pin me-2"></i> 固定捐血地點
+                     </h5>`);
+                for (var i = 0; i < data.length; i++) {
+                    $("#btnGroup").append(`<a href="/Map/Detail?id=`+data[i].bId + `" class="btn mt-4 c-white">` + data[i].bName + `</a>`);
+                    
+                }
+
+            }
+
+        });
+
+    });
+
+</script>
