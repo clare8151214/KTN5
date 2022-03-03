@@ -15,15 +15,15 @@
         <div class="d-flex lg:justify-content-end">
             <ul>
                 <li>
-                    <a class="weeknew" href="#">本週熱門</a>
+                    <a class="weeknew" href="@Url.Action("Index")?keyword=本週熱門">本週熱門</a>
                 <li>
-                    <a class="new" href="#">最新上線</a>
+                    <a class="new" href="@Url.Action("Index")?keyword=最新上線">最新上線</a>
                 </li>
                 <li>
-                    <a class="end" href="#">即將結束</a>
+                    <a class="end" href="@Url.Action("Index")?keyword=即將結束">即將結束</a>
                 </li>
                 <li>
-                    <a class="all" href="#">全部專案</a>
+                    <a class="all" href="@Url.Action("Index")">全部專案</a>
                 </li>
 
             </ul>
@@ -76,41 +76,8 @@
             }
 
 
-            <div class="col-4 d-flex justify-content-center">
-                <div class="mb-3">
-                    <div class="card" style="width: 21rem">
-                        <a class="pro1" href="#">
-                            <img src="~/images/首圖2-1200x600.png"
-                                 class="card-img-top"
-                                 alt="《全魯凱語山上教室》集資計畫｜讓扎根在石板屋裡的魯凱族，重新萌芽於山林之間" />
-                        </a>
-                        <div class="card-body">
-                            <a class="pro1" href="#"><h6 class="card-title">《全魯凱語山上教室》集資計畫｜讓扎根在石板屋裡的魯凱族，重新萌芽於山林之間</h6></a>
-
-                            <p>提案人&nbsp<span class="org">南島魯瑪社</span></p>
-                            <div class="pay">
-                                <p>NT$<span id="pay">20,736</span></p>
-                            </div>
-
-                            <div class="progress">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     style="width: 14%"
-                                     aria-valuenow="14"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100">
-                                    14%
-                                </div>
-                            </div><br>
-
-                            <div class="endtime">
-                                <p>剩餘時間&nbsp&nbsp<span id="endtime" style="font-weight: bold;">倒數63天</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 d-flex justify-content-center">
+            
+            @*<div class="col-4 d-flex justify-content-center">
                 <div class="mb-3">
                     <div class="card" style="width: 21rem">
                         <a class="pro1" href="#">
@@ -246,40 +213,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 d-flex justify-content-center">
-                <div class="mb-3">
-                    <div class="card" style="width: 21rem">
-                        <a class="pro1" href="#">
-                            <img src="~/images/首圖7-1200x600.jpg"
-                                 class="card-img-top"
-                                 alt="攜旺流浪狗教育助學資金" />
-                        </a>
-                        <div class="card-body">
-                            <a class="pro1" href="#"><h6 class="card-title">攜旺流浪狗教育助學資金</h6><br></a>
-
-                            <p>提案人&nbsp<span class="org">攜旺浪浪中途學校</span></p>
-                            <div class="pay">
-                                <p>NT$<span id="pay">207,630</span></p>
-                            </div>
-
-                            <div class="progress">
-                                <div class="progress-bar"
-                                     role="progressbar"
-                                     style="width: 75%"
-                                     aria-valuenow="75"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100">
-                                    75%
-                                </div>
-                            </div><br>
-
-                            <div class="endtime">
-                                <p>剩餘時間&nbsp&nbsp<span id="endtime" style="font-weight: bold;">倒數32天</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="col-4 d-flex justify-content-center">
                 <div class="mb-3">
                     <div class="card" style="width: 21rem">
@@ -347,7 +281,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
+
+
+
         </div>
     </div>
 </section>

@@ -27,28 +27,28 @@
                             <label for="p-name">專案名稱</label>
                         </div>
                         <div class="proposal-group2">
-                            <textarea class="form-control" name="pName" value="" rows="2" style="resize: none;" placeholder="可日後變更（例：ARRC 前瞻火箭｜台灣首支類衛星載具火箭 HTTP-3A 發射計畫" required></textarea><br>
+                            <textarea class="form-control" name="fName" value="" rows="2" style="resize: none;" placeholder="可日後變更（例：ARRC 前瞻火箭｜台灣首支類衛星載具火箭 HTTP-3A 發射計畫" required></textarea><br>
                         </div>
 
                         <div class="proposal-group1">
                             <label for="p-number">專案概述</label>
                         </div>
                         <div class="proposal-group2">
-                            <textarea class="form-control" name="pNumber" rows="5" value="" style="resize: none;" placeholder="請用 250 字摘要您的集資目標與計畫內容。產品型專案請說明產品內容，非產品集資請說明集資目的。" required></textarea><br>
+                            <textarea class="form-control" name="fText" rows="5" value="" style="resize: none;" placeholder="請用 250 字摘要您的集資目標與計畫內容。產品型專案請說明產品內容，非產品集資請說明集資目的。" required></textarea><br>
                         </div>
 
                         <div class="proposal-group1">
                             <label for="p-type">目標金額(新台幣)</label>
                         </div>
                         <div class="proposal-group2">
-                            <textarea type="text" class="form-control" name="type" rows="3" cols="40" placeholder="挖貝採取的是全有全無制（All or Nothing），因此團隊可簡略試算集資成本、生產成本或集資資金使用分配，以推算出集資金額的門檻。" style="resize: none;"></textarea><br>
+                            <textarea type="text" class="form-control" name="targetMoney" rows="3" cols="40" placeholder="挖貝採取的是全有全無制（All or Nothing），因此團隊可簡略試算集資成本、生產成本或集資資金使用分配，以推算出集資金額的門檻。" style="resize: none;"></textarea><br>
                         </div>
 
                         <div class="proposal-group1">
                             <label for="start">專案開始日</label>
                         </div>
                         <div class="proposal-group2">
-                            <input type="date" id="start" name="trip-start">
+                            <input type="date" id="start" name="startTime">
                         </div>
 
 
@@ -56,7 +56,7 @@
                             <label for="start">專案結束日</label>
                         </div>
                         <div class="proposal-group2">
-                            <input type="date" id="end" name="trip-end">
+                            <input type="date" id="end" name="endTime">
                         </div><br>
 
 
@@ -64,21 +64,21 @@
                             <label for="p-type">聯絡窗口姓名</label>
                         </div>
                         <div class="proposal-group2">
-                            <input type="text" class="form-control" name="price" placeholder="窗口的真實姓名"><br>
+                            <input type="text" class="form-control" name="trueName" placeholder="窗口的真實姓名"><br>
                         </div>
 
                         <div class="proposal-group1">
                             <label for="p-type">聯絡電話</label>
                         </div>
                         <div class="proposal-group2">
-                            <input type="phone" class="form-control" name="cellphone" placeholder="09xx-xxx-xxx/電話請加(區碼)"><br>
+                            <input type="text" class="form-control" name="fPhone" placeholder="09xx-xxx-xxx/電話請加(區碼)"><br>
                         </div>
 
                         <div class="proposal-group1">
                             <label for="p-type">電子郵件</label>
                         </div>
                         <div class="proposal-group2">
-                            <input type="email" class="form-control" name="cellphone" placeholder="此信箱提案信箱審核通過後，將會成為您的專案管理後台登入帳號。"><br>
+                            <input type="email" class="form-control" name="fEmail" placeholder="此信箱提案信箱審核通過後，將會成為您的專案管理後台登入帳號。"><br>
                         </div>
 
                         <div class="col-6 text-center">
@@ -88,8 +88,8 @@
                             <br>
                             <div class="proposal-wrap">
                                 <div class="proposal-btn">
-                                    <label class="upload-btn text-center" for="upload"><i class="bi bi-camera"></i> 上傳照片</i></label>
-                                    <input type="file" id="upload" onchange="previewFile()"><br>
+                                    <label class="upload-btn text-center" for="upload"><i class="bi bi-camera"></i> 上傳照片</label>
+                                    <input type="file" name="photo" id="upload" onchange="previewFile()"><br>
                                 </div>
                             </div>
 

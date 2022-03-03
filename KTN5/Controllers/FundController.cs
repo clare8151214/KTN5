@@ -11,7 +11,7 @@ namespace KTN5.Controllers
         dbktnEntities db = new dbktnEntities();
         // GET: Fund
 
-        public ActionResult Index()
+        public ActionResult Index(string keyword)
         {
             string uid = User.Identity.Name;
             var user = db.User.Where(m => m.account == uid).FirstOrDefault();
@@ -21,7 +21,7 @@ namespace KTN5.Controllers
                 ViewBag.Role = user.role;
             }
             List<FundsView> funds = new List<FundsView>(); 
-            string keyword = Request.Form["txtKeyword"];
+            //string keyword = Request.Form["txtKeyword"];
             if (string.IsNullOrEmpty(keyword))
             {
                 var query = (from f in db.Fund
@@ -55,11 +55,11 @@ namespace KTN5.Controllers
                     });
                 }
             }              
-            else
+            else if(keyword == "本週熱門")
             {
                 var query = (from f in db.Fund
                              join c in db.Charity_Member on f.cId equals c.cId
-                             where f.trueName.Contains(keyword)
+                             orderby f.accMoney descending
                              select new
                              {
                                  fId = f.fId,
@@ -71,7 +71,7 @@ namespace KTN5.Controllers
                                  endTime = f.endTime,
                                  fPhoto = f.fPhoto,
 
-                             }).ToList();
+                             }).Take(3);
 
                 foreach (var item in query)
                 {
@@ -84,7 +84,75 @@ namespace KTN5.Controllers
                         //startTime = item.startTime,
                         //endTime = item.endTime,
                         countDown = (item.endTime - item.startTime),
-                        progress =  (item.accMoney / item.targetMoney),
+                        progress =  (item.accMoney / item.targetMoney) * 100,
+                        fPhoto = item.fPhoto,
+                    });
+                }
+            }
+            else if (keyword == "最新上線")
+            {
+                var query = (from f in db.Fund
+                             join c in db.Charity_Member on f.cId equals c.cId
+                             orderby f.startTime 
+                             select new
+                             {
+                                 fId = f.fId,
+                                 fName = f.fName,
+                                 cName = c.c_name,
+                                 targetMoney = f.targetMoney,
+                                 accMoney = f.accMoney,
+                                 startTime = f.startTime,
+                                 endTime = f.endTime,
+                                 fPhoto = f.fPhoto,
+
+                             }).Take(3);
+
+                foreach (var item in query)
+                {
+                    funds.Add(new FundsView()
+                    {
+                        fId = item.fId,
+                        fName = item.fName,
+                        cName = item.cName,
+                        accMoney = Convert.ToInt32(item.accMoney),
+                        //startTime = item.startTime,
+                        //endTime = item.endTime,
+                        countDown = (item.endTime - item.startTime),
+                        progress = (item.accMoney / item.targetMoney) * 100,
+                        fPhoto = item.fPhoto,
+                    });
+                }
+            }
+            else if (keyword == "即將結束")
+            {
+                var query = (from f in db.Fund
+                             join c in db.Charity_Member on f.cId equals c.cId
+                             orderby f.endTime 
+                             select new
+                             {
+                                 fId = f.fId,
+                                 fName = f.fName,
+                                 cName = c.c_name,
+                                 targetMoney = f.targetMoney,
+                                 accMoney = f.accMoney,
+                                 startTime = f.startTime,
+                                 endTime = f.endTime,
+                                 fPhoto = f.fPhoto,
+
+                             }).Take(3);
+
+                foreach (var item in query)
+                {
+                    funds.Add(new FundsView()
+                    {
+                        fId = item.fId,
+                        fName = item.fName,
+                        cName = item.cName,
+                        accMoney = Convert.ToInt32(item.accMoney),
+                        //startTime = item.startTime,
+                        //endTime = item.endTime,
+                        countDown = (item.endTime - item.startTime),
+                        progress = (item.accMoney / item.targetMoney) * 100,
                         fPhoto = item.fPhoto,
                     });
                 }

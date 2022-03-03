@@ -49,7 +49,7 @@ namespace KTN5.Controllers
                              endTime = f.endTime,
                              fPhoto = f.fPhoto,
 
-                         }).ToList();
+                         }).Take(6);
 
             foreach (var item in query)
             {
