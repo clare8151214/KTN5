@@ -207,8 +207,8 @@
                             <td>@c.rName</td>
                             <td>@c.rPhone</td>
                             <td>@c.rAddress</td>
-                            <td>@c.startTime.ToString()</td>
-                            <td>@c.endTime.ToString()</td>
+                            <td>@c.startTime.Value.ToString(@"hh\:mm")</td>
+                            <td>@c.endTime.Value.ToString(@"hh\:mm")</td>
                             @if (ViewBag.Role == "管理員") { 
                             
                                 <td>

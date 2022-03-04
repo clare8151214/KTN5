@@ -11,13 +11,14 @@ namespace KTN5.Controllers
 {
     public class MailController : Controller
     {
-        //"miniwei1011@gmail.com","Passw0rd-iii"
+        //"charityktn@gmail.com  P@ssw0rd-iii"
+        [HttpPost]
         public ActionResult SendEmail(/*string emailID, string emailFor = "VerifyAccount"*/ MailModel model)
         {
            
-            var fromEmail = new MailAddress("miniwei1011@gmail.com", "WEIWEI");
-            var toEmail = new MailAddress("miniwei1011@gmail.com");
-            var fromEmailPassword = "Passw0rd-iii";
+            var fromEmail = new MailAddress("charityktn@gmail.com", "系統管理員");
+            var toEmail = new MailAddress("charityktn@gmail.com");
+            var fromEmailPassword = "P@ssw0rd-iii";
 
             string subject = "";
             string body = "";

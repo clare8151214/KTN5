@@ -20,7 +20,14 @@
                     <div class="col-6 text-center">
 
                         <div class="personal-img">
-                            <img src="~/images/Charity_icon.svg" id="user-img" width="250" height="250" style="border-radius: 50%">
+                            @if (string.IsNullOrEmpty(Model.photo))
+                            {
+                                <img src="~/images/Charity_icon.svg" id="user-img" width="250" height="250" style="border-radius: 50%">
+                            }
+                            else 
+                            { 
+                                <img src="~/UserPhotos/@Model.photo" id="user-img" width="250" height="250" style="border-radius: 50%">
+                            }
                         </div>
                         <br>
                         <div class="personal-wrap">

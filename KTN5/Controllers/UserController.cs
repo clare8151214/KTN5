@@ -242,22 +242,22 @@ namespace KTN5.Controllers
                 return v != null;
             }
         }
-        [NonAction]//"miniwei1011@gmail.com","Passw0rd-iii"
+        [NonAction]//"charityktn@gmail.com ","P@ssw0rd-iii"
         public void SendVerificationLinkEmail(string emailID, string activationCode, string emailFor = "VerifyAccount")
         {
             var verifyUrl = "/User/" + emailFor + "/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("miniwei1011@gmail.com", "WEIWEI");
+            var fromEmail = new MailAddress("charityktn@gmail.com ", "系統管理員");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "Passw0rd-iii";
+            var fromEmailPassword = "P@ssw0rd-iii";
 
             string subject = "";
             string body = "";
             if (emailFor == "VerifyAccount")
             {
-                subject = "OK";
-                body = "<br/><br/>aa" + "<br/><br/><a href='" + link + "'>" + link + "</a>";
+                subject = "驗證帳號";
+                body = "<br/><br/>驗證帳號連結:" + "<br/><br/><a href='" + link + "'>" + link + "</a>";
             }
             else if (emailFor == "ResetPassword")
             {

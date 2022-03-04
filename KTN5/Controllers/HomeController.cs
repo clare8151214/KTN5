@@ -253,7 +253,8 @@ namespace KTN5.Controllers
                 }
                 result.name = user.name;
                 result.account = user.account;
-                result.password = user.password;
+                result.password = Crypto.Hash(user.password);
+                result.ConfirmPassword = Crypto.Hash(user.password);
                 result.phone = user.phone;
                 result.address = user.address;
                 result.role = user.role;

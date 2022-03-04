@@ -142,34 +142,39 @@ li {
 /* blood-donation section */
 .donation-sec {
   width: 75vw;
-  height: 80vh;
   background-color: #d9f1ec;
   margin: 0 auto;
-  /* border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px; */
   border-radius: 30px;
 }
 
 .donation-area {
-  background-color: #ffd7a3;
+  background-color: #e0d7ff;
   border-radius: 30px;
-  /* padding-left: 60px; */
 }
 
 .donation-area a {
   width: 80%;
   height: 50px;
   display: block;
-  background-color: #a278c4;
+  background-color: #905ca2;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.form-select:focus {
+.donation-area a:hover {
+  background-color: #5f1985;
+  color: white;
+}
+
+.area-search {
+  text-align: center;
+}
+
+.area-search .form-select:focus {
   border-color: #9d4edd;
-  box-shadow: 0 0 0 0.25rem rgba(223, 207, 240, 0.91);
+  box-shadow: none;
 }
 
 .w-45 {
@@ -180,17 +185,11 @@ li {
   padding-left: 14vw;
 }
 
-/* .blood-mobile {
-  background-color: white;
-  border-radius: 30px;
-  margin: 10px auto;
-} */
 .fa-map-pin {
   color: #40454b;
 }
 
 .area-search button[type="submit"] {
-  /* display: block; */
   border: none;
   background-color: #9860c5;
   color: white;
@@ -199,17 +198,12 @@ li {
   border-radius: 6px;
 }
 
-.donation-area a:hover {
-  background-color: #9860c5;
-  color: white;
-}
-
 .c-white {
   color: white;
 }
 
 .c-org {
-  color: #f33827;
+  color: #e90a0e;
 }
 
 .fa-location-dot {

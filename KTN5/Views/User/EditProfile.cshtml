@@ -52,7 +52,7 @@
                             <label for="u-name">姓名</label>
                         </div>
                         <div class="personal-group2">
-                            <input type="text" class="form-control" name="name" value="" placeholder="姓名" required><br>
+                            <input type="text" class="form-control" name="name" value="@Model.name" placeholder="姓名" required><br>
                             @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                         </div>
 
@@ -60,7 +60,7 @@
                             <label for="u-phone">電話</label>
                         </div>
                         <div class="personal-group2">
-                            <input type="tel" class="form-control" name="phone" value="" placeholder="電話號碼" maxlength="10">
+                            <input type="tel" class="form-control" name="phone" value="@Model.phone" placeholder="電話號碼" maxlength="10">
                             @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
                             <br>
 
@@ -70,7 +70,7 @@
                             <label for="u-address">地址</label>
                         </div>
                         <div class="personal-group2">
-                            <input type="text" class="form-control" name="address" value="" placeholder="地址" maxlength=30><br>
+                            <input type="text" class="form-control" name="address" value="@Model.address" placeholder="地址" maxlength=30><br>
                             @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
                         </div>
 
