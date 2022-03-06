@@ -150,6 +150,7 @@ li {
 .donation-area {
   background-color: #e0d7ff;
   border-radius: 30px;
+  height:670px;
 }
 
 .donation-area a {
@@ -209,3 +210,9 @@ li {
 .fa-location-dot {
   font-size: 20px;
 }
+
+.area-search form{
+    display:inline-block;
+}
+
+

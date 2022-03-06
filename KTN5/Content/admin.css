@@ -69,6 +69,14 @@
     cursor:pointer;
 }
 
+.searchBar .abp-search {
+    left: 335px;
+}
+
+/*#gmember-table td:nth-child(4){
+    width:150px;
+}*/
+
 .icon-pc {
     cursor: pointer;
     color: #e76f51;

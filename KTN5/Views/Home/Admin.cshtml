@@ -1,7 +1,7 @@
 ﻿@model KTN5.Models.CVMMember
 
 @{
-    ViewBag.Title = "Admin";
+    ViewBag.Title = "後臺管理員";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 @section Styles{
@@ -69,7 +69,8 @@
                     </div>
                     <div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="searchBar">
-                            <select id="searchOption_ch">
+                            <span class="me-2">查詢:</span>
+                            <select id="searchOption_ch" class="me-2">
                                 <option value="cId">@Html.DisplayNameFor(model => model.charities.First().cId)</option>
                                 <option value="c_name">@Html.DisplayNameFor(model => model.charities.First().c_name)</option>
                                 <option value="c_address">@Html.DisplayNameFor(model => model.charities.First().c_address)</option>
@@ -77,7 +78,7 @@
                                 <option value="heart_code">@Html.DisplayNameFor(model => model.charities.First().heart_code)</option>
                             </select>
                             <input class="searchtext" id="searchText_ch" type="text" name="search" placeholder="Search..." />
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-search abp-search"></i>
                         </div>
                         <table class="table table-striped db-table mt-3" id="cmember-table">
                             <thead>
@@ -165,11 +166,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>@Html.DisplayNameFor(m => m.objects.First().oId)</th>
+                                <th style="width:80px">@Html.DisplayNameFor(m => m.objects.First().oId)</th>
                                 <th>@Html.DisplayNameFor(m => m.objects.First().oName)</th>
                                 <th>@Html.DisplayNameFor(m => m.objects.First().cId)</th>
                                 <th>@Html.DisplayNameFor(m => m.objects.First().oNumber)</th>
-                                <th>@Html.DisplayNameFor(m => m.objects.First().oIntro)</th>
+                                <th style="width:400px">@Html.DisplayNameFor(m => m.objects.First().oIntro)</th>
                                 <th>編輯</th>
                                 <th>刪除</th>
                             </tr>
@@ -431,6 +432,7 @@
             $("#searchText_rest").on("keyup", function () {
                 if (!$("#searchText_rest").val()) {
                     $("#rest-table tbody").empty();
+                    console.log("asdfs");
                     getRestaurants();
                 } else {
                     searchRestaurant();
@@ -585,7 +587,7 @@
                 $('#sup-modal-cId').val(obj.cId)
                 $('#sup-modal-oNumber').val(obj.oNumber)
                 $('#sup-modal-oIntro').val(obj.oIntro)
-                $('#sup-photo').attr("src", "/images/" + obj.oPhoto)
+                $('#sup-photo').attr("src", "/Content/oPhoto/" + obj.oPhoto)
             })
         },
         //error: function (err) { confirm("載入錯誤") }
@@ -613,7 +615,7 @@
                 $('#member-modal-userAddress').val(member.address)
                 $('#member-modal-userRole').val(member.role)
                 $('#member-modal-userCreatedAt').val(date)
-                $('#member-avatar').attr("src", "/images/" + member.photo)
+                $('#member-avatar').attr("src", "/UserPhotos/" + member.photo)
             })
         },
         //error: function (err) { confirm("載入錯誤") }
@@ -689,21 +691,15 @@
             method: "GET",
             success: function (restList) {
                 $(restList).each(function (index, rest) {
+                  
                     //轉換結束營業datetime format
-                    var endDate = rest.endTime.substr(6);
-                    var currentTime = new Date(parseInt(endDate));
-                    var hour = currentTime.getHours();
-                    var minute = currentTime.getMinutes();
-                    if (minute == '0')
-                        minute = '00'
-                    var endTime = hour + ":" + minute;
+                    var endHours = addZero(rest.endTime.Hours);
+                    var endMinute = addZero(rest.endTime.Minutes);
+                    var endTime = endHours + ":" + endMinute;
                     //轉換開始營業datetime format
-                    var startDate = rest.startTime.substr(6);
-                    var startCT = new Date(parseInt(startDate));
-                    var sminute = startCT.getMinutes(); //分
-                    if (sminute == '0')
-                        sminute = '00'
-                    var startTime = startCT.getHours() + ":" + sminute;
+                    var startHours = addZero(rest.startTime.Hours);
+                    var startMinute = addZero(rest.startTime.Minutes);
+                    var startTime = startHours + ":" + startMinute;
                     $("#rest-table tbody").append(`<tr class="list">
                         <td>${rest.rId}</td>
                         <td>${rest.rName}</td>
@@ -758,7 +754,7 @@
                     $('#charity-modal-cName').val(item.c_name)
                     $('#charity-modal-cAddress').val(item.c_address)
                     $('#charity-modal-cPhone').val(item.c_phone)
-                    $("#charity-photo").attr("src", "/images/" + item.photo)
+                    $("#charity-photo").attr("src", "/UserPhotos/" + item.photo)
                     $('#charity-modal-heartCode').val(item.heart_code)
                     $('#charity-modal-createdAt').val(date)
                 })
@@ -805,6 +801,13 @@
         })
     }
 
+    function addZero(i) {
+        if (i < 10) { i = "0" + i }
+        return i;
+    }
+
+
+
     function searchRestaurant()
     {
         var searchText = $("#searchText_rest").val();
@@ -820,20 +823,14 @@
             else {
                 $(restList).each(function (index, rest) {
                     //轉換結束營業datetime format
-                    var endDate = rest.endTime.substr(6);
-                    var currentTime = new Date(parseInt(endDate));
-                    var hour = currentTime.getHours();
-                    var minute = currentTime.getMinutes();
-                    if (minute == '0')
-                        minute = '00'
-                    var endTime = hour + ":" + minute;
+                    var endHours = addZero(rest.endTime.Hours);
+                    var endMinute = addZero(rest.endTime.Minutes);
+                    var endTime = endHours + ":" + endMinute;
                     //轉換開始營業datetime format
-                    var startDate = rest.startTime.substr(6);
-                    var startCT = new Date(parseInt(startDate));
-                    var sminute = startCT.getMinutes(); //分
-                    if (sminute == '0')
-                        sminute = '00'
-                    var startTime = startCT.getHours() + ":" + sminute;
+                    var startHours = addZero(rest.startTime.Hours);
+                    var startMinute = addZero(rest.startTime.Minutes);
+                    var startTime = startHours + ":" + startMinute;
+
                     $("#rest-table tbody").append(`<tr class="list">
                     <td>${rest.rId}</td>
                     <td>${rest.rName}</td>
@@ -893,20 +890,13 @@
             success: function (restaurants) {
                 $(restaurants).each(function (index, rest) {
                     //轉換結束營業datetime format
-                    var endDate = rest.endTime.substr(6);
-                    var currentTime = new Date(parseInt(endDate));
-                    var hour = currentTime.getHours();
-                    var minute = currentTime.getMinutes();
-                    if (minute == '0')
-                        minute = '00'
-                    var endTime = hour + ":" + minute;
+                    var endHours = addZero(rest.endTime.Hours);
+                    var endMinute = addZero(rest.endTime.Minutes);
+                    var endTime = endHours + ":" + endMinute;
                     //轉換開始營業datetime format
-                    var startDate = rest.startTime.substr(6);
-                    var startCT = new Date(parseInt(startDate));
-                    var sminute = startCT.getMinutes(); //分
-                    if (sminute == '0')
-                        sminute = '00'
-                    var startTime = startCT.getHours() + ":" + sminute;
+                    var startHours = addZero(rest.startTime.Hours);
+                    var startMinute = addZero(rest.startTime.Minutes);
+                    var startTime = startHours + ":" + startMinute;
                     $('#rest-modal-rId').val(rest.rId)
                     $('#rest-modal-rName').val(rest.rName)
                     $('#rest-modal-rAddress').val(rest.rAddress)

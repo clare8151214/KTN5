@@ -158,6 +158,7 @@
     <Content Include="images\adminbg.jpg" />
     <Content Include="images\blood-donation.png" />
     <Content Include="images\Charity_icon.svg" />
+    <Content Include="images\CMS_icon.svg" />
     <Content Include="images\Facebook_icon.png" />
     <Content Include="images\Facebook_icon.svg" />
     <Content Include="images\Google_icon.png" />

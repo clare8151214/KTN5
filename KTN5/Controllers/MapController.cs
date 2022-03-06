@@ -17,7 +17,24 @@ namespace KTN5.Controllers
 
         public ActionResult List()
         {
+            string uid = User.Identity.Name;
+            var user = db.User.Where(m => m.account == uid).FirstOrDefault();
 
+            if (user != null)
+            {
+                var getCart = db.ShoppingCart.Where(m => m.uId == user.uId).ToList();
+                int? quantity = 0;
+                foreach (var item in getCart)
+                {
+                    quantity += item.oQty;
+                }
+                Session["Cart"] = quantity;
+                Session.Timeout = 50;
+                ViewBag.Name = user.name;
+                ViewBag.Role = user.role;
+                ViewBag.photo = user.photo;
+
+            }
             ViewBag.lat = 22.628026;
             ViewBag.lng = 120.293009;
             IEnumerable<SelectListItem> objMemberSelectListItem =
@@ -61,6 +78,24 @@ namespace KTN5.Controllers
         }
         public ActionResult Detail(int id)
         {
+            string uid = User.Identity.Name;
+            var user = db.User.Where(m => m.account == uid).FirstOrDefault();
+
+            if (user != null)
+            {
+                var getCart = db.ShoppingCart.Where(m => m.uId == user.uId).ToList();
+                int? quantity = 0;
+                foreach (var item in getCart)
+                {
+                    quantity += item.oQty;
+                }
+                Session["Cart"] = quantity;
+                Session.Timeout = 50;
+                ViewBag.Name = user.name;
+                ViewBag.Role = user.role;
+                ViewBag.photo = user.photo;
+
+            }
             BloodMap mapEdit = db.BloodMap.FirstOrDefault(p => p.bId == id);
             ViewBag.lat = mapEdit.lat;
             ViewBag.lng = mapEdit.lng;
