@@ -16,10 +16,10 @@ namespace KTN5.Controllers
             return db.Solution.Where(m => m.fId == id);
         }
 
-        //// GET: api/SolutionApi/5
-        //public string Get(int id)
+        // GET: api/SolutionApi/5
+        //public Solution Get()
         //{
-        //    return "value";
+        //    return db.Solution.Where;
         //}
 
         //// POST: api/SolutionApi

@@ -1,13 +1,39 @@
 ﻿@model KTN5.Models.SponsorView
 @{
-    ViewBag.Title = "Sponsor";
+    ViewBag.Title = "捐贈表單";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
 @section Styles{
     <link href="~/Content/activities.css" rel="stylesheet" />
 }
+<script>
+    var apiurl = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "SolutionApi", id = Model.fId })';
+    loadData();
+    function loadData() {
+        $.ajax({
+            url: apiurl,
+            type: 'GET',
+            success: function (data) {
+                $("#solutionDetail").empty();
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].sId == @Model.sId) {
+                        $("#solutionDetail").append
+                         (   
+                                data[i].intro
+                         );
+                    }
+                    
+                }
 
+
+
+            }
+
+        });
+    }
+
+</script>
 
 <div class="pay">
     <div class="payhead">
@@ -47,15 +73,9 @@
                         <h5 style="font-weight: bold;">@Model.sName&nbsp每期 NT$ @Model.sMoney.Value.ToString("N0")</h5>
                         <hr>
                         @*@Model.intro*@
-                        <p>
-                            ▉ 每月300元捐款一年，相當於支持一個社團15％的每月花費。
-                        </p>
-                        <p>
-                            ▉ 本方案回饋： 【普仁感謝禮】 ｜小太陽感謝卡ｘ１ ｜普仁紀念袋ｘ１ ｜普仁家園季刊ｘ１ ｜官網捐款列名 【園藝社禮包】 植物盆栽罐罐ｘ１ 室內香氛噴霧ｘ１ 【微熱山丘】 蜂蜜脆蛋糕ｘ１
-                        </p>
-                        <p>
-                            ▉ 其他注意事項：本方案至少需贊助滿 12 個月
-                        </p>
+                        <div id="solutionDetail">
+                            
+                        </div>
                     </div>
                     <div class="left-project-bottom">
                         <div>

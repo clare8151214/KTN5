@@ -78,8 +78,8 @@
                                 <td class="o-Name">@item.oName</td>
                                 <td><input type="image" img src="~/Content/oPhoto/@item.oPhoto" width="100" height="100" alt=""></td>
                                 <td class="o-Number">@item.oNumber</td>
-                                <td class="o-Intro">@item.oIntro</td>
-                                <td class="o-type">@item.type</td>
+                                <td class="o-type">@item.oIntro</td>
+                                <td class="o-Intro">@item.type</td>
                                 <td class="o-btn"><button type="button" class="update-btn" onclick="location.href = '@Url.Action("Edit")?id=@item.oId'">編輯</button></td>
                                 <td class="o-btn"><button type="button" class="delete-btn" onclick="Delete(@item.oId)">刪除</button></td>
                             </tr>
@@ -95,4 +95,4 @@
 </section>
 
 
-<script src="~/Scripts/Object-Create.js"></script>
+@*<script src="~/Scripts/Object-Create.js"></script>*@

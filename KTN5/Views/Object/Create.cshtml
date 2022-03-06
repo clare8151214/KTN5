@@ -46,7 +46,7 @@
                         <br>
                         <div class="create-wrap">
                             <div class="create-btn">
-                                <label class="upload-btn" for="upload"><i class="bi bi-camera"> 上傳照片</i></label>
+                                <label class="upload-btn" for="upload"><i class="bi bi-camera">上傳照片</i></label>
                                 <input type="file" name="photo" id="upload" onchange="previewFile()"><br>
                             </div>
                         </div>
@@ -93,7 +93,6 @@
                             <option value="食品">食品</option>
                             <option value="電器">電器</option>
                             <option value="醫療">醫療</option>
-                            <option value="其他">其他</option>
                         </select>
                         @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
                         <br>

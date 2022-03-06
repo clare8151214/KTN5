@@ -1,7 +1,7 @@
 ﻿@model KTN5.Models.Object
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "編輯物資";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 
@@ -78,7 +78,7 @@
                             <label for="o-intro">需求說明</label>
                         </div>
                         <div class="create-group2">
-                            <textarea class="form-control" name="oIntro" rows="5" cols="40" placeholder="@Model.oIntro" style="resize: none;"></textarea><br>
+                            <textarea class="form-control" name="oIntro" rows="5" cols="40" placeholder="@Model.oIntro" style="resize: none;">@Model.oIntro</textarea><br>
                         </div>
 
                         <div class="create-group1">
@@ -92,7 +92,6 @@
                             <option value="食品">食品</option>
                             <option value="電器">電器</option>
                             <option value="醫療">醫療</option>
-                            <option value="其他">其他</option>
                         </select>
 
                         <br>
@@ -110,85 +109,6 @@
 
 
 
-
-
-
-@using (Html.BeginForm("Edit", "Object", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>物資資料</h4>
-        <hr />
-
-
-
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.oName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.oName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.oName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.oPhoto, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                @*@Html.EditorFor(model => model.oPhoto, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.oPhoto, "", new { @class = "text-danger" })*@
-
-                <br />
-                <div>
-                    <img id="preview" src="~/Content/images/oPhoto/@Model.oPhoto" style="width: 100px; height: 100px;" onerror="imgUserAvatarError(this)" />
-                </div>
-                <br />
-                <input type="file" class="upload" name="photo" id="photo" accept="image/*" onchange="PreviewImage();" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.oNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.oNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.oNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.oIntro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.oIntro, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.oIntro, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                <select name="type">
-                    <option value="文具">文具</option>
-                    <option value="食品">食品</option>
-                    <option value="電器">電器</option>
-                    <option value="衛生">衛生</option>
-                    <option value="醫療">醫療</option>
-                    <option value="其他">其他</option>
-                </select>
-
-                @*@Html.EditorFor(model => model.type, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
 
 
