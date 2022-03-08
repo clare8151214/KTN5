@@ -135,6 +135,20 @@ CREATE TABLE [dbo].[Donate] (
 );
 GO
 
+CREATE TABLE [dbo].[BloodMap] (
+    [bId] int IDENTITY(1,1) NOT NULL,
+	[bName] nvarchar(100) NOT NULL,
+	[bAddress] nvarchar(100) NULL,
+	[bPhone] nvarchar(100) NULL,
+	[lat] decimal(12,9) NOT NULL,
+	[lng] decimal(12,9) NOT NULL,
+	[startTime] time NULL,
+	[endTime] time NULL,
+	PRIMARY KEY CLUSTERED ([bId] ASC)
+);
+GO
+
+
 
 --TRUNCATE TABLE [dbo].[User];
 --TRUNCATE TABLE [dbo].[Charity_Member];
@@ -144,3 +158,4 @@ GO
 --TRUNCATE TABLE [dbo].[Solution];
 --TRUNCATE TABLE [dbo].[Order];
 --TRUNCATE TABLE [dbo].[OrderDetail];
+TRUNCATE TABLE [dbo].[Sponsor];

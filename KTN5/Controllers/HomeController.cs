@@ -151,17 +151,17 @@ namespace KTN5.Controllers
             List<Restaurant> restList = new List<Restaurant>();
             switch (searchOption)
             {
-                case "餐廳編號":
+                case "rId":
                     int intsearchText = Convert.ToInt32(searchText);
                     restList = db.Restaurant.Where(m => m.rId == intsearchText).OrderBy(m => m.rId).ToList();
                     break;
-                case "名稱":
+                case "rName":
                     restList = db.Restaurant.Where(m => m.rName.Contains(searchText)).OrderBy(m => m.rId).ToList();
                     break;
-                case "地區":
+                case "rAddress":
                     restList = db.Restaurant.Where(m => m.rAddress.Contains(searchText)).OrderBy(m => m.rId).ToList();
                     break;
-                case "電話":
+                case "rPhone":
                     restList = db.Restaurant.Where(m => m.rPhone.Contains(searchText)).OrderBy(m => m.rId).ToList();
                     break;
             }
@@ -247,7 +247,7 @@ namespace KTN5.Controllers
                 if (user.photoFile != null)
                 {
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
-                    var path = Path.Combine(Server.MapPath("~/images"), photoName);
+                    var path = Path.Combine(Server.MapPath("~/UserPhotos"), photoName);
                     user.photoFile.SaveAs(path);
                     result.photo = photoName;
                 }
@@ -273,8 +273,8 @@ namespace KTN5.Controllers
             {
                 if (charity.logoFile != null)
                 {
-                    string logoName = charity.c_name + Guid.NewGuid().ToString() + ".jpg";
-                    var path = Path.Combine(Server.MapPath("~/images"), logoName);
+                    string logoName = Guid.NewGuid().ToString() + ".jpg";
+                    var path = Path.Combine(Server.MapPath("~/UserPhotos"), logoName);
                     charity.logoFile.SaveAs(path);
                     result.photo = logoName;  //更改資料庫logo檔名
                 }
@@ -354,8 +354,8 @@ namespace KTN5.Controllers
             {
                 if (obj.photo != null)
                 {
-                    string ophotoName = obj.oName + Guid.NewGuid().ToString() + ".jpg";
-                    var path = Path.Combine(Server.MapPath("~/images"), ophotoName);
+                    string ophotoName =  Guid.NewGuid().ToString() + ".jpg";
+                    var path = Path.Combine(Server.MapPath("~/Content/oPhoto"), ophotoName);
                     obj.photo.SaveAs(path);
                     result.oPhoto = ophotoName;
                 }
@@ -429,8 +429,144 @@ namespace KTN5.Controllers
             return RedirectToAction("Admin");
         }
 
+        public JsonResult getFunds()
+        {
+            return Json(
+                from c in db.Charity_Member
+                join f in db.Fund on c.cId equals f.cId
+                select new { f.fId, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fName, f.fPhoto },
+                JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult getFundById(int fId)
+        {
+            return Json((from c in db.Charity_Member
+                         join f in db.Fund on c.cId equals f.cId
+                         where f.fId == fId
+                         select new { f.fId, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fName, f.fPhoto }).FirstOrDefault(),
+                        JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpPost]
+        public ActionResult EditFund(Fund fund)
+        {
+            var result = db.Fund.Where(m => m.fId == fund.fId).FirstOrDefault();
+            if (result != null)
+            {
+                if (fund.photo != null)
+                {
+                    string fPhotoName = Guid.NewGuid().ToString() + ".jpg";
+                    var path = Path.Combine(Server.MapPath("~/FundPhotos"), fPhotoName);
+                    fund.photo.SaveAs(path);
+                    result.fPhoto = fPhotoName;
+                }
+                result.fName = fund.fName;
+                result.fText = fund.fText;
+                result.targetMoney = fund.targetMoney;
+                result.accMoney = fund.accMoney;
+                result.startTime = fund.startTime;
+                result.endTime = fund.endTime;
+                result.trueName = fund.trueName;
+                result.fPhone = fund.fPhone;
+                result.fEmail = fund.fEmail;
+                db.SaveChanges();
+                TempData["msg"] = "恭喜!資料更新成功!";
+            }
+            return RedirectToAction("Admin");
+        }
+        public JsonResult getFundsByKeyword(string searchOption, string searchText)
+        {
+            switch (searchOption)
+            {
+                case "fId":
+                    int intSearchText = Convert.ToInt32(searchText);
+                    var fundList = (from c in db.Charity_Member
+                                    join f in db.Fund on c.cId equals f.cId
+                                    where f.fId == intSearchText
+                                    select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "fName":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.fName.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+
+                    return Json(fundList);
+                case "cId":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where c.c_name.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+
+                    return Json(fundList);
+
+                case "fText":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.fText.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "targetMoney":
+                    intSearchText = Convert.ToInt32(searchText);
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.targetMoney == intSearchText
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "accMoney":
+                    intSearchText = Convert.ToInt32(searchText);
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.accMoney == intSearchText
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "startTime":
+                    intSearchText = Convert.ToInt32(searchText);
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.startTime.Value.Year == intSearchText
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "endTime":
+                    intSearchText = Convert.ToInt32(searchText);
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.endTime.Value.Year == intSearchText
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "trueName":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.trueName.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "fPhone":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.fPhone.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+                case "fEmail":
+                    fundList = (from c in db.Charity_Member
+                                join f in db.Fund on c.cId equals f.cId
+                                where f.fEmail.Contains(searchText)
+                                select new { f.fId, f.fName, c.c_name, f.fText, f.targetMoney, f.accMoney, f.startTime, f.endTime, f.trueName, f.fPhone, f.fEmail, f.fPhoto }).ToList();
+                    return Json(fundList);
+            }
+            return Json(null);
+        }
+
+        public ActionResult DeleteFund(int fId)
+        {
+            var result = db.Fund.Where(m => m.fId == fId).FirstOrDefault();
+            if (result != null)
+            {
+                db.Fund.Remove(result);
+                db.SaveChanges();
+                TempData["msg"] = "資料已成功刪除!";
+            }
+            return RedirectToAction("Admin");
+        }
 
     }
 }

@@ -1,412 +1,529 @@
 ﻿@model KTN5.Models.CVMMember
 
 @{
-    ViewBag.Title = "後臺管理員";
+    ViewBag.Title = "後台管理員";
     Layout = "~/Views/Shared/Navbar.cshtml";
 }
 @section Styles{
-    <link href="~/Content/Index.css" rel="stylesheet" />
+    
     <link href="~/Content/admin.css" rel="stylesheet" />
 
 }
 
-<div class="hero-image">
-    <div class="hero-text d-flex justify-content-center align-items-center">
-        <h1>後台管理員</h1>
-    </div>
-</div>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-2 cs-btns">
-            <h3>管理項目</h3>
-            <button class="btn-classItem mb-3 bs-color" id="btn-member-management"><i class="fa-solid fa-user-large me-2"></i>會員管理</button>
-            <button class="btn-classItem mb-3" id="btn-act-management"><i class="fa-solid fa-box me-2"></i>活動管理</button>
-            <button class="btn-classItem mb-3" id="btn-rest-management"><i class="fa-solid fa-utensils me-2"></i>愛心餐廳</button>
+
+<main class="admin-container">
+    <div class="hero-image">
+        <div class="hero-text d-flex justify-content-center align-items-center">
+            <h1>後台管理員</h1>
         </div>
-        <div class="col-md-10" style="flex-grow:1;" id="tab-container">
-            <div id="member-container">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="Charity_Member" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">一般會員</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="User" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">公益單位</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active mt-3" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="searchBar">
-                            <span class="me-2">查詢:</span>
-                            <select id="searchOption" class="me-2">
-                                <option value="uId">@Html.DisplayNameFor(model => model.gmembers.First().uId)</option>
-                                <option value="name">@Html.DisplayNameFor(model => model.gmembers.First().name)</option>
-                                <option value="account">@Html.DisplayNameFor(model => model.gmembers.First().account)</option>
-                                <option value="password">@Html.DisplayNameFor(model => model.gmembers.First().password)</option>
-                                <option value="phone">@Html.DisplayNameFor(model => model.gmembers.First().phone)</option>
-                                <option value="address">@Html.DisplayNameFor(model => model.gmembers.First().address)</option>
-                            </select>
-                            <i class="fa fa-search"></i>
-                            <input class="searchtext" id="searchText" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-2 cs-btns">
+                <h3>管理項目</h3>
+                <button class="btn-classItem mb-3 bs-color" id="btn-member-management"><i class="fa-solid fa-user-large me-2"></i>會員管理</button>
+                <button class="btn-classItem mb-3 bs-color" id="btn-fund-management"><i class="fa-solid fa-clipboard-check me-2"></i>募資管理</button>
+                <button class="btn-classItem mb-3" id="btn-sup-management"><i class="fa-solid fa-cubes me-2"></i>物資管理</button>
+                <button class="btn-classItem mb-3" id="btn-rest-management"><i class="fa-solid fa-utensils me-2"></i>愛心餐廳</button>
+            </div>
+            <div class="col-md-10" style="flex-grow:1;" id="tab-container">
+                <div id="member-container">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="Charity_Member" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">全部會員</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="User" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">公益單位</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        @*GMember content*@
+                        <div class="tab-pane fade show active mt-3 outer" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="searchBar">
+                                <span class="me-2">查詢:</span>
+                                <select id="searchOption" class="me-2">
+                                    <option value="uId">@Html.DisplayNameFor(model => model.gmembers.First().uId)</option>
+                                    <option value="name">@Html.DisplayNameFor(model => model.gmembers.First().name)</option>
+                                    <option value="account">@Html.DisplayNameFor(model => model.gmembers.First().account)</option>
+                                    <option value="password">@Html.DisplayNameFor(model => model.gmembers.First().password)</option>
+                                    <option value="phone">@Html.DisplayNameFor(model => model.gmembers.First().phone)</option>
+                                    <option value="address">@Html.DisplayNameFor(model => model.gmembers.First().address)</option>
+                                </select>
+                                <i class="fa fa-search"></i>
+                                <input class="searchtext" id="searchText" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                            </div>
+                            <div class="mem-sec tbstyle table-responsive">
+                                <table class="table db-table mt-3" id="gmember-table">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().uId)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().name)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().account)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().password)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().phone)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().address)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().role)</th>
+                                            <th>@Html.DisplayNameFor(model => model.gmembers.First().created_at)</th>
+                                            <th>編輯</th>
+                                            <th>刪除</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <table class="table table-striped db-table mt-3" id="gmember-table">
+                        @*Charity content*@
+                        <div class="tab-pane fade mt-3 outer" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="searchBar">
+                                <span class="me-2">查詢:</span>
+                                <select id="searchOption_ch" class="me-2">
+                                    <option value="cId">@Html.DisplayNameFor(model => model.charities.First().cId)</option>
+                                    <option value="c_name">@Html.DisplayNameFor(model => model.charities.First().c_name)</option>
+                                    <option value="c_address">@Html.DisplayNameFor(model => model.charities.First().c_address)</option>
+                                    <option value="c_phone">@Html.DisplayNameFor(model => model.charities.First().c_phone)</option>
+                                    <option value="heart_code">@Html.DisplayNameFor(model => model.charities.First().heart_code)</option>
+                                </select>
+                                <i class="fa fa-search icon-cl"></i>
+                                <input class="searchtext" id="searchText_ch" type="text" name="search" placeholder="請輸入關鍵字..." />
+                            </div>
+                            <div class="mem-sec tbstyle table-responsive">
+                                <table class="table db-table mt-3" id="cmember-table">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().cId)</th>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().c_name)</th>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().c_address)</th>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().c_phone)</th>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().heart_code)</th>
+                                            <th>@Html.DisplayNameFor(model => model.charities.First().created_at)</th>
+                                            <th>編輯</th>
+                                            <th>刪除</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Reastaurant Table*@
+                <div class="outer mt-3" id="rest-container">
+                    <div class="rest-sec tbstyle mb-3 row">
+                        <div class="col-8">
+                            <span>查詢:</span>
+                            <select class="form-select d-inline mx-2 w-25" id="areaDataList">
+                                <option value="rId" selected>@Html.DisplayNameFor(model => model.restaurants.First().rId)</option>
+                                <option value="rName">@Html.DisplayNameFor(model => model.restaurants.First().rName)</option>
+                                <option value="rAddress">@Html.DisplayNameFor(model => model.restaurants.First().rAddress)</option>
+                                <option value="rPhone">@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</option>
+                            </select>
+                            <input class="searchtext h-100" id="searchText_rest" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                            <i class="fa fa-search icon-pc"></i>
+                        </div>
+                    </div>
+                    <div class="rest-sec tbstyle table-responsive" id="rest-table">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().uId)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().name)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().account)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().password)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().phone)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().address)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().role)</th>
-                                    <th>@Html.DisplayNameFor(model => model.gmembers.First().created_at)</th>
+                                    <th style="width:100px">@Html.DisplayNameFor(model => model.restaurants.First().rId)</th>
+                                    <th style="width:180px">@Html.DisplayNameFor(model => model.restaurants.First().rName)</th>
+                                    <th>@Html.DisplayNameFor(model => model.restaurants.First().rAddress)</th>
+                                    <th>@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</th>
+                                    <th>@Html.DisplayNameFor(model => model.restaurants.First().startTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.restaurants.First().endTime)</th>
                                     <th>編輯</th>
                                     <th>刪除</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade mt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="searchBar">
-                            <span class="me-2">查詢:</span>
-                            <select id="searchOption_ch" class="me-2">
-                                <option value="cId">@Html.DisplayNameFor(model => model.charities.First().cId)</option>
-                                <option value="c_name">@Html.DisplayNameFor(model => model.charities.First().c_name)</option>
-                                <option value="c_address">@Html.DisplayNameFor(model => model.charities.First().c_address)</option>
-                                <option value="c_phone">@Html.DisplayNameFor(model => model.charities.First().c_phone)</option>
-                                <option value="heart_code">@Html.DisplayNameFor(model => model.charities.First().heart_code)</option>
-                            </select>
-                            <input class="searchtext" id="searchText_ch" type="text" name="search" placeholder="Search..." />
-                            <i class="fa fa-search abp-search"></i>
-                        </div>
-                        <table class="table table-striped db-table mt-3" id="cmember-table">
-                            <thead>
-                                <tr>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().cId)</th>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_name)</th>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_address)</th>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().c_phone)</th>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().heart_code)</th>
-                                    <th>@Html.DisplayNameFor(model => model.charities.First().created_at)</th>
-                                    <th>編輯</th>
-                                    <th>刪除</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            @*Reastaurant Table*@
-            <div class="outer mt-3" id="rest-container">
-                <div class="rest-sec tbstyle mb-3 row">
-                    <div class="col-8">
-                        <span>查詢:</span>
-                        <select class="form-select d-inline mx-2 w-25" id="areaDataList">
-                            <option selected>@Html.DisplayNameFor(model => model.restaurants.First().rId)</option>
-                            <option>@Html.DisplayNameFor(model => model.restaurants.First().rName)</option>
-                            <option>地區</option>
-                            <option>@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</option>
-                        </select>
-                        <input class="searchtext h-100" id="searchText_rest" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
-                        <i class="fa fa-search icon-pc"></i>
-                    </div>
-                </div>
-                <div class="rest-sec tbstyle table-responsive" id="rest-table">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th style="width:100px">@Html.DisplayNameFor(model => model.restaurants.First().rId)</th>
-                                <th style="width:180px">@Html.DisplayNameFor(model => model.restaurants.First().rName)</th>
-                                <th>@Html.DisplayNameFor(model => model.restaurants.First().rAddress)</th>
-                                <th>@Html.DisplayNameFor(model => model.restaurants.First().rPhone)</th>
-                                <th>@Html.DisplayNameFor(model => model.restaurants.First().startTime)</th>
-                                <th>@Html.DisplayNameFor(model => model.restaurants.First().endTime)</th>
-                                <th>編輯</th>
-                                <th>刪除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.restaurants)
-                            {
-                                <tr class="list">
-                                    <td>@item.rId</td>
-                                    <td>@item.rName</td>
-                                    <td>@item.rAddress</td>
-                                    <td>@item.rPhone</td>
-                                    <td>@item.startTime</td>
-                                    <td>@item.endTime</td>
-                                    <td><a data-id="@item.rId" class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(@item.rId)"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                                    <td><a href="@Url.Action("DeleteRest", "Home", new { rId = item.rId })" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            @*Supplies Table*@
-            <div class="outer mt-3" id="sup-container">
-                <div class="mb-3 row">
-                    <div class="col-8">
-                        <span>查詢:</span>
-                        <select class="form-select d-inline mx-2 w-25" id="option_obj">
-                            <option value="oId" selected>@Html.DisplayNameFor(model => model.objects.First().oId)</option>
-                            <option value="oName">@Html.DisplayNameFor(model => model.objects.First().oName)</option>
-                            <option value="cId">@Html.DisplayNameFor(model => model.objects.First().cId)</option>
-                            <option value="oNumber">@Html.DisplayNameFor(model => model.objects.First().oNumber)</option>
-                            <option value="oIntro">@Html.DisplayNameFor(model => model.objects.First().oIntro)</option>
-                        </select>
-                        <input class="searchtext h-100" id="searchText_sup" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
-                        <i class="fa fa-search icon-pc"></i>
-                    </div>
-                </div>
-                <div class="sup-sec tbstyle table-responsive" id="sup-table">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th style="width:80px">@Html.DisplayNameFor(m => m.objects.First().oId)</th>
-                                <th>@Html.DisplayNameFor(m => m.objects.First().oName)</th>
-                                <th>@Html.DisplayNameFor(m => m.objects.First().cId)</th>
-                                <th>@Html.DisplayNameFor(m => m.objects.First().oNumber)</th>
-                                <th style="width:400px">@Html.DisplayNameFor(m => m.objects.First().oIntro)</th>
-                                <th>編輯</th>
-                                <th>刪除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*@foreach (var item in Model.objects)
+                                @foreach (var item in Model.restaurants)
                                 {
                                     <tr class="list">
-                                        <td>@item.oId</td>
-                                        <td>@item.oName</td>
-                                        <td>@item.cId</td>
-                                        <td>@item.oNumber</td>
-                                        <td>@item.oIntro</td>
-                                        <td><a data-id="@item.oId" class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(@item.oId)"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                                        <td><a href="@Url.Action("DeleteObj", "Home", new { oId = item.oId })" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                                        <td>@item.rId</td>
+                                        <td>@item.rName</td>
+                                        <td>@item.rAddress</td>
+                                        <td>@item.rPhone</td>
+                                        <td>@item.startTime</td>
+                                        <td>@item.endTime</td>
+                                        <td><a data-id="@item.rId" class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(@item.rId)"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                        <td><a href="@Url.Action("DeleteRest", "Home", new { rId = item.rId })" class="btn sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
                                     </tr>
-                                }*@
-                        </tbody>
-                    </table>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*Supplies Table*@
+                <div class="outer mt-3" id="sup-container">
+                    <div class="mb-3 row">
+                        <div class="col-8">
+                            <span>查詢:</span>
+                            <select class="form-select d-inline mx-2 w-25" id="option_obj">
+                                <option value="oId" selected>@Html.DisplayNameFor(model => model.objects.First().oId)</option>
+                                <option value="oName">@Html.DisplayNameFor(model => model.objects.First().oName)</option>
+                                <option value="cId">@Html.DisplayNameFor(model => model.objects.First().cId)</option>
+                                <option value="oNumber">@Html.DisplayNameFor(model => model.objects.First().oNumber)</option>
+                                <option value="oIntro">@Html.DisplayNameFor(model => model.objects.First().oIntro)</option>
+                            </select>
+                            <input class="searchtext h-100" id="searchText_sup" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                            <i class="fa fa-search icon-pc"></i>
+                        </div>
+                    </div>
+                    <div class="sup-sec tbstyle table-responsive" id="sup-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.objects.First().oId)</th>
+                                    <th>@Html.DisplayNameFor(m => m.objects.First().oName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.objects.First().cId)</th>
+                                    <th>@Html.DisplayNameFor(m => m.objects.First().oNumber)</th>
+                                    <th>@Html.DisplayNameFor(m => m.objects.First().oIntro)</th>
+                                    <th>編輯</th>
+                                    <th>刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*Fund Table*@
+                <div class="outer mt-3" id="fund-container">
+                    <div class="mb-3 row">
+                        <div class="col-8">
+                            <span>查詢:</span>
+                            <select class="form-select d-inline mx-2 w-25" id="option_fund">
+                                <option value="fId" selected>@Html.DisplayNameFor(model => model.funds.First().fId)</option>
+                                <option value="fName">@Html.DisplayNameFor(model => model.funds.First().fName)</option>
+                                <option value="cId">@Html.DisplayNameFor(model => model.funds.First().cId)</option>
+                                <option value="fText">@Html.DisplayNameFor(model => model.funds.First().fText)</option>
+                                <option value="targetMoney">@Html.DisplayNameFor(model => model.funds.First().targetMoney)</option>
+                                <option value="accMoney">@Html.DisplayNameFor(model => model.funds.First().accMoney)</option>
+                                <option value="startTime">@Html.DisplayNameFor(model => model.funds.First().startTime)</option>
+                                <option value="endTime">@Html.DisplayNameFor(model => model.funds.First().endTime)</option>
+                                <option value="trueName">@Html.DisplayNameFor(model => model.funds.First().trueName)</option>
+                                <option value="fPhone">@Html.DisplayNameFor(model => model.funds.First().fPhone)</option>
+                                <option value="fEmail">@Html.DisplayNameFor(model => model.funds.First().fEmail)</option>
+                            </select>
+                            <input class="searchtext h-100" id="searchText_fund" type="text" name="txtKeyword" placeholder="請輸入關鍵字..." />
+                            <i class="fa fa-search icon-pc"></i>
+                        </div>
+                    </div>
+                    <div class="fund-sec tbstyle table-responsive" id="fund-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:60px">募資編號</th>
+                                    <th>@Html.DisplayNameFor(m => m.funds.First().fName)</th>
+                                    <th>公益單位名稱</th>
+               
+                                    <th style="width:60px">@Html.DisplayNameFor(m => m.funds.First().targetMoney)</th>
+                                    <th style="width:60px">@Html.DisplayNameFor(m => m.funds.First().accMoney)</th>
+                                    <th>開始日期</th>
+                                    <th>結束日期</th>
+                                    <th>@Html.DisplayNameFor(m => m.funds.First().trueName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.funds.First().fPhone)</th>
+                                    <th>@Html.DisplayNameFor(m => m.funds.First().fEmail)</th>
+                                    <th>編輯</th>
+                                    <th>刪除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @*Gmember Modal*@
-    <div class="modal fade" id="member-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">一般會員資料修改</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        @*Gmember Modal*@
+        <div class="modal fade" id="member-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">一般會員資料修改</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="~/Home/EditMember" method="post" enctype="multipart/form-data">
+                        <div class="modal-body d-flex p-3">
+                            <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                                <p><img src="" alt="avatar-photo" width="200px" id="member-avatar" /></p>
+                                @*<input type="file" name="photoFile" id="imageBrowse"/>*@
+                                <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="photoFile" id="memberImgBrowse" hidden /></label>
+                                <!---<button class="btn-uploadImg" onclick="imageBrowse.click()"><i class="fa-solid fa-image"></i>上傳檔案</button>-->
+                            </div>
+                            <div class="col-7">
+                                <div class="mb-3" id="userId">
+                                    <label for="userId">@Html.DisplayNameFor(model => model.gmembers.First().uId):</label>
+                                    <input type="text" class="form-control" id="member-modal-userId" name="uId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
+                                </div>
+                                <div class="mb-3" id="userName">
+                                    <label for="userName">@Html.DisplayNameFor(model => model.gmembers.First().name):</label>
+                                    <input type="text" class="form-control" id="member-modal-userName" name="name" aria-label="UserName" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userAccount">
+                                    <label for="userAccount">@Html.DisplayNameFor(model => model.gmembers.First().account):</label>
+                                    <input type="text" class="form-control" id="member-modal-userAccount" name="account" aria-label="UserAccount" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userPassword">
+                                    <label for="userPassword">@Html.DisplayNameFor(model => model.gmembers.First().password):</label>
+                                    <input type="text" class="form-control" id="member-modal-userPassword" name="password" aria-label="UserPassword" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userPhone">
+                                    <label for="userPhone">@Html.DisplayNameFor(model => model.gmembers.First().phone):</label>
+                                    <input type="text" class="form-control" id="member-modal-userPhone" name="phone" aria-label="UserPhone" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userAddress">
+                                    <label for="userAddress">@Html.DisplayNameFor(model => model.gmembers.First().address):</label>
+                                    <input type="text" class="form-control" id="member-modal-userAddress" name="address" aria-label="UserAddress" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userRole">
+                                    <label for="userRole">@Html.DisplayNameFor(model => model.gmembers.First().role):</label>
+                                    <input type="text" class="form-control" id="member-modal-userRole" name="role" aria-label="UserRole" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="userCreatedAt">
+                                    <label for="userCreatedAt">@Html.DisplayNameFor(model => model.gmembers.First().created_at):</label>
+                                    <input type="text" class="form-control" id="member-modal-userCreatedAt" name="created_at" aria-label="UserCreatedAt" aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <button type="submit" class="btn btn-success">更新</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="~/Home/EditMember" method="post" enctype="multipart/form-data">
-                    <div class="modal-body d-flex p-3">
-                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
-                            <p><img src="" alt="avatar-photo" width="200px" id="member-avatar" /></p>
-                            @*<input type="file" name="photoFile" id="imageBrowse"/>*@
-                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="photoFile" id="memberImgBrowse" hidden /></label>
-                            <!---<button class="btn-uploadImg" onclick="imageBrowse.click()"><i class="fa-solid fa-image"></i>上傳檔案</button>-->
-                        </div>
-                        <div class="col-7">
-                            <div class="mb-3" id="userId">
-                                <label for="userId">@Html.DisplayNameFor(model => model.gmembers.First().uId):</label>
-                                <input type="text" class="form-control" id="member-modal-userId" name="uId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
-                            </div>
-                            <div class="mb-3" id="userName">
-                                <label for="userName">@Html.DisplayNameFor(model => model.gmembers.First().name):</label>
-                                <input type="text" class="form-control" id="member-modal-userName" name="name" aria-label="UserName" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userAccount">
-                                <label for="userAccount">@Html.DisplayNameFor(model => model.gmembers.First().account):</label>
-                                <input type="text" class="form-control" id="member-modal-userAccount" name="account" aria-label="UserAccount" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userPassword">
-                                <label for="userPassword">@Html.DisplayNameFor(model => model.gmembers.First().password):</label>
-                                <input type="text" class="form-control" id="member-modal-userPassword" name="password" aria-label="UserPassword" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userPhone">
-                                <label for="userPhone">@Html.DisplayNameFor(model => model.gmembers.First().phone):</label>
-                                <input type="text" class="form-control" id="member-modal-userPhone" name="phone" aria-label="UserPhone" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userAddress">
-                                <label for="userAddress">@Html.DisplayNameFor(model => model.gmembers.First().address):</label>
-                                <input type="text" class="form-control" id="member-modal-userAddress" name="address" aria-label="UserAddress" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userRole">
-                                <label for="userRole">@Html.DisplayNameFor(model => model.gmembers.First().role):</label>
-                                <input type="text" class="form-control" id="member-modal-userRole" name="role" aria-label="UserRole" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="userCreatedAt">
-                                <label for="userCreatedAt">@Html.DisplayNameFor(model => model.gmembers.First().created_at):</label>
-                                <input type="text" class="form-control" id="member-modal-userCreatedAt" name="created_at" aria-label="UserCreatedAt" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                        <button type="submit" class="btn btn-success">確定變更</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
-    @*Charity modal*@
-    <div class="modal fade" id="charity-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">公益單位資料修改</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        @*Charity modal*@
+        <div class="modal fade" id="charity-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">公益單位資料修改</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="~/Home/EditCharity" method="post" enctype="multipart/form-data">
+                        <div class="modal-body d-flex p-3">
+                            <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                                <p><img src="" alt="charity-photo" width="200px" id="charity-photo" /></p>
+                                <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="logoFile" id="charityImgBrowse" hidden /></label>
+                            </div>
+                            <div class="col-7">
+                                <div class="mb-3" id="cId">
+                                    <label for="userId">@Html.DisplayNameFor(model => model.charities.First().cId):</label>
+                                    <input type="text" class="form-control" id="charity-modal-cId" name="cId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
+                                </div>
+                                <div class="mb-3" id="cName">
+                                    <label for="userName">@Html.DisplayNameFor(model => model.charities.First().c_name):</label>
+                                    <input type="text" class="form-control" id="charity-modal-cName" name="c_name" aria-label="UserName" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="cAddress">
+                                    <label for="userAccount">@Html.DisplayNameFor(model => model.charities.First().c_address):</label>
+                                    <input type="text" class="form-control" id="charity-modal-cAddress" name="c_address" aria-label="UserAccount" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="cPhone">
+                                    <label for="userPassword">@Html.DisplayNameFor(model => model.charities.First().c_phone):</label>
+                                    <input type="text" class="form-control" id="charity-modal-cPhone" name="c_phone" aria-label="UserPassword" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="cHeartcode">
+                                    <label for="userPhone">@Html.DisplayNameFor(model => model.charities.First().heart_code):</label>
+                                    <input type="text" class="form-control" id="charity-modal-heartCode" name="heart_code" aria-label="UserPhone" aria-describedby="basic-addon1" required>
+                                </div>
+                                <div class="mb-3" id="cCreatedat">
+                                    <label for="userAddress">@Html.DisplayNameFor(model => model.charities.First().created_at):</label>
+                                    <input type="text" class="form-control" id="charity-modal-createdAt" name="created_at" aria-label="UserAddress" aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <button type="submit" class="btn btn-success">更新</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="~/Home/EditCharity" method="post" enctype="multipart/form-data">
-                    <div class="modal-body d-flex p-3">
-                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
-                            <p><img src="" alt="charity-photo" width="200px" id="charity-photo" /></p>
-                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="logoFile" id="charityImgBrowse" hidden /></label>
-                        </div>
-                        <div class="col-7">
-                            <div class="mb-3" id="cId">
-                                <label for="userId">@Html.DisplayNameFor(model => model.charities.First().cId):</label>
-                                <input type="text" class="form-control" id="charity-modal-cId" name="cId" aria-label="UserId" aria-describedby="basic-addon1" readonly>
-                            </div>
-                            <div class="mb-3" id="cName">
-                                <label for="userName">@Html.DisplayNameFor(model => model.charities.First().c_name):</label>
-                                <input type="text" class="form-control" id="charity-modal-cName" name="c_name" aria-label="UserName" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="cAddress">
-                                <label for="userAccount">@Html.DisplayNameFor(model => model.charities.First().c_address):</label>
-                                <input type="text" class="form-control" id="charity-modal-cAddress" name="c_address" aria-label="UserAccount" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="cPhone">
-                                <label for="userPassword">@Html.DisplayNameFor(model => model.charities.First().c_phone):</label>
-                                <input type="text" class="form-control" id="charity-modal-cPhone" name="c_phone" aria-label="UserPassword" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="cHeartcode">
-                                <label for="userPhone">@Html.DisplayNameFor(model => model.charities.First().heart_code):</label>
-                                <input type="text" class="form-control" id="charity-modal-heartCode" name="heart_code" aria-label="UserPhone" aria-describedby="basic-addon1" required>
-                            </div>
-                            <div class="mb-3" id="cCreatedat">
-                                <label for="userAddress">@Html.DisplayNameFor(model => model.charities.First().created_at):</label>
-                                <input type="text" class="form-control" id="charity-modal-createdAt" name="created_at" aria-label="UserAddress" aria-describedby="basic-addon1" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                        <button type="submit" class="btn btn-success">確定變更</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
-
-    @*Restaurant Modal*@
-    <div class="modal fade" id="rest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">愛心餐廳資料修改</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                @using (Html.BeginForm("EditRest", "Home", FormMethod.Post))
-                {
-                    <div class="modal-body p-3">
-                        <div>
-                            <div class="mb-3" id="rId">
-                                @Html.LabelFor(m => m.restaurants.First().rId):
-                                <input type="text" class="form-control" id="rest-modal-rId" name="rId" readonly />
-                            </div>
-                            <div class="mb-3" id="rName">
-                                @Html.LabelFor(m => m.restaurants.First().rName):
-                                <input type="text" class="form-control" id="rest-modal-rName" name="rName" required />
-                            </div>
-                            <div class="mb-3" id="rAddress">
-                                @Html.LabelFor(m => m.restaurants.First().rAddress):
-                                <input type="text" class="form-control" id="rest-modal-rAddress" name="rAddress" required />
-                            </div>
-                            <div class="mb-3" id="rPhone">
-                                @Html.LabelFor(m => m.restaurants.First().rPhone):
-                                <input type="text" class="form-control" id="rest-modal-rPhone" name="rPhone" required>
-                            </div>
-                            <div class="mb-3" id="rStarttime">
-                                @Html.LabelFor(m => m.restaurants.First().startTime):
-                                <input type="text" class="form-control" id="rest-modal-starttime" name="startTime" required />
-                            </div>
-                            <div class="mb-3" id="rEndtime">
-                                @Html.LabelFor(m => m.restaurants.First().endTime):
-                                <input type="text" class="form-control" id="rest-modal-endtime" name="endTime" required />
-                            </div>
-                        </div>
+        @*Restaurant Modal*@
+        <div class="modal fade" id="rest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">愛心餐廳資料修改</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                        <input type="submit" class="btn btn-success" value="更新" />
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-    @*Supplies Model*@
-    <div class="modal fade" id="sup-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">物資需求修改</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                @using (Html.BeginForm("EditObj", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="modal-body p-3 row">
-                        <div class="col-5 d-flex flex-column justify-content-center align-items-center">
-                            <p><img src="" class="rounded-circle" alt="supplies-photo" width="200px" id="sup-photo" /></p>
-                            <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="ophotoFile" id="supImgBrowse" hidden /></label>
-                        </div>
-                        <div class="col-7">
+                    @using (Html.BeginForm("EditRest", "Home", FormMethod.Post))
+                    {
+                        <div class="modal-body p-3">
                             <div>
-                                <div class="mb-3" id="oId">
-                                    @Html.LabelFor(m => m.objects.First().oId):
-                                    <input type="text" class="form-control" id="sup-modal-oId" name="oId" readonly />
+                                <div class="mb-3" id="rId">
+                                    @Html.LabelFor(m => m.restaurants.First().rId):
+                                    <input type="text" class="form-control" id="rest-modal-rId" name="rId" readonly />
                                 </div>
-                                <div class="mb-3" id="oName">
-                                    @Html.LabelFor(m => m.objects.First().oName):
-                                    <input type="text" class="form-control" id="sup-modal-oName" name="oName" required />
+                                <div class="mb-3" id="rName">
+                                    @Html.LabelFor(m => m.restaurants.First().rName):
+                                    <input type="text" class="form-control" id="rest-modal-rName" name="rName" required />
                                 </div>
-                                <div class="mb-3" id="oCId">
-                                    @Html.LabelFor(m => m.objects.First().cId):
-                                    <input type="text" class="form-control" id="sup-modal-cId" name="cId" required readonly />
+                                <div class="mb-3" id="rAddress">
+                                    @Html.LabelFor(m => m.restaurants.First().rAddress):
+                                    <input type="text" class="form-control" id="rest-modal-rAddress" name="rAddress" required />
                                 </div>
-                                <div class="mb-3" id="oNumber">
-                                    @Html.LabelFor(m => m.objects.First().oNumber):
-                                    <input type="text" class="form-control" id="sup-modal-oNumber" name="oNumber" required>
+                                <div class="mb-3" id="rPhone">
+                                    @Html.LabelFor(m => m.restaurants.First().rPhone):
+                                    <input type="text" class="form-control" id="rest-modal-rPhone" name="rPhone" required>
                                 </div>
-                                <div class="mb-3" id="oIntro">
-                                    @Html.LabelFor(m => m.objects.First().oIntro):
-                                    <input type="text" class="form-control" id="sup-modal-oIntro" name="oIntro" required />
+                                <div class="mb-3" id="rStarttime">
+                                    @Html.LabelFor(m => m.restaurants.First().startTime):
+                                    <input type="text" class="form-control" id="rest-modal-starttime" name="startTime" required />
+                                </div>
+                                <div class="mb-3" id="rEndtime">
+                                    @Html.LabelFor(m => m.restaurants.First().endTime):
+                                    <input type="text" class="form-control" id="rest-modal-endtime" name="endTime" required />
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <input type="submit" class="btn btn-success" value="更新" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*Supplies Model*@
+        <div class="modal fade" id="sup-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">物資修改</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                        <input type="submit" class="btn btn-success" value="更新" />
+                    @using (Html.BeginForm("EditObj", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-body p-3 row">
+                            <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                                <p><img src="../Content/oPhoto/@Model.objects.First().oPhoto" class="rounded-circle" alt="supplies-photo" width="200px" id="sup-photo" /></p>
+                                <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="photo" id="supImgBrowse" hidden /></label>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <div class="mb-3" id="oId">
+                                        @Html.LabelFor(m => m.objects.First().oId):
+                                        <input type="text" class="form-control" id="sup-modal-oId" name="oId" readonly />
+                                    </div>
+                                    <div class="mb-3" id="oName">
+                                        @Html.LabelFor(m => m.objects.First().oName):
+                                        <input type="text" class="form-control" id="sup-modal-oName" name="oName" required />
+                                    </div>
+                                    <div class="mb-3" id="oCId">
+                                        @Html.LabelFor(m => m.objects.First().cId):
+                                        <input type="text" class="form-control" id="sup-modal-cId" name="cId" required readonly />
+                                    </div>
+                                    <div class="mb-3" id="oNumber">
+                                        @Html.LabelFor(m => m.objects.First().oNumber):
+                                        <input type="text" class="form-control" id="sup-modal-oNumber" name="oNumber" required>
+                                    </div>
+                                    <div class="mb-3" id="oIntro">
+                                        @Html.LabelFor(m => m.objects.First().oIntro):
+                                        <input type="text" class="form-control" id="sup-modal-oIntro" name="oIntro" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <input type="submit" class="btn btn-success" value="更新" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*Fund Model*@
+        <div class="modal fade" id="fund-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">募資專案修改</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                }
+                    @using (Html.BeginForm("EditFund", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-body p-3 row">
+                            <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+                                <p><img src="" class="rounded" alt="fund-photo" width="200px" id="fund-photo" /></p>
+                                <label class="imageBrowse-label"><i class="fa-solid fa-image"></i>上傳檔案<input type="file" name="photo" id="fundImgBrowse" hidden /></label>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <div class="mb-3" id="fId">
+                                        @Html.LabelFor(m => m.funds.First().fId):
+                                        <input type="text" class="form-control" id="fund-modal-fId" name="fId" readonly />
+                                    </div>
+                                    <div class="mb-3" id="fName">
+                                        @Html.LabelFor(m => m.funds.First().fName):
+                                        <input type="text" class="form-control" id="fund-modal-fName" name="fName" />
+                                    </div>
+                                    <div class="mb-3" id="fCId">
+                                        @Html.LabelFor(m => m.funds.First().cId):
+                                        <input type="text" class="form-control" id="fund-modal-cId" name="cId" required />
+                                    </div>
+                                    <div class="mb-3" id="fText">
+                                        @Html.LabelFor(m => m.funds.First().fText):
+                                        <input type="text" class="form-control" id="fund-modal-fText" name="fText" required />
+                                    </div>
+                                    <div class="mb-3" id="targetMoney">
+                                        @Html.LabelFor(m => m.funds.First().targetMoney):
+                                        <input type="text" class="form-control" id="fund-modal-targetMoney" name="targetMoney" required>
+                                    </div>
+                                    <div class="mb-3" id="accMoney">
+                                        @Html.LabelFor(m => m.funds.First().accMoney):
+                                        <input type="text" class="form-control" id="fund-modal-accMoney" name="accMoney" required />
+                                    </div>
+                                    <div class="mb-3" id="startTime">
+                                        @Html.LabelFor(m => m.funds.First().startTime):
+                                        <input type="text" class="form-control" id="fund-modal-startTime" name="startTime" required />
+                                    </div>
+                                    <div class="mb-3" id="endTime">
+                                        @Html.LabelFor(m => m.funds.First().endTime):
+                                        <input type="text" class="form-control" id="fund-modal-endTime" name="endTime" required />
+                                    </div>
+                                    <div class="mb-3" id="trueName">
+                                        @Html.LabelFor(m => m.funds.First().trueName):
+                                        <input type="text" class="form-control" id="fund-modal-trueName" name="trueName" required />
+                                    </div>
+                                    <div class="mb-3" id="fPhone">
+                                        @Html.LabelFor(m => m.funds.First().fPhone):
+                                        <input type="text" class="form-control" id="fund-modal-fPhone" name="fPhone" required />
+                                    </div>
+                                    <div class="mb-3" id="fEmail">
+                                        @Html.LabelFor(m => m.funds.First().fEmail):
+                                        <input type="text" class="form-control" id="fund-modal-fEmail" name="fEmail" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                            <input type="submit" class="btn btn-success" value="更新" />
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
+@section scripts{
 
-@section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             //載入表格資料
             getGenMembers();
             getCharities();
             getObjects();
+            getFunds();
+
 
             //一般會員搜尋功能
             $("#searchText").on("keyup", function () {
@@ -432,7 +549,6 @@
             $("#searchText_rest").on("keyup", function () {
                 if (!$("#searchText_rest").val()) {
                     $("#rest-table tbody").empty();
-                    console.log("asdfs");
                     getRestaurants();
                 } else {
                     searchRestaurant();
@@ -446,6 +562,16 @@
                     getObjects();
                 } else {
                     searchObj();
+                }
+            })
+
+            //募資搜尋
+            $("#searchText_fund").on("keyup", function () {
+                if (!$("#searchText_fund").val()) {
+                    $("#fund-table tbody").empty();
+                    getFunds();
+                } else {
+                    searchFund();
                 }
             })
 
@@ -469,6 +595,11 @@
                 ReadSupImg(File[0]);
             })
 
+            $("#fundImgBrowse").change(function () {
+                const File = this.files;
+                ReadFundImg(File[0]);
+            })
+
             //按鈕樣式切換
             $(".btn-classItem").click(function () {
                 $(".btn-classItem").removeClass("bs-color");
@@ -478,15 +609,31 @@
             //按鈕切換頁面
             $(".cs-btns").click(function () {
                 if ($(event.target).is("#btn-rest-management")) {
+                    localStorage.removeItem('show');
+                    localStorage.setItem('show', '#rest-container');
                     $("#rest-container").css("display", "block");
                     $("#member-container").css("display", "none");
                     $("#sup-container").css("display", "none");
+                    $('#fund-container').css('display', 'none')
                 } else if ($(event.target).is("#btn-member-management")) {
+                    localStorage.removeItem('show');
+                    localStorage.setItem('show', '#member-container');
                     $("#member-container").css("display", "block");
                     $("#rest-container").css("display", "none");
                     $("#sup-container").css("display", "none");
-                } else if ($(event.target).is("#btn-act-management")) {
+                    $('#fund-container').css('display', 'none')
+                } else if ($(event.target).is("#btn-sup-management")) {
+                    localStorage.removeItem('show');
+                    localStorage.setItem('show', '#sup-container');
                     $("#sup-container").css("display", "block");
+                    $("#rest-container").css("display", "none");
+                    $("#member-container").css("display", "none");
+                    $('#fund-container').css('display', 'none')
+                } else if ($(event.target).is("#btn-fund-management")) {
+                    localStorage.removeItem('show');
+                    localStorage.setItem('show', '#fund-container')
+                    $('#fund-container').css('display', 'block')
+                    $("#sup-container").css("display", "none");
                     $("#rest-container").css("display", "none");
                     $("#member-container").css("display", "none");
                 }
@@ -500,7 +647,22 @@
                     icon: "success",
                 });
             }
-    })
+        })
+
+        let curPage = localStorage.getItem('show') || '#member-container';
+        /*$(curPage).css("display", "block");*/
+        document.querySelector(curPage).style.display = "block";
+        $(".btn-classItem").removeClass("bs-color");
+        if (curPage == '#member-container') {
+            $("#btn-member-management").addClass("bs-color");
+        } else if (curPage == '#sup-container') {
+            $("#btn-sup-management").addClass("bs-color");
+        } else if (curPage == '#rest-container') {
+            $("#btn-rest-management").addClass("bs-color");
+        } else if (curPage == '#fund-container') {
+            $("#btn-fund-management").addClass("bs-color");
+        }
+
 
     function ReadSupImg(file)
     {
@@ -511,7 +673,18 @@
             }
             reader.readAsDataURL(file);
         }
-    }
+        }
+
+        function ReadFundImg(file)
+        {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#fund-photo").attr("src", e.target.result)
+                }
+                reader.readAsDataURL(file);
+            }
+        }
 
     function ReadCharityImg(file)
     {
@@ -554,7 +727,7 @@
                     var day = currentTime.getDate();
                     var year = currentTime.getFullYear();
                     var date = year + "/" + month + "/" + day
-                    $("#gmember-table tbody").append(`<tr>
+                    $("#gmember-table tbody").append(`<tr class="list">
                     <td>${member.uId}</td>
                     <td>${member.name}</td>
                     <td>${member.account}</td>
@@ -563,13 +736,11 @@
                     <td>${member.address}</td>
                     <td>${member.role}</td>
                     <td>${date}</td>
-                    <td><a type="button" class="btn btn-info btn-edit-gmember" data-id="${member.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${member.uId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
-                    <td><a class="btn btn-danger btn-delete" data-id="${member.uId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${member.uId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                    <td><a class="btn sec-btn-info" data-id="${member.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${member.uId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a class="btn sec-btn-danger" data-id="${member.uId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${member.uId}'><i class="fa-solid fa-trash-can"></i></a></td>
                 </tr>`)
-
                 })
             }
-
         },
         //error: function (err) { confirm("載入錯誤") }
     })
@@ -637,7 +808,7 @@
                     var day = currentTime.getDate();
                     var year = currentTime.getFullYear();
                     var date = year + "/" + month + "/" + day
-                    $("#gmember-table tbody").append(`<tr>
+                    $("#gmember-table tbody").append(`<tr class="list">
                         <td>${item.uId}</td>
                         <td>${item.name}</td>
                         <td>${item.account}</td>
@@ -646,8 +817,8 @@
                         <td>${item.address}</td>
                         <td>${item.role}</td>
                         <td>${date}</td>
-                        <td><a type="button" class="btn btn-info btn-edit-gmember" data-id="${item.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${item.uId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td><a class="btn btn-danger btn-delete" data-id="${item.uId}" onclick="return confirm('確定要刪除此筆資料嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${item.uId}'><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td><a class="btn sec-btn-info" data-id="${item.uId}" data-bs-toggle="modal" data-bs-target="#member-modal" onclick="findGeneralMemberRecord(${item.uId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a class="btn sec-btn-danger" data-id="${item.uId}" onclick="return confirm('確定要刪除此筆資料嗎?')" href='@Url.Action("DeleteMember","Home")?uId=${item.uId}'><i class="fa-solid fa-trash-can"></i></a></td>
                             </tr>`)
                 })
             },
@@ -669,19 +840,27 @@
                     var day = currentTime.getDate();
                     var year = currentTime.getFullYear();
                     var date = year + "/" + month + "/" + day
-                    $("#cmember-table tbody").append(`<tr>
+                    $("#cmember-table tbody").append(`<tr class="list">
                         <td>${charity.cId}</td>
                         <td>${charity.c_name}</td>
                         <td>${charity.c_address}</td>
                         <td>${charity.c_phone}</td>
                         <td>${charity.heart_code}</td>
                         <td>${date}</td>
-                        <td><a type="button" class="btn btn-info btn-edit-charity" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
-                        <td><a class="btn btn-danger btn-delete" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity","Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                        <td><a class="btn sec-btn-info" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a class="btn sec-btn-danger" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity","Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>`)
                 })
+                console.log('success')
             }
        })
+    }
+
+    function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
     }
 
     function getRestaurants()
@@ -691,7 +870,6 @@
             method: "GET",
             success: function (restList) {
                 $(restList).each(function (index, rest) {
-                  
                     //轉換結束營業datetime format
                     var endHours = addZero(rest.endTime.Hours);
                     var endMinute = addZero(rest.endTime.Minutes);
@@ -707,8 +885,8 @@
                         <td>${rest.rPhone}</td>
                         <td>${startTime}</td>
                         <td>${endTime}</td>
-                        <td><a class="btn sec-btn-info" data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
-                        <td><a class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                        <td><a class="btn sec-btn-info" data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a class="btn sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>`)
                 })
             }
@@ -728,12 +906,91 @@
                         <td>${obj.c_name}</td>
                         <td>${obj.oNumber}</td>
                         <td>${obj.oIntro}</td>
-                        <td><a class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td><a class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>`)
                 })
             }
        })
+    }
+
+    function getFunds()
+    {
+        $.ajax({
+            url: "@Url.Action("getFunds", "Home")",
+            method: "GET",
+            success: function (funds) {
+                $(funds).each(function (index, fund) {
+                    //Start Time
+                    var startString = fund.startTime.substr(6);
+                    var startTime = new Date(parseInt(startString));
+                    var month = startTime.getMonth() + 1;
+                    var day = startTime.getDate();
+                    var year = startTime.getFullYear();
+                    var fStartTime = year + "/" + month + "/" + day;
+                    //End Time
+                    var endString = fund.endTime.substr(6);
+                    var endTime = new Date(parseInt(endString));
+                    var month = endTime.getMonth() + 1;
+                    var day = endTime.getDate();
+                    var year = endTime.getFullYear();
+                    var fEndTime = year + "/" + month + "/" + day;
+                    $("#fund-table tbody").append(`<tr class="list">
+                        <td>${fund.fId}</td>
+                        <td>${fund.fName}</td>
+                        <td>${fund.c_name}</td>
+                        <td>${fund.targetMoney}</td>
+                        <td>${fund.accMoney}</td>
+                        <td>${fStartTime}</td>
+                        <td>${fEndTime}</td>
+                        <td>${fund.trueName}</td>
+                        <td>${fund.fPhone}</td>
+                        <td>${fund.fEmail}</td>
+                        <td><a class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#fund-modal" onclick="findFundRecord(${fund.fId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteFund", "Home")?fId=${fund.fId}" class="btn sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>`)
+                })
+            }
+        })
+    }
+
+    function findFundRecord(id)
+    {
+        $.ajax({
+            url: "@Url.Action("getFundById", "Home")",
+            method: "POST",
+            data: { "fId": id },
+            success: function (funds) {
+                $(funds).each(function (index, item) {
+                    //Start Time
+                    var startString = item.startTime.substr(6);
+                    var startTime = new Date(parseInt(startString));
+                    var month = startTime.getMonth() + 1;
+                    var day = startTime.getDate();
+                    var year = startTime.getFullYear();
+                    var fStartTime = year + "/" + month + "/" + day;
+                    //End Time
+                    var endString = item.endTime.substr(6);
+                    var endTime = new Date(parseInt(endString));
+                    var month = endTime.getMonth() + 1;
+                    var day = endTime.getDate();
+                    var year = endTime.getFullYear();
+                    var fEndTime = year + "/" + month + "/" + day;
+                    $('#fund-modal-fId').val(item.fId)
+                    $('#fund-modal-fName').val(item.fName)
+                    $('#fund-modal-cId').val(item.c_name)
+                    $('#fund-modal-fText').val(item.fText)
+                    $('#fund-modal-targetMoney').val(item.targetMoney)
+                    $("#fund-modal-accMoney").val(item.accMoney)
+                    $('#fund-modal-startTime').val(fStartTime)
+                    $('#fund-modal-endTime').val(fEndTime)
+                    $('#fund-modal-trueName').val(item.trueName)
+                    $('#fund-modal-fPhone').val(item.fPhone)
+                    $('#fund-modal-fEmail').val(item.fEmail)
+                    $('#fund-photo').attr('src', '/FundPhotos/' + item.fPhoto)
+                })
+            }
+        })
     }
 
     function findCharityRecord(id)
@@ -754,7 +1011,7 @@
                     $('#charity-modal-cName').val(item.c_name)
                     $('#charity-modal-cAddress').val(item.c_address)
                     $('#charity-modal-cPhone').val(item.c_phone)
-                    $("#charity-photo").attr("src", "/UserPhotos/" + item.photo)
+                    $("#charity-photo").attr("src", "/images/" + item.photo)
                     $('#charity-modal-heartCode').val(item.heart_code)
                     $('#charity-modal-createdAt').val(date)
                 })
@@ -782,15 +1039,15 @@
                     var day = currentTime.getDate();
                     var year = currentTime.getFullYear();
                     var date = year + "/" + month + "/" + day;
-                    $("#cmember-table tbody").append(`<tr>
+                    $("#cmember-table tbody").append(`<tr class="list">
                     <td>${charity.cId}</td>
                     <td>${charity.c_name}</td>
                     <td>${charity.c_address}</td>
                     <td>${charity.c_phone}</td>
                     <td>${charity.heart_code}</td>
                     <td>${date}</td>
-                    <td><a type="button" class="btn btn-edit-charity" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
-                    <td><a class="btn btn-danger btn-delete" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity", "Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                    <td><a class="btn sec-btn-info" data-id="${charity.cId}" data-bs-toggle="modal" data-bs-target="#charity-modal" onclick="findCharityRecord(${charity.cId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a class="btn sec-btn-danger" data-id="${charity.cId}" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteCharity", "Home")?cId=${charity.cId}'><i class="fa-solid fa-trash-can"></i></a></td>
                 </tr>`)
 
                 })
@@ -800,13 +1057,6 @@
         //error: function (err) { confirm("載入錯誤") }
         })
     }
-
-    function addZero(i) {
-        if (i < 10) { i = "0" + i }
-        return i;
-    }
-
-
 
     function searchRestaurant()
     {
@@ -830,7 +1080,6 @@
                     var startHours = addZero(rest.startTime.Hours);
                     var startMinute = addZero(rest.startTime.Minutes);
                     var startTime = startHours + ":" + startMinute;
-
                     $("#rest-table tbody").append(`<tr class="list">
                     <td>${rest.rId}</td>
                     <td>${rest.rName}</td>
@@ -838,8 +1087,8 @@
                     <td>${rest.rPhone}</td>
                     <td>${startTime}</td>
                     <td>${endTime}</td>
-                    <td><a class="btn btn-info sec-btn-info"  data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square me-1"></i></a></td>
-                    <td><a class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can me-1"></i></a></td>
+                    <td><a class="btn sec-btn-info"  data-id="${rest.rId}" data-bs-toggle="modal" data-bs-target="#rest-modal" onclick="findRestRecord(${rest.rId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                    <td><a class="btn sec-btn-danger" onclick="return confirm('確定要刪除嗎?')" href='@Url.Action("DeleteRest", "Home")?rId=${rest.rId}'><i class="fa-solid fa-trash-can"></i></a></td>
                 </tr>`)
 
                 })
@@ -869,13 +1118,62 @@
                         <td>${obj.c_name}</td>
                         <td>${obj.oNumber}</td>
                         <td>${obj.oIntro}</td>
-                        <td><a class="btn sec-btn-info edit-btn-obj" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn btn-danger sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                        <td><a class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#sup-modal" onclick="findObjRecord(${obj.oId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteObj", "Home")?oId=${obj.oId}" class="btn sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
                     </tr>`)
 
                 })
             }
+        },
+        //error: function (err) { confirm("載入錯誤") }
+        })
+    }
 
+    function searchFund()
+    {
+        $("#fund-table tbody").empty();
+        var searchText = $("#searchText_fund").val();
+        var searchOption = $("#option_fund").val();
+        $.ajax({
+        url: "getFundsByKeyword?searchOption=" + searchOption + "&searchText=" + searchText,
+        type: "POST",
+            success: function (fundList) {
+            $("#fund-table tbody").empty();
+            if (fundList.length == 0) {
+                $("#fund-table tbody").append(`<tr><td colspan='10'>查無相符的資料</td></tr>`)
+            }
+            else {
+                $(fundList).each(function (index, fund) {
+                    //Start Time
+                    var startString = fund.startTime.substr(6);
+                    var startTime = new Date(parseInt(startString));
+                    var month = startTime.getMonth() + 1;
+                    var day = startTime.getDate();
+                    var year = startTime.getFullYear();
+                    var fStartTime = year + "/" + month + "/" + day;
+                    //End Time
+                    var endString = fund.endTime.substr(6);
+                    var endTime = new Date(parseInt(endString));
+                    var month = endTime.getMonth() + 1;
+                    var day = endTime.getDate();
+                    var year = endTime.getFullYear();
+                    var fEndTime = year + "/" + month + "/" + day;
+                    $("#fund-table tbody").append(`<tr class="list">
+                        <td>${fund.fId}</td>
+                        <td>${fund.fName}</td>
+                        <td>${fund.c_name}</td>
+                        <td>${fund.targetMoney}</td>
+                        <td>${fund.accMoney}</td>
+                        <td>${fStartTime}</td>
+                        <td>${fEndTime}</td>
+                        <td>${fund.trueName}</td>
+                        <td>${fund.fPhone}</td>
+                        <td>${fund.fEmail}</td>
+                        <td><a class="btn sec-btn-info" data-bs-toggle="modal" data-bs-target="#fund-modal" onclick="findFundRecord(${fund.fId})"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        <td><a href="@Url.Action("DeleteFund", "Home")?fId=${fund.fId}" class="btn sec-btn-danger" onclick="return confirm('確定要刪除此筆資料嗎?')"><i class="fa-solid fa-trash-can"></i></a></td>
+                    </tr>`)
+                })
+            }
         },
         //error: function (err) { confirm("載入錯誤") }
     })

@@ -13,5 +13,7 @@ namespace KTN5.Models
         public List<Restaurant> restaurants { get; set; }
 
         public List<Object> objects { get; set; }
+
+        public List<Fund> funds { get; set; }
     }
 }

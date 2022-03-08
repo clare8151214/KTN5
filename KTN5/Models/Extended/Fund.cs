@@ -34,5 +34,9 @@ namespace KTN5.Models
         public string fPhoto { get; set; }
         [DisplayName("專案名稱")]
         public string fName { get; set; }
+        [DisplayName("募資編號")]
+        public string fId { get; set; }
+        [DisplayName("公益單位名稱")]
+        public int cId { get; set; }
     }
 }

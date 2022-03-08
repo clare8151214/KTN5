@@ -15,9 +15,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    border:1px solid white;
-    width:500px;
-    height:200px;
+    border: 1px solid white;
+    width: 500px;
+    height: 200px;
 }
 
 .hero-text::after {
@@ -32,8 +32,8 @@
     transform: translate(-50%);
 }
 
-.hero-text h1{
-    font-size:50px;
+.hero-text h1 {
+    font-size: 50px;
 }
 
 .btn-classItem {
@@ -49,9 +49,8 @@
     background-color: #8850CC;
 }
 
-
-.searchBar{
-    position:relative;
+.searchBar {
+    position: relative;
 }
 
 .searchBar .searchtext {
@@ -64,18 +63,10 @@
 .searchBar .fa-search {
     color: #b200ff;
     position: absolute;
-    top: 12px;
-    left: 305px;
-    cursor:pointer;
+    top: 14px;
+    left: 233px;
+    cursor: pointer;
 }
-
-.searchBar .abp-search {
-    left: 335px;
-}
-
-/*#gmember-table td:nth-child(4){
-    width:150px;
-}*/
 
 .icon-pc {
     cursor: pointer;
@@ -83,22 +74,26 @@
     margin-left: -30px;
 }
 
+.searchBar .icon-cl {
+    left: 255px;
+}
+
 .db-table .btn-info {
     background-color: #2ec4b6;
     border-color: #2ec4b6;
-    color:white;
+    color: white;
 }
 
- .db-table thead{
+.db-table thead {
     background-color: #8e7dbe;
-    color:white;
+    color: white;
 }
 
 .imageBrowse-label {
     margin-top: 50px;
     border: none;
-    width: 100px;
-    height: 50px;
+    width: 85px;
+    height: 45px;
     border-radius: 10px;
     background-color: #7904a0;
     color: white;
@@ -107,9 +102,9 @@
     cursor: pointer;
 }
 
- #member-avatar{
-     border-radius:50%;
- }
+#member-avatar {
+    border-radius: 50%;
+}
 
 .btn-uploadImg {
     border: none;
@@ -128,7 +123,7 @@
     .container {
         max-width: 1500px;
     }
- }
+}
 
 /*restaurant table style*/
 .tbstyle thead {
@@ -136,6 +131,7 @@
     color: white;
     border-radius: 10px;
 }
+
 /*remove the thick bottom border from thead*/
 .table > :not(:first-child) {
     border-top: 0;
@@ -162,8 +158,16 @@
     background-color: #5FAF9F;
 }
 
-tr.list{
-    vertical-align:middle;
+.mem-sec thead {
+    background-color: #f7b52c;
+}
+
+.mem-sec .list:hover {
+    background-color: #FFEEB2;
+}
+
+tr.list {
+    vertical-align: middle;
 }
 
 tr.list:hover {
@@ -174,11 +178,18 @@ tr.list:hover {
     background-color: #C8E0DB;
 }
 
+.fund-sec thead {
+    background-color: #FF9E30;
+}
 
-.outer .sec-btn-info{
-    background-color:#f7b52c;
-    color:white;
-    border:none;
+.fund-sec .list:hover {
+    background-color: #FFE7CC;
+}
+
+.outer .sec-btn-info {
+    background-color: #f7b52c;
+    color: white;
+    border: none;
 }
 
 .sec-btn-danger {
@@ -192,27 +203,32 @@ tr.list:hover {
     color: white;
 }
 
-.form-select{
-    width:15%;
+.form-select {
+    width: 15%;
+    font-size:10px;
 }
 
-.form-select:focus{
-    border-color:#9d4edd;
+.form-select:focus {
+    border-color: #9d4edd;
     box-shadow: 0 0 0 0.25rem rgba(223, 207, 240, 0.91);
 }
 
-#rest-container{
-    display:none;
+#member-container {
+    display: none;
+}
+
+#rest-container {
+    display: none;
 }
 
 #sup-container {
     display: none;
 }
 
-/*.show-y{
-    display:block;
+#fund-container {
+    display: none;
 }
 
-.show-n{
-    display:none;
-}*/
+.admin-container {
+    font-size: 10px;
+}
